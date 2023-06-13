@@ -1,6 +1,7 @@
-# FullSweepTest.py
-# Revised 12/01/2022
+# antennasweepauto.py
+# Revised 6/13/2023
 # Colton Cox - ccox60@uco.edu
+# Nathan Wiley - nwiley@uco.edu
 
 import os
 import pynput
@@ -21,7 +22,6 @@ default_iterations = 77
 iterations = 8
 
 
-
 # Physical rotation
 motorcontrol = input("Use motor control? y/n: ")
 
@@ -32,7 +32,6 @@ switch_delay_time = 30
 COM_PORT_ANT = 'COM19'  # COM port used for communicating with antennas
 baudrate = 115200
 timeout = 0.1
-
 try:
 	antennas = serial.Serial(port=COM_PORT_ANT, baudrate=baudrate, timeout=timeout)
 except:
@@ -43,14 +42,12 @@ except:
 COM_PORT_ARM = 'COM17'  # COM port used for communicating with control arm
 baudrate = 115200
 timeout = 1
-
 try:
 	arm = serial.Serial(port=COM_PORT_ARM, baudrate=baudrate, timeout=timeout)
 except:
 	print(f"Couldn't find Arduino on {COM_PORT_ARM} - Is it connected?")
 
 def performTesting():
-
     cont = True
     while cont:
         code = input("Enter channel code to send to Arduino (q to quit): ")
@@ -68,9 +65,11 @@ if iterations == 0:
 mouse = MouseController()
 keyboard = KeyboardController()
 
-# This bit of code opens the software in the correct position
-# win1 is MegiQ VNA
-# win2 is CONTROL
+""" 
+This bit of code opens the software in the correct position
+win1 is MegiQ VNA
+win2 is CONTROL 
+"""
 
 os.startfile("C:/Program Files (x86)/MegiQ/VNA/MiQVNA.exe")
 time.sleep(15)
@@ -100,9 +99,10 @@ time.sleep(3)
 mouse.position = (1254, 15)
 mouse.click(Button.left, 1)
 
+
+
 #####################################################
 # Function Definitions
-
 
 # Initiates sweep in MegiQ
 def sweep():
@@ -210,7 +210,6 @@ def exportfile():
 # start collection of data. sweep, save, title. repeat.
 
 if motorcontrol.lower() == 'y':
-
     for i in range(iterations):
         sweep()
         time.sleep(0.25)
@@ -223,7 +222,6 @@ if motorcontrol.lower() == 'y':
         time.sleep(2)# Allow time for rotation between sweeps
 
 else:
-
     # For defined number of iterations, performs sweep measurement and saves to file for each of the 4 antenna
     # configurations
     for j in range(iterations):
