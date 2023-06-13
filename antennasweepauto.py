@@ -140,21 +140,21 @@ def rotate():
 
 # Sends g-code commands to the control arm
 def send_gcode(gcode):
-    arm.write(bytes(str(gcode + '\n'), 'utf-8'))  # Send G-code command as string
-    print(f"Code: {gcode} sent") # print g-code for console
+    arm.write(bytes(str(gcode + '\n'), 'utf-8'))   # Send G-code command as string
+    print(f"Code: {gcode} sent")                   # print g-code for console
     while True:
-        response = arm.readline().decode().strip()  # Read Arduino response
+        response = arm.readline().decode().strip() # Read Arduino response
         if response == 'ok':
             break
         elif response.startswith('error'):
             raise Exception(response)
-        time.sleep(0.1)  # Wait for the Arduino to process the command
+        time.sleep(0.1)                            # Wait for the Arduino to process the command
 
 
 def raise_to_compressor():
     send_gcode('G90 G21 Y100 F3600') # This y value is arbitrary. Will need to change when we know the measurement
-    time.sleep(3) # Wait for compressor to fire
-    send_gcode('G90 G21 Y0 F3600') # return to original position
+    time.sleep(3)                    # Wait for compressor to fire
+    send_gcode('G90 G21 Y0 F3600')   # return to original position
 
 
 # Changes signal path on switch to param
@@ -247,10 +247,3 @@ endTime = time.time()
 print(f"Total time: {endTime - startTime} seconds")
 antennas.close()
 arm.close()
-
-    
-
-
-
-
-
