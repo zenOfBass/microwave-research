@@ -7,6 +7,7 @@ Nathan Wiley - nwiley@uco.edu
 
 #####################################################
 # Imports
+
 import os                                                          # Module for operating system related functionalities
 import pynput                                                      # Module for controlling input devices like mouse and keyboard
 import time                                                        # Module for adding delays
@@ -15,6 +16,9 @@ from pynput.mouse import Button, Controller as MouseController     # Specific cl
 from pynput.keyboard import Key, Controller as KeyboardController  # Specific classes from 'pynput.keyboard'
 import serial                                                      # Module for serial communication
 
+
+#####################################################
+# Start-up
 
 delay = 0.75 # Default delay time for sleep function used in export function
 
@@ -45,10 +49,9 @@ COM_PORT_ARM = 'COM17' # COM port used for communicating with control arm
 arm_baudrate = 115200  # Baudrate for control arm
 arm_timeout = 1
 try:
-    arm = serial.Serial(port="COM17", baudrate=arm_baudrate, timeout=arm_timeout) # Attempt to set up serial connection to arm
+    arm = serial.Serial(port='COM17', baudrate=arm_baudrate, timeout=arm_timeout) # Attempt to set up serial connection to arm
 except:
     print(f"Couldn't find BlackBox on {COM_PORT_ARM} - Is it connected?") # If serial connection fails, print error to console
-
 
 def performTesting():
     cont = True  # Initialize the 'cont' variable to True
@@ -83,7 +86,7 @@ win.activate()          # Activate the window
 win.moveTo(10, 10)      # Move the window to coordinates (10, 10)
 win.resizeTo(727, 767)  # Resize the window to dimensions (727, 767)
 
-# Only opens the Control window if it is being used (I belive this is mostly legacy code)
+# Only opens the Control window if it is being used (I belive this is basically legacy code)
 if motorcontrol.lower() == 'y':
     os.startfile("C:/Users/EngineeringAdmin/AppData/Local/Programs/OpenBuildsCONTROL/OpenBuildsCONTROL.exe")
     time.sleep(3)
@@ -101,7 +104,6 @@ mouse.position = (1254, 15) # Set the mouse position for the minimize button
 mouse.click(Button.left, 1) # Click the left mouse button once
 
 
-
 #####################################################
 # Function Definitions
 
@@ -111,13 +113,11 @@ def sweep():
     mouse.click(Button.left, 1) # Click the left mouse button once
     time.sleep(1)               # Pause for 1 second
 
-
 # Clicks save in MegiQ
 def save():
     mouse.position = (699, 558) # Set the mouse position for the save button
     mouse.click(Button.left, 1) # Click the left mouse button once
     time.sleep(1)               # Pause for 1 second
-
 
 # Saves data in MegiQ - Integer parameter used for loop
 def file(filename):
@@ -127,18 +127,15 @@ def file(filename):
         time.sleep(0.2)       # Pause for 0.2 seconds between key presses
     time.sleep(1)             # Pause for 1 second (outside of loop)
 
-
 # Hits enter key
 def ok():
     keyboard.tap(Key.enter)
-
 
 # Initiates rotation in Control
 def rotate():
     mouse.position = (1320, 236) # Set the mouse position for the rotation button
     mouse.click(Button.left, 1)  # Click the left mouse button once
     time.sleep(0.5)              # Pause for 0.5 seconds
-
 
 # Sends g-code commands to the control arm
 def send_gcode(gcode):
@@ -152,15 +149,13 @@ def send_gcode(gcode):
             raise Exception(response)              # ...then raise an exception
         time.sleep(0.1)                            # Wait for the Arduino to process the command (0.1 seconds)
 
-
 # Brings the phantom up into the air compressor chamber then back down
 def raise_to_compressor():
     send_gcode('$X')                     # Kill arm lock state
     send_gcode('G10 P0 L20 Y0')          # Set current position as Y0
-    send_gcode('$J=G91G21Y300F3600')     # Move the phantom up in the Y-axis (currently arbitrary value)
+    send_gcode('$J=G91G21Y500F3600')     # Move the phantom up in the Y-axis (currently arbitrary value)
     time.sleep(10)                       # Wait for compressor to fire (10 seconds, also arbitrary value)
-    send_gcode('G90 \n G21 \n G0 Y0')    # Return to Y0
-
+    send_gcode('G90\n G21\n G0 Y0')      # Return to Y0
 
 # Changes signal path on switch to param
 # Writes string number to arduino, parsed to function call for RF channel select (see switch_update.ino)
@@ -170,14 +165,12 @@ def switch(rf_path):
     time.sleep(3)                            # Pause for 3 seconds
     print(f"switching to rf path {rf_path}") # Print the RF path for console
 
-
 def set_transmitting_antenna(antenna_number):
     antenna_number += 10                           # Increase the antenna number by 10 (to match the Arduino code)
     antenna_number = str(antenna_number)           # Convert the antenna number to a string
     antennas.write(bytes(antenna_number, 'utf-8')) # Write the antenna number to the antennas using serial communication
     time.sleep(3)                                  # Pause for 3 seconds
     print(f"switching transmitting antenna to antenna number {int(antenna_number) - 10}") # Print the antenna number for console
-
 
 def exportfile():
     time.sleep(delay)
@@ -209,7 +202,6 @@ def exportfile():
     ok()
 
 
-
 #####################################################
 # Start collection of data: sweep, save, title. repeat.
 # For defined number of iterations (j and i), performs sweep measurement,
@@ -230,7 +222,6 @@ for j in range(iterations):
             time.sleep(0.25)  # Pause for 0.25 seconds
             file("Channel " + str(transmitting_antenna) + str(i + 1))  # Save data with a filename based on the transmitting and receiving antenna numbers
             ok()              # Press the Enter key
-
 
 endTime = time.time()                               # Record end time for data collection
 print(f"Total time: {endTime - startTime} seconds") # Write end time to file
