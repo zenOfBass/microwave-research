@@ -1,28 +1,32 @@
-# antennasweepauto.py
-# Revised 6/13/2023
-# Colton Cox - ccox60@uco.edu
-# Nathan Wiley - nwiley@uco.edu
+'''
+antennasweepauto.py
+Revised 6/14/2023
+Colton Cox - ccox60@uco.edu
+Nathan Wiley - nwiley@uco.edu
+'''
 
-import os
-import pynput
-import time
-import pygetwindow as gw
-from pynput.mouse import Button, Controller as MouseController
-from pynput.keyboard import Key, Controller as KeyboardController
-import serial
+#####################################################
+# Imports
+import os                                                          # Module for operating system related functionalities
+import pynput                                                      # Module for controlling input devices like mouse and keyboard
+import time                                                        # Module for adding delays
+import pygetwindow as gw                                           # Module for window management
+from pynput.mouse import Button, Controller as MouseController     # Specific classes from 'pynput.mouse'
+from pynput.keyboard import Key, Controller as KeyboardController  # Specific classes from 'pynput.keyboard'
+import serial                                                      # Module for serial communication
 
 
-delay = 0.75
+delay = 0.75 # Default delay time for sleep function used in export function
 
 startTime = time.time()
-# User input to define parameters here
+# User input to define parameters here (?)
 
 # Number of iterations (sweeps) to perform
 default_iterations = 77
 iterations = 8
 
 # Physical rotation
-motorcontrol = input("Use motor control? y/n: ") # input prompt for using the motor control window
+motorcontrol = input("Use motor control? y/n: ") # Input prompt for using the motor control window
 
 # Time between switching RF path
 switch_delay_time = 30
@@ -47,15 +51,15 @@ except:
 
 
 def performTesting():
-    cont = True
+    cont = True  # Initialize the 'cont' variable to True
     while cont:
-        code = input("Enter channel code to send to Arduino (q to quit): ")
+        code = input("Enter channel code to send to Arduino (q to quit): ")  # Prompt the user to enter a channel code
         if code == "q":
-            cont = False
-            break
+            cont = False  # Set 'cont' to False if the code is 'q'
+            break         # Exit the loop
         else:
-            antennas.write(bytes(str(code), 'utf-8'))
-            print(f"Code: {code} sent")
+            antennas.write(bytes(str(code), 'utf-8'))  # Write the channel code to the antennas using serial communication
+            print(f"Code: {code} sent")                # Print the code for console
 
 if iterations == 0:
     performTesting()
@@ -65,22 +69,21 @@ keyboard = KeyboardController()
 
 """ 
 This bit of code opens the software in the correct position
-win1 is MegiQ VNA
+win is MegiQ VNA
 win2 is CONTROL 
 """
+os.startfile("C:/Program Files (x86)/MegiQ/VNA/MiQVNA.exe")  # Start the MiQVNA.exe software
+time.sleep(15)      # Pause for 15 seconds
+gw.getAllTitles()   # Get all the window titles
+gw.getAllWindows()  # Get all the windows
+gw.getWindowsWithTitle('MegiQ VNA')  # Get the windows with the title 'MegiQ VNA'
+gw.getActiveWindow()  # Get the active window
+win = gw.getWindowsWithTitle('MegiQ VNA')[0]  # Get the first window with the title 'MegiQ VNA'
+win.activate()          # Activate the window
+win.moveTo(10, 10)      # Move the window to coordinates (10, 10)
+win.resizeTo(727, 767)  # Resize the window to dimensions (727, 767)
 
-os.startfile("C:/Program Files (x86)/MegiQ/VNA/MiQVNA.exe")
-time.sleep(15)
-gw.getAllTitles()
-gw.getAllWindows()
-gw.getWindowsWithTitle('MegiQ VNA')
-gw.getActiveWindow()
-win = gw.getWindowsWithTitle('MegiQ VNA')[0]
-win.activate()
-win.moveTo(10, 10)
-win.resizeTo(727, 767)
-
-# Only opens the Control window if it is being used
+# Only opens the Control window if it is being used (I belive this is mostly legacy code)
 if motorcontrol.lower() == 'y':
     os.startfile("C:/Users/EngineeringAdmin/AppData/Local/Programs/OpenBuildsCONTROL/OpenBuildsCONTROL.exe")
     time.sleep(3)
@@ -91,17 +94,16 @@ if motorcontrol.lower() == 'y':
     win2.resizeTo(767, 767)
 
 # Allow time for software to boot
-time.sleep(3)
+time.sleep(3) # Pause for 3 seconds
 
 # Minimize the command program
-mouse.position = (1254, 15)
-mouse.click(Button.left, 1)
+mouse.position = (1254, 15) # Set the mouse position for the minimize button
+mouse.click(Button.left, 1) # Click the left mouse button once
 
 
 
 #####################################################
 # Function Definitions
-
 
 # Initiates sweep in MegiQ
 def sweep():
@@ -145,7 +147,7 @@ def send_gcode(gcode):
     while True:
         response = arm.readline().decode().strip() # Read response from BlackBox
         if response == 'ok':                       # If response is 'ok', break the loop
-            break                                  # Exit loop
+            break                                  # Exit the loop
         elif response.startswith('error'):         # If response starts with 'error'...
             raise Exception(response)              # ...then raise an exception
         time.sleep(0.1)                            # Wait for the Arduino to process the command (0.1 seconds)
