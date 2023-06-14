@@ -3,8 +3,6 @@
 # Colton Cox - ccox60@uco.edu
 # Nathan Wiley - nwiley@uco.edu
 
-
-
 import os
 import pynput
 import time
@@ -207,38 +205,25 @@ def exportfile():
 
 
 #####################################################
-# start collection of data. sweep, save, title. repeat.
-
-if motorcontrol.lower() == 'y':
+# Start collection of data. sweep, save, title. repeat.
+# For defined number of iterations, performs sweep measurement,
+# and saves to file for each of the 4 antenna configurations
+for j in range(iterations):
+    raise_to_compressor()
+    switch(j + 11)
+    transmitting_antenna = j+1;
     for i in range(iterations):
-        sweep()
-        time.sleep(0.25)
-        save()
-        time.sleep(0.25)
-        file("Channel " + str(i + 1))
-        ok()
-
-        rotate()
-        time.sleep(2) # Allow time for rotation between sweeps
-
-else:
-    # For defined number of iterations, performs sweep measurement,
-    # and saves to file for each of the 4 antenna configurations
-    for j in range(iterations):
-        switch(j+11)
-        transmitting_antenna = j+1;
-        for i in range(iterations):
-            if (i+1) is transmitting_antenna:
-                pass
-            else:
-                switch(i+1)
-                time.sleep(0.25)
-                sweep()
-                time.sleep(2.5)
-                save()
-                time.sleep(0.25)
-                file("Channel " + str(transmitting_antenna) + str(i+1))
-                ok()
+        if (i+1) is transmitting_antenna:
+            pass
+        else:
+            switch(i + 1)
+            time.sleep(0.25)
+            sweep()
+            time.sleep(2.5)
+            save()
+            time.sleep(0.25)
+            file("Channel " + str(transmitting_antenna) + str(i + 1))
+            ok()
 
 
 endTime = time.time()
