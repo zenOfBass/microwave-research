@@ -26,7 +26,7 @@ default_iterations = 77
 iterations = 8
 
 # Physical rotation
-motorcontrol = input("Use motor control? y/n: ") # Input prompt for using the motor control window
+motorcontrol = input("Use motor control? y/n: ") # User input prompt for using the motor control window
 
 # Time between switching RF path
 switch_delay_time = 30
@@ -77,7 +77,7 @@ time.sleep(15)      # Pause for 15 seconds
 gw.getAllTitles()   # Get all the window titles
 gw.getAllWindows()  # Get all the windows
 gw.getWindowsWithTitle('MegiQ VNA')  # Get the windows with the title 'MegiQ VNA'
-gw.getActiveWindow()  # Get the active window
+gw.getActiveWindow()    # Get the active window
 win = gw.getWindowsWithTitle('MegiQ VNA')[0]  # Get the first window with the title 'MegiQ VNA'
 win.activate()          # Activate the window
 win.moveTo(10, 10)      # Move the window to coordinates (10, 10)
@@ -155,10 +155,11 @@ def send_gcode(gcode):
 
 # Brings the phantom up into the air compressor chamber then back down
 def raise_to_compressor():
-    send_gcode('$X')               # Send g-code command to stop any ongoing movement
-    send_gcode('$J=G91 G21 Y200')  # This y value is arbitrary. Will need to change when we know the measurement
-    time.sleep(10)                 # Wait for compressor to fire (10 seconds)
-    send_gcode('$J=G91 G21 Y-200') # Return to original position
+    send_gcode('$X')                     # Kill arm lock state
+    send_gcode('G10 P0 L20 Y0')          # Set current position as Y0
+    send_gcode('$J=G91G21Y300F3600')     # Move the phantom up in the Y-axis (currently arbitrary value)
+    time.sleep(10)                       # Wait for compressor to fire (10 seconds, also arbitrary value)
+    send_gcode('G90 \n G21 \n G0 Y0')    # Return to Y0
 
 
 # Changes signal path on switch to param
