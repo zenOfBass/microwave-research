@@ -12,7 +12,6 @@ from pynput.keyboard import Key, Controller as KeyboardController
 import serial
 
 
-
 delay = 0.75
 
 startTime = time.time()
@@ -23,28 +22,29 @@ default_iterations = 77
 iterations = 8
 
 # Physical rotation
-motorcontrol = input("Use motor control? y/n: ")
+motorcontrol = input("Use motor control? y/n: ") # input prompt for using the motor control window
 
 # Time between switching RF path
 switch_delay_time = 30
 
 # Serial parameters for interfacing with antennas
 COM_PORT_ANT = 'COM19' # COM port used for communicating with antennas
-baudrate = 115200
-timeout = 0.1
+ant_baudrate = 115200  # Baudrate for antennas
+ant_timeout = 0.1
 try:
-	antennas = serial.Serial(port=COM_PORT_ANT, baudrate=baudrate, timeout=timeout)
+	antennas = serial.Serial(port=COM_PORT_ANT, baudrate=ant_baudrate, timeout=ant_timeout) # Attempt to set up serial connection to antennas
 except:
-	print(f"Couldn't find Arduino on {COM_PORT_ANT} - Is it connected?")
+	print(f"Couldn't find Arduino on {COM_PORT_ANT} - Is it connected?") # If serial connection fails, print error to console
 
 # Serial parameters for interfacing with control arm
 COM_PORT_ARM = 'COM17' # COM port used for communicating with control arm
-baudrate = 115200
-timeout = 1
+arm_baudrate = 115200  # Baudrate for control arm
+arm_timeout = 1
 try:
-	arm = serial.Serial(port=COM_PORT_ARM, baudrate=baudrate, timeout=timeout)
+    arm = serial.Serial(port="COM17", baudrate=arm_baudrate, timeout=arm_timeout) # Attempt to set up serial connection to arm
 except:
-	print(f"Couldn't find Arduino on {COM_PORT_ARM} - Is it connected?")
+    print(f"Couldn't find BlackBox on {COM_PORT_ARM} - Is it connected?") # If serial connection fails, print error to console
+
 
 def performTesting():
     cont = True
@@ -102,75 +102,78 @@ mouse.click(Button.left, 1)
 #####################################################
 # Function Definitions
 
+
 # Initiates sweep in MegiQ
 def sweep():
-    mouse.position = (514, 553)
-    mouse.click(Button.left, 1)
-    time.sleep(1)
+    mouse.position = (514, 553) # Set the mouse position for the sweep button
+    mouse.click(Button.left, 1) # Click the left mouse button once
+    time.sleep(1)               # Pause for 1 second
 
 
 # Clicks save in MegiQ
 def save():
-    mouse.position = (699, 558)
-    mouse.click(Button.left, 1)
-    time.sleep(1)
+    mouse.position = (699, 558) # Set the mouse position for the save button
+    mouse.click(Button.left, 1) # Click the left mouse button once
+    time.sleep(1)               # Pause for 1 second
 
 
 # Saves data in MegiQ - Integer parameter used for loop
 def file(filename):
     filename = str(filename)  # Convert filename from int to string for keyboard input
     for f in filename:        # Splits filename into individual digits for each key press
-        keyboard.tap(f)
-        time.sleep(0.2)
-    time.sleep(1)
+        keyboard.tap(f)       # Simulate pressing the corresponding key on the keyboard
+        time.sleep(0.2)       # Pause for 0.2 seconds between key presses
+    time.sleep(1)             # Pause for 1 second (outside of loop)
 
 
+# Hits enter key
 def ok():
     keyboard.tap(Key.enter)
 
 
 # Initiates rotation in Control
 def rotate():
-    mouse.position = (1320, 236)
-    mouse.click(Button.left, 1)
-    time.sleep(0.5)
+    mouse.position = (1320, 236) # Set the mouse position for the rotation button
+    mouse.click(Button.left, 1)  # Click the left mouse button once
+    time.sleep(0.5)              # Pause for 0.5 seconds
 
 
 # Sends g-code commands to the control arm
 def send_gcode(gcode):
     arm.write(bytes(str(gcode + '\n'), 'utf-8'))   # Send g-code command as string
-    print(f"Code: {gcode} sent")                   # Print g-code for console
+    print(f"Code: {gcode} sent")                   # Print sent g-code for debug console
     while True:
-        response = arm.readline().decode().strip() # Read Arduino response
-        if response == 'ok':
-            break
-        elif response.startswith('error'):
-            raise Exception(response)
-        time.sleep(0.1)                            # Wait for the Arduino to process the command
+        response = arm.readline().decode().strip() # Read response from BlackBox
+        if response == 'ok':                       # If response is 'ok', break the loop
+            break                                  # Exit loop
+        elif response.startswith('error'):         # If response starts with 'error'...
+            raise Exception(response)              # ...then raise an exception
+        time.sleep(0.1)                            # Wait for the Arduino to process the command (0.1 seconds)
 
 
+# Brings the phantom up into the air compressor chamber then back down
 def raise_to_compressor():
-    send_gcode('G90 G21 Y100 F3600') # This y value is arbitrary. Will need to change when we know the measurement
-    time.sleep(3)                    # Wait for compressor to fire
-    send_gcode('G90 G21 Y0 F3600')   # Return to original position
+    send_gcode('$X')               # Send g-code command to stop any ongoing movement
+    send_gcode('$J=G91 G21 Y200')  # This y value is arbitrary. Will need to change when we know the measurement
+    time.sleep(10)                 # Wait for compressor to fire (10 seconds)
+    send_gcode('$J=G91 G21 Y-200') # Return to original position
 
 
 # Changes signal path on switch to param
 # Writes string number to arduino, parsed to function call for RF channel select (see switch_update.ino)
 def switch(rf_path):
-    rf_path = str(rf_path)
-    antennas.write(bytes(rf_path, 'utf-8'))
-    time.sleep(3)
-    print(f"switching to rf path {rf_path}")
+    rf_path = str(rf_path)                   # Convert the RF path to a string
+    antennas.write(bytes(rf_path, 'utf-8'))  # Write the RF path to the antennas using serial communication
+    time.sleep(3)                            # Pause for 3 seconds
+    print(f"switching to rf path {rf_path}") # Print the RF path for console
 
 
 def set_transmitting_antenna(antenna_number):
-    antenna_number += 10
-    antenna_number = str(antenna_number)
-
-    antennas.write(bytes(antenna_number, 'utf-8'))
-    time.sleep(3)
-    print(f"switching transmitting antenna to antenna number {int(antenna_number) - 10}")
+    antenna_number += 10                           # Increase the antenna number by 10 (to match the Arduino code)
+    antenna_number = str(antenna_number)           # Convert the antenna number to a string
+    antennas.write(bytes(antenna_number, 'utf-8')) # Write the antenna number to the antennas using serial communication
+    time.sleep(3)                                  # Pause for 3 seconds
+    print(f"switching transmitting antenna to antenna number {int(antenna_number) - 10}") # Print the antenna number for console
 
 
 def exportfile():
@@ -205,28 +208,28 @@ def exportfile():
 
 
 #####################################################
-# Start collection of data. sweep, save, title. repeat.
-# For defined number of iterations, performs sweep measurement,
+# Start collection of data: sweep, save, title. repeat.
+# For defined number of iterations (j and i), performs sweep measurement,
 # and saves to file for each of the 4 antenna configurations
 for j in range(iterations):
-    raise_to_compressor()
-    switch(j + 11)
-    transmitting_antenna = j+1;
+    raise_to_compressor()         # Bring the phantom up into the air compressor chamber and back down
+    switch(j + 11)                # Change the signal path on the switch to the RF channel (j + 11)
+    transmitting_antenna = j + 1; # Set the transmitting antenna number to (j + 1)
     for i in range(iterations):
-        if (i+1) is transmitting_antenna:
-            pass
+        if (i + 1) is transmitting_antenna:
+            pass              # Skip this iteration if i + 1 is the same as the transmitting antenna number
         else:
-            switch(i + 1)
-            time.sleep(0.25)
-            sweep()
-            time.sleep(2.5)
-            save()
-            time.sleep(0.25)
-            file("Channel " + str(transmitting_antenna) + str(i + 1))
-            ok()
+            switch(i + 1)     # Change the signal path on the switch to the RF channel (i + 1)
+            time.sleep(0.25)  # Pause for 0.25 seconds
+            sweep()           # Initiate sweep in MegiQ
+            time.sleep(2.5)   # Pause for 2.5 seconds
+            save()            # Click save in MegiQ
+            time.sleep(0.25)  # Pause for 0.25 seconds
+            file("Channel " + str(transmitting_antenna) + str(i + 1))  # Save data with a filename based on the transmitting and receiving antenna numbers
+            ok()              # Press the Enter key
 
 
-endTime = time.time()
-print(f"Total time: {endTime - startTime} seconds")
-antennas.close()
-arm.close()
+endTime = time.time()                               # Record end time for data collection
+print(f"Total time: {endTime - startTime} seconds") # Write end time to file
+antennas.close() # Close serial connect to antennas for safety...
+arm.close()      # ...and also close connection to arm
