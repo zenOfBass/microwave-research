@@ -3,6 +3,8 @@
 # Colton Cox - ccox60@uco.edu
 # Nathan Wiley - nwiley@uco.edu
 
+
+
 import os
 import pynput
 import time
@@ -10,6 +12,7 @@ import pygetwindow as gw
 from pynput.mouse import Button, Controller as MouseController
 from pynput.keyboard import Key, Controller as KeyboardController
 import serial
+
 
 
 delay = 0.75
@@ -21,7 +24,6 @@ startTime = time.time()
 default_iterations = 77
 iterations = 8
 
-
 # Physical rotation
 motorcontrol = input("Use motor control? y/n: ")
 
@@ -29,17 +31,16 @@ motorcontrol = input("Use motor control? y/n: ")
 switch_delay_time = 30
 
 # Serial parameters for interfacing with antennas
-COM_PORT_ANT = 'COM19'  # COM port used for communicating with antennas
+COM_PORT_ANT = 'COM19' # COM port used for communicating with antennas
 baudrate = 115200
 timeout = 0.1
 try:
 	antennas = serial.Serial(port=COM_PORT_ANT, baudrate=baudrate, timeout=timeout)
 except:
 	print(f"Couldn't find Arduino on {COM_PORT_ANT} - Is it connected?")
-        
 
 # Serial parameters for interfacing with control arm
-COM_PORT_ARM = 'COM17'  # COM port used for communicating with control arm
+COM_PORT_ARM = 'COM17' # COM port used for communicating with control arm
 baudrate = 115200
 timeout = 1
 try:
@@ -60,7 +61,6 @@ def performTesting():
 
 if iterations == 0:
     performTesting()
-
 
 mouse = MouseController()
 keyboard = KeyboardController()
@@ -92,10 +92,10 @@ if motorcontrol.lower() == 'y':
     win2.moveTo(755, 0)
     win2.resizeTo(767, 767)
 
-# allow time for software to boot
+# Allow time for software to boot
 time.sleep(3)
 
-# minimize the command program
+# Minimize the command program
 mouse.position = (1254, 15)
 mouse.click(Button.left, 1)
 
@@ -120,8 +120,8 @@ def save():
 
 # Saves data in MegiQ - Integer parameter used for loop
 def file(filename):
-    filename = str(filename)  # convert filename from int to string for keyboard input
-    for f in filename:        # splits filename into individual digits for each key press
+    filename = str(filename)  # Convert filename from int to string for keyboard input
+    for f in filename:        # Splits filename into individual digits for each key press
         keyboard.tap(f)
         time.sleep(0.2)
     time.sleep(1)
@@ -140,8 +140,8 @@ def rotate():
 
 # Sends g-code commands to the control arm
 def send_gcode(gcode):
-    arm.write(bytes(str(gcode + '\n'), 'utf-8'))   # Send G-code command as string
-    print(f"Code: {gcode} sent")                   # print g-code for console
+    arm.write(bytes(str(gcode + '\n'), 'utf-8'))   # Send g-code command as string
+    print(f"Code: {gcode} sent")                   # Print g-code for console
     while True:
         response = arm.readline().decode().strip() # Read Arduino response
         if response == 'ok':
@@ -154,7 +154,7 @@ def send_gcode(gcode):
 def raise_to_compressor():
     send_gcode('G90 G21 Y100 F3600') # This y value is arbitrary. Will need to change when we know the measurement
     time.sleep(3)                    # Wait for compressor to fire
-    send_gcode('G90 G21 Y0 F3600')   # return to original position
+    send_gcode('G90 G21 Y0 F3600')   # Return to original position
 
 
 # Changes signal path on switch to param
@@ -215,15 +215,15 @@ if motorcontrol.lower() == 'y':
         time.sleep(0.25)
         save()
         time.sleep(0.25)
-        file("Channel " + str(i+1))
+        file("Channel " + str(i + 1))
         ok()
 
         rotate()
-        time.sleep(2)# Allow time for rotation between sweeps
+        time.sleep(2) # Allow time for rotation between sweeps
 
 else:
-    # For defined number of iterations, performs sweep measurement and saves to file for each of the 4 antenna
-    # configurations
+    # For defined number of iterations, performs sweep measurement,
+    # and saves to file for each of the 4 antenna configurations
     for j in range(iterations):
         switch(j+11)
         transmitting_antenna = j+1;
