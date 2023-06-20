@@ -51,7 +51,7 @@ arm_timeout = 1
 try:
     arm = serial.Serial(port='COM17', baudrate=arm_baudrate, timeout=arm_timeout) # Attempt to set up serial connection to arm
 except:
-    print(f"Couldn't find BlackBox on {COM_PORT_ARM} - Is it connected?") # If serial connection fails, print error to console
+    print(f"Couldn't find BlackBox on {COM_PORT_ARM} - Is it connected? Ensure motor control program isn't connected.") # If serial connection fails, print error to console
 
 def performTesting():
     cont = True  # Initialize the 'cont' variable to True
@@ -139,12 +139,12 @@ def rotate():
 
 # Sends g-code commands to the control arm
 def send_gcode(gcode):
-    arm.write(bytes(str(gcode + '\n'), 'utf-8'))   # Send g-code command as string
+    arm.write(bytes(str(gcode + '\n'), 'utf-8'))   # Send g-code command as bytes
     print(f"Code: {gcode} sent")                   # Print sent g-code for debug console
     while True:
         response = arm.readline().decode().strip() # Read response from BlackBox
-        if response == 'ok':                       # If response is 'ok', break the loop
-            break                                  # Exit the loop
+        if response == 'ok':                       # If response is 'ok'...
+            break                                  # ...exit the loop
         elif response.startswith('error'):         # If response starts with 'error'...
             raise Exception(response)              # ...then raise an exception
         time.sleep(0.1)                            # Wait for the Arduino to process the command (0.1 seconds)
@@ -203,7 +203,7 @@ def exportfile():
 
 
 #####################################################
-# Start collection of data: sweep, save, title. repeat.
+# Start collection of data: sweep, save, title, repeat.
 # For defined number of iterations (j and i), performs sweep measurement,
 # and saves to file for each of the 4 antenna configurations
 for j in range(iterations):
@@ -224,6 +224,6 @@ for j in range(iterations):
             ok()              # Press the Enter key
 
 endTime = time.time()                               # Record end time for data collection
-print(f"Total time: {endTime - startTime} seconds") # Write end time to file
+print(f"Total time: {endTime - startTime} seconds") # Print end time to console
 antennas.close() # Close serial connect to antennas for safety...
 arm.close()      # ...and also close connection to arm
