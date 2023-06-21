@@ -10,27 +10,12 @@
 #define MAX_COMPLEX_NUMBERS 500
 #define BUFFER_SIZE 4096
 
-
-int main()
+void chan_freq_antloc_reader()
 {
     // Declare arrays for each file type
     int intArray[MAX_ROWS][MAX_COLS];
     double doubleArray[MAX_ROWS];
     float floatArray[MAX_ROWS][MAX_COLS];
-
-    long double complex **complexArray1 = malloc(MAX_ROWS_COMPLEX * sizeof(long double complex *));
-    for (int i = 0; i < MAX_ROWS_COMPLEX; i++)
-    {
-        complexArray1[i] = malloc(MAX_COMPLEX_NUMBERS * sizeof(long double complex));
-    }
-    int num_complex_numbers1[MAX_ROWS_COMPLEX] = {0};
-
-    long double complex **complexArray2 = malloc(MAX_ROWS_COMPLEX * sizeof(long double complex *));
-    for (int i = 0; i < MAX_ROWS_COMPLEX; i++)
-    {
-        complexArray2[i] = malloc(MAX_COMPLEX_NUMBERS * sizeof(long double complex));
-    }
-    int num_complex_numbers2[MAX_ROWS_COMPLEX] = {0};
 
     // Read first file (int array)
     FILE *file1 = fopen("file1.csv", "r");
@@ -89,6 +74,45 @@ int main()
     }
     fclose(file3);
 
+    // // Print the contents of the arrays
+    // printf("Data from file1.csv (2D int array):\n");
+    // for (int i = 0; i < rows1; i++)
+    // {
+    //     printf("[%d, %d]\n", intArray[i][0], intArray[i][1]);
+    // }
+
+    // printf("\nData from file2.csv (double array):\n");
+    // for (int i = 0; i < rows2; i++)
+    // {
+    //     printf("%lf\n", doubleArray[i]);
+    // }
+
+    // printf("\nData from file3.csv (float array):\n");
+    // for (int i = 0; i < rows3; i++)
+    // {
+    //     printf("[%f, %f, %f]\n", floatArray[i][0], floatArray[i][1], floatArray[i][2]);
+    // }
+    // printf("\n");
+
+    printf("chan_freq_antloc_reader() done\n");
+}
+
+void iq_reader()
+{
+    long double complex **complexArray1 = malloc(MAX_ROWS_COMPLEX * sizeof(long double complex *));
+    for (int i = 0; i < MAX_ROWS_COMPLEX; i++)
+    {
+        complexArray1[i] = malloc(MAX_COMPLEX_NUMBERS * sizeof(long double complex));
+    }
+    int num_complex_numbers1[MAX_ROWS_COMPLEX] = {0};
+
+    long double complex **complexArray2 = malloc(MAX_ROWS_COMPLEX * sizeof(long double complex *));
+    for (int i = 0; i < MAX_ROWS_COMPLEX; i++)
+    {
+        complexArray2[i] = malloc(MAX_COMPLEX_NUMBERS * sizeof(long double complex));
+    }
+    int num_complex_numbers2[MAX_ROWS_COMPLEX] = {0};
+
     // Read fourth file (complex numbers)
     FILE *file4 = fopen("file4.csv", "r");
     if (file4 == NULL)
@@ -98,7 +122,7 @@ int main()
     }
     else
     {
-        printf("File4 read.\n");
+        printf("file4 read.\n");
     }
 
     char line4[BUFFER_SIZE];
@@ -135,7 +159,7 @@ int main()
     }
     else
     {
-        printf("File5 read.\n");
+        printf("file5 read.\n");
     }
 
     char line[BUFFER_SIZE];
@@ -163,46 +187,26 @@ int main()
     }
     fclose(file5);
 
-    // Print the contents of the arrays
-    printf("Data from file1.csv (2D int array):\n");
-    for (int i = 0; i < rows1; i++)
-    {
-        printf("[%d, %d]\n", intArray[i][0], intArray[i][1]);
-    }
+    // printf("\nData from file4.csv (complex double array):\n");
+    // for (int i = 0; i < row4; i++)
+    // {
+    //     for (int j = 0; j < num_complex_numbers1[i]; j++)
+    //     {
+    //         long double complex c_num = complexArray1[i][j];
+    //         printf("%.18Lf + %.18Lfi\n", creal(c_num), cimag(c_num));
+    //     }
+    // }
 
-    printf("\nData from file2.csv (double array):\n");
-    for (int i = 0; i < rows2; i++)
-    {
-        printf("%lf\n", doubleArray[i]);
-    }
-
-    printf("\nData from file3.csv (float array):\n");
-    for (int i = 0; i < rows3; i++)
-    {
-        printf("[%f, %f, %f]\n", floatArray[i][0], floatArray[i][1], floatArray[i][2]);
-    }
-
-    printf("\nData from file4.csv (complex double array):\n");
-    for (int i = 0; i < row4; i++)
-    {
-        for (int j = 0; j < num_complex_numbers1[i]; j++)
-        {
-            long double complex c_num = complexArray1[i][j];
-            printf("%.18Lf + %.18Lfi\n", creal(c_num), cimag(c_num));
-        }
-    }
-
-    printf("\nData from file5.csv (complex double array):\n");
-    for (int i = 0; i < row5; i++)
-    {
-        for (int j = 0; j < num_complex_numbers2[i]; j++)
-        {
-            long double complex c_num = complexArray2[i][j];
-            printf("%.18Lf + %.18Lfi\n", creal(c_num), cimag(c_num));
-        }
-    }
-
-    printf("\n");
+    // printf("\nData from file5.csv (complex double array):\n");
+    // for (int i = 0; i < row5; i++)
+    // {
+    //     for (int j = 0; j < num_complex_numbers2[i]; j++)
+    //     {
+    //         long double complex c_num = complexArray2[i][j];
+    //         printf("%.18Lf + %.18Lfi\n", creal(c_num), cimag(c_num));
+    //     }
+    // }
+    // printf("\n");
 
     for (int i = 0; i < MAX_ROWS_COMPLEX; i++)
     {
@@ -215,6 +219,14 @@ int main()
         free(complexArray2[i]);
     }
     free(complexArray2);
+
+    printf("iq_reader() done\n");
+}
+
+int main()
+{
+    chan_freq_antloc_reader();
+    iq_reader();
 
     return 0;
 }
