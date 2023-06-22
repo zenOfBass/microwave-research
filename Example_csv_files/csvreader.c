@@ -1,15 +1,30 @@
+/*
+csvreader.c
+Revised 6/22/2023 
+Nathan Wiley - nwiley @uco.edu
+*/
+
+//////////////////////////////////////////////////////
+// Imports
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <complex.h>
 #include <string.h>
 
-#define MAX_ROWS 300
-#define MAX_COLS 3
-#define MAX_LINE_LENGTH 1000
-#define MAX_ROWS_COMPLEX 500
-#define MAX_COMPLEX_NUMBERS 500
-#define BUFFER_SIZE 4096
+//////////////////////////////////////////////////////
+// Define constants
 
+#define MAX_ROWS 300            // Maximun rows for 2D channel names, frequencies, and 2D antenna locations arrays
+#define MAX_COLS 3              // Maximun comlumns for 2D channel names and 2D antenna locations arrays
+#define MAX_ROWS_COMPLEX 500    // Maximun rows for 2D complex number array (IQ data)
+#define MAX_COMPLEX_NUMBERS 500 // Maximun comlumns for 2D complex number array (IQ data)
+#define BUFFER_SIZE 4096        // Maximum buffer size for line when reading complex number CSV data file
+
+//////////////////////////////////////////////////////
+// Functions
+
+// Reads channel names, frequencies, and antenna locations CSV data files
 void chan_freq_antloc_reader(const char *chan, const char *freq, const char *antloc)
 {
     // Declare arrays for each file type
@@ -17,7 +32,7 @@ void chan_freq_antloc_reader(const char *chan, const char *freq, const char *ant
     double doubleArray[MAX_ROWS];         // Array of frequencies
     float floatArray[MAX_ROWS][MAX_COLS]; // 2D array of antenna locations
 
-    // Open first file (int array)
+    // Open first file (channel names)
     FILE *file1 = fopen(chan, "r");
     if (file1 == NULL) // If the file isn't found...
     {
@@ -41,7 +56,7 @@ void chan_freq_antloc_reader(const char *chan, const char *freq, const char *ant
     }
     fclose(file1); // Close channel names file
 
-    // Open second file (double array)
+    // Open second file (frequencies)
     FILE *file2 = fopen(freq, "r");
     if (file2 == NULL) // If the file isn't found...
     {
@@ -49,7 +64,7 @@ void chan_freq_antloc_reader(const char *chan, const char *freq, const char *ant
         return 1; // Exception exit
     }
 
-    // Read second file
+    // Read second file 
     int rows2 = 0;
     while (fscanf(file2, "%lf,", &doubleArray[rows2]) == 1)
     {
@@ -64,14 +79,13 @@ void chan_freq_antloc_reader(const char *chan, const char *freq, const char *ant
     }
     fclose(file2); // Close frequencies file
 
-    // Open third file (array of x, y, z float coordinates)
+    // Open third file (antenna x, y, z coordinates)
     FILE *file3 = fopen(antloc, "r");
     if (file3 == NULL) // If the file isn't found...
     {
         printf("Error opening antenna locations CSV (%s).\n", antloc); // Print error to terminal
         return 1; // Exception exit
     }
-
     // Read third file
     int rows3 = 0;
     while (fscanf(file3, "%f,%f,%f,", &floatArray[rows3][0], &floatArray[rows3][1], &floatArray[rows3][2]) == 3)
@@ -109,9 +123,10 @@ void chan_freq_antloc_reader(const char *chan, const char *freq, const char *ant
     printf("chan_freq_antloc_reader() done. (%s, %s, %s)\n", chan, freq, antloc); // Print confirmation to terminal
 }
 
+// Reads IQ CSV data files
 void iq_reader(const char *iq)
 {
-    // Declare arrays and allocate memory
+    // Declare arrays and allocate
     long double complex **complexArray = malloc(MAX_ROWS_COMPLEX * sizeof(long double complex *)); // Allocate memory for array in heap
     for (int i = 0; i < MAX_ROWS_COMPLEX; i++)                                       // Loop over all elements
     {
@@ -119,27 +134,27 @@ void iq_reader(const char *iq)
     }
     int num_complex_numbers[MAX_ROWS_COMPLEX] = {0}; // Set all elements to zero
 
-    // Read the CSV file
+    // Open the CSV file
     FILE *file = fopen(iq, "r");
     if (file == NULL) // If the file isn't found...
     {
         printf("Error opening IQ CSV (%s).\n", iq); // Print error to terminal
         return 1; // Exception exit
     }
-
+    // Read the CSV file
     char line[BUFFER_SIZE];
     int row = 0;
     while (fgets(line, sizeof(line), file)) // Read a line from 'file' and store it in 'line'
     {
         char *token;
         char *rest = line;
-        while ((token = strtok_r(rest, ",", &rest))) // Split 'line' into tokens using the delimiter ',' and store each token in 'token'
+        while ((token = strtok_r(rest, ",", &rest))) // Split 'line' into tokens using the delimiter ',' and store each 'token'
         {
             // Extract the real and imaginary parts from 'token'
             char *endptr;
             long double real = strtold(token, &endptr);                    // Convert the token to a real number
             long double imag = strtold(endptr, &endptr);                   // Convert the remaining string to an imaginary number
-            complexArray[row][num_complex_numbers[row]] = real + imag * I; // Store the complex number in the array by combining them and multiplying by 'i'
+            complexArray[row][num_complex_numbers[row]] = real + imag * I; // Store complex number in array by combining and multiplying by 'i'
             num_complex_numbers[row]++;                                    // Increment the count of complex numbers for the current row
         }
         row++;
@@ -150,7 +165,7 @@ void iq_reader(const char *iq)
             break; // Break loop from error
         }
     }
-    fclose(file); // Close iq file
+    fclose(file); // Close CSV file
 
     /* Print statements to terminal for debugging (legacy) */
     // // Print the contents of the arrays
@@ -164,15 +179,18 @@ void iq_reader(const char *iq)
     //     }
     // }
 
-    // Deallocation
+    // Memory deallocation // TODO: Split this off so array can be used
     for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over the array
     {
-        free(complexArray[i]); // Deallocate the memory for each element in array in heap
+        free(complexArray[i]); // Deallocate heap memory for each element in array
     }
-    free(complexArray);        // Deallocate memory for array in heap
+    free(complexArray);        // Deallocate memory heap for array itself
 
     printf("iq_reader() done. (%s)\n", iq); // Print confirmation to terminal
 }
+
+//////////////////////////////////////////////////////
+// Main
 
 int main()
 {
