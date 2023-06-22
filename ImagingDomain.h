@@ -1,3 +1,9 @@
+/*
+ImagingDomain.c
+Revised 6/22/2023 
+Colton Cox - ccox60@uco.edu
+*/
+
 #ifndef IMAGING_DOMAIN
 #define IMAGING_DOMAIN
 
