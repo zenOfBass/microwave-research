@@ -1,4 +1,4 @@
-#include "csvReader.h"
+#include "csvreader.h"
 
 #define MAX_ROWS 300            // Maximun rows for 2D channel names, frequencies, and 2D antenna locations arrays
 #define MAX_COLS 3              // Maximun comlumns for 2D channel names and 2D antenna locations arrays
