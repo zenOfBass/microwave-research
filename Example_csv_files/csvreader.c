@@ -102,24 +102,24 @@ void chan_freq_antloc_reader(const char *chan, const char *freq, const char *ant
     fclose(file3); // Close antenna locations file
 
     /* Print statements to terminal for debugging (legacy) */
-    // // Print the contents of the arrays
-    // printf("Data from file1.csv (2D int array):\n");
-    // for (int i = 0; i < rows1; i++)
-    // {
-    //     printf("[%d, %d]\n", intArray[i][0], intArray[i][1]);
-    // }
-    // printf("\nData from file2.csv (double array):\n");
-    // for (int i = 0; i < rows2; i++)
-    // {
-    //     printf("%lf\n", doubleArray[i]);
-    // }
-    // printf("\nData from file3.csv (float array):\n");
-    // for (int i = 0; i < rows3; i++)
-    // {
-    //     printf("[%f, %f, %f]\n", floatArray[i][0], floatArray[i][1], floatArray[i][2]);
-    // }
-    // printf("\n");
-
+    // Print the contents of the arrays
+    printf("Data from file1.csv (2D int array):\n");
+    for (int i = 0; i < rows1; i++)
+    {
+        printf("[%d, %d]\n", intArray[i][0], intArray[i][1]);
+    }
+    printf("\nData from file2.csv (double array):\n");
+    for (int i = 0; i < rows2; i++)
+    {
+        printf("%lf\n", doubleArray[i]);
+    }
+    printf("\nData from file3.csv (float array):\n");
+    for (int i = 0; i < rows3; i++)
+    {
+        printf("[%f, %f, %f]\n", floatArray[i][0], floatArray[i][1], floatArray[i][2]);
+    }
+    printf("\n");
+    
     printf("chan_freq_antloc_reader() done. (%s, %s, %s)\n", chan, freq, antloc); // Print confirmation to terminal
 }
 
@@ -168,16 +168,16 @@ void iq_reader(const char *iq)
     fclose(file); // Close CSV file
 
     /* Print statements to terminal for debugging (legacy) */
-    // // Print the contents of the arrays
-    // printf("Data from the IQ file (long double complex):\n");
-    // for (int i = 0; i < row; i++)
-    // {
-    //     for (int j = 0; j < num_complex_numbers[i]; j++)
-    //     {
-    //         long double complex c_num = complexArray[i][j];
-    //         printf("%.18Lf + %.18Lfi\n", creal(c_num), cimag(c_num));
-    //     }
-    // }
+    // Print the contents of the arrays
+    printf("Data from the IQ file (long double complex):\n");
+    for (int i = 0; i < row; i++)
+    {
+        for (int j = 0; j < num_complex_numbers[i]; j++)
+        {
+            long double complex c_num = complexArray[i][j];
+            printf("%.18Lf + %.18Lfi\n", creal(c_num), cimag(c_num));
+        }
+    }
 
     // Memory deallocation // TODO: Split this off so array can be used
     for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over the array
