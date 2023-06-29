@@ -8,7 +8,7 @@ Colton Cox - ccox60@uco.edu
 #include "ImagingDomain.h"
 
 
-void GenerateImagingDomain(float imaging_domain[MAX_SIZE][3])
+void generateImagingDomain(float imaging_domain[MAX_SIZE][3])
 {
     int index = 0;
     for(float height=0; height < SPHERE_RADIUS * 2; height += RESOLUTION)

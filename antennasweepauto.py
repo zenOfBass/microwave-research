@@ -1,9 +1,9 @@
-'''
+"""
 antennasweepauto.py
 Revised 6/14/2023
 Colton Cox - ccox60@uco.edu
 Nathan Wiley - nwiley@uco.edu
-'''
+"""
 
 #####################################################
 # Imports
@@ -138,7 +138,7 @@ def rotate():
     time.sleep(0.5)              # Pause for 0.5 seconds
 
 # Sends g-code commands to the control arm
-def send_gcode(gcode):
+def sendGCode(gcode):
     arm.write(bytes(str(gcode + '\n'), 'utf-8'))   # Send g-code command as bytes
     print(f"Code: {gcode} sent")                   # Print sent g-code for debug console
     while True:
@@ -150,12 +150,12 @@ def send_gcode(gcode):
         time.sleep(0.1)                            # Wait for the Arduino to process the command (0.1 seconds)
 
 # Brings the phantom up into the air compressor chamber then back down
-def raise_to_compressor():
-    send_gcode('$X')                     # Kill arm lock state
-    send_gcode('G10 P0 L20 Y0')          # Set current position as Y0
-    send_gcode('$J=G91G21Y500F3600')     # Move the phantom up in the Y-axis (currently arbitrary value)
+def raiseToCompressor():
+    sendGCode('$X')                     # Kill arm lock state
+    sendGCode('G10 P0 L20 Y0')          # Set current position as Y0
+    sendGCode('$J=G91G21Y500F3600')     # Move the phantom up in the Y-axis (currently arbitrary value)
     time.sleep(10)                       # Wait for compressor to fire (10 seconds, also arbitrary value)
-    send_gcode('G90\n G21\n G0 Y0')      # Return to Y0
+    sendGCode('G90\n G21\n G0 Y0')      # Return to Y0
 
 # Changes signal path on switch to param
 # Writes string number to arduino, parsed to function call for RF channel select (see switch_update.ino)
@@ -165,14 +165,14 @@ def switch(rf_path):
     time.sleep(3)                            # Pause for 3 seconds
     print(f"switching to rf path {rf_path}") # Print the RF path for console
 
-def set_transmitting_antenna(antenna_number):
+def setTransmittingAntenna(antenna_number):
     antenna_number += 10                           # Increase the antenna number by 10 (to match the Arduino code)
     antenna_number = str(antenna_number)           # Convert the antenna number to a string
     antennas.write(bytes(antenna_number, 'utf-8')) # Write the antenna number to the antennas using serial communication
     time.sleep(3)                                  # Pause for 3 seconds
     print(f"switching transmitting antenna to antenna number {int(antenna_number) - 10}") # Print the antenna number for console
 
-def exportfile():
+def exportFile():
     time.sleep(delay)
     mouse.click(Button.left, 1)
     mouse.click(Button.right, 1)
@@ -207,7 +207,7 @@ def exportfile():
 # For defined number of iterations (j and i), performs sweep measurement,
 # and saves to file for each of the 4 antenna configurations
 for j in range(iterations):
-    raise_to_compressor()         # Bring the phantom up into the air compressor chamber and back down
+    raiseToCompressor()         # Bring the phantom up into the air compressor chamber and back down
     switch(j + 11)                # Change the signal path on the switch to the RF channel (j + 11)
     transmitting_antenna = j + 1; # Set the transmitting antenna number to (j + 1)
     for i in range(iterations):
