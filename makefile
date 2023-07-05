@@ -1,13 +1,16 @@
-a.exe: main.o ImagingDomain.o csvreader.o
-	gcc main.o ImagingDomain.o csvreader.o
+a.exe: main.o ImagingDomain.o CSVReader.o CallHeatmap.o
+	gcc main.o ImagingDomain.o CSVReader.o CallHeatmap.o
 
 ImagingDomain.o: ImagingDomain.c ImagingDomain.h
 	gcc -c ImagingDomain.c
 
-csvreader.o: csvreader.c csvreader.h
-	gcc -c csvreader.c
+CSVReader.o: CSVReader.c CSVReader.h
+	gcc -c CSVReader.c
 
-main.o: main.c ImagingDomain.h
+CallHeatmap.o: CallHeatmap.c CallHeatmap.h
+	gcc -c CallHeatmap.c
+
+main.o: main.c ImagingDomain.h CSVReader.h CallHeatmap.h
 	gcc -c main.c
 
 clean:

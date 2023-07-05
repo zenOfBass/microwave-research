@@ -4,9 +4,7 @@ Revised 6/22/2023
 Colton Cox - ccox60@uco.edu
 */
 
-
 #include "ImagingDomain.h"
-
 
 void generateImagingDomain(float imaging_domain[MAX_SIZE][3])
 {
@@ -38,6 +36,4 @@ void generateImagingDomain(float imaging_domain[MAX_SIZE][3])
     }
     fclose(fp);
 #endif
-
 }
-

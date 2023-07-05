@@ -22,5 +22,4 @@ Colton Cox - ccox60@uco.edu
 
 void generateImagingDomain(float imaging_domain[MAX_SIZE][3]);
 
-
 #endif

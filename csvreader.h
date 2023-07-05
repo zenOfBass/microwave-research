@@ -1,3 +1,9 @@
+/*
+CSVReader.h
+Revised 6/27/2023
+Nathan Wiley - nwiley@uco.edu
+*/
+
 #ifndef CSV_READER
 #define CSV_READER
 

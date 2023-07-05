@@ -1,5 +1,6 @@
 #include "ImagingDomain.h"
-#include "csvreader.h"
+#include "CSVReader.h"
+#include "CallHeatmap.h"
 
 float ID[MAX_SIZE][3];
 
@@ -13,5 +14,8 @@ int main()
     {
        printf("%f\n", ID[i][0]);
     }
+
+    callHeatmap();
+
     return 0;
 }
