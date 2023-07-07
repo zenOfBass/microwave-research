@@ -18,7 +18,7 @@ Colton Cox - ccox60@uco.edu
 #define MAX_SIZE 231762                 // maximum number of points generated
 
 
-//#define WRITE_TO_FILE                 // Uncomment to write results to output.csv
+#define WRITE_TO_FILE                 // Uncomment to write results to output.csv
 
 void generateImagingDomain(float imaging_domain[MAX_SIZE][3]);
 

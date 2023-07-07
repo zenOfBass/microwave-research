@@ -20,7 +20,7 @@ void readIntArray(const char *fileName, int intArray[MAX_ROWS][MAX_COLS], int *n
     {
         printf("Error opening file (%s).\n", fileName); // Print error to terminal
         *numRows = 0;                                   // Set the number of rows to 0
-        return 1;                                       // Exception exit
+        return;                                         // Exception exit
     }
 
     // Read file
@@ -50,7 +50,7 @@ void readDoubleArray(const char *fileName, double doubleArray[MAX_ROWS], int *nu
     {
         printf("Error opening file (%s).\n", fileName); // Print error to terminal
         *numRows = 0;                                   // Set the number of rows to 0
-        return 1;                                       // Exception exit
+        return;                                         // Exception exit
     }
 
     // Read file
@@ -79,7 +79,7 @@ void readFloatArray(const char *fileName, float floatArray[MAX_ROWS][MAX_COLS], 
     {
         printf("Error opening file (%s).\n", fileName); // Print error to terminal
         *numRows = 0;                                   // Set the number of rows to 0
-        return 1;                                       // Exception exit
+        return;                                         // Exception exit
     }
 
     // Read file
@@ -108,7 +108,7 @@ void readComplexArray(const char *fileName, long double complex **complexArray, 
     {
         printf("Error opening IQ CSV (%s).\n", fileName); // Print error to terminal
         *numRows = 0;                                     // Set the number of rows to 0
-        return 1;                                         // Exception exit
+        return;                                           // Exception exit
     }
 
     // Read file
