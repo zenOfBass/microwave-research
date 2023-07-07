@@ -7,13 +7,20 @@ Nathan Wiley - nwiley@uco.edu
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <complex.h>
 
 #define C 299792458.0
-#define Er 1
+#define ER 1
+#define MAX_ROWS 300
+#define MAX_COLS 3
+#define MAX_SIZE 231762
+// Don't know what the below values need to be
+// #define NUM_OF_CHANNELS
+// #define FREQ_MAX
 
 double timeDelay(float RX_x, float RX_y, float RX_z, float ID_x, float ID_y, float ID_z)
 {
-    return (sqrt(pow((RX_x - ID_x), 2) + pow((RX_y - ID_y), 2) + pow((RX_z - ID_z), 2))) / (C/sqrt(Er));
+    return (sqrt(pow((RX_x - ID_x), 2) + pow((RX_y - ID_y), 2) + pow((RX_z - ID_z), 2))) / (C/sqrt(ER));
 }
 
 void delayAndSum(int intArray[MAX_ROWS][MAX_COLS],
