@@ -1,22 +1,10 @@
 /*
 CSVReader.h
-Revised 7/6/2023
+Revised 7/11/2023
 Nathan Wiley - nwiley@uco.edu
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <complex.h>
-
-#define C 299792458.0
-#define ER 1
-#define MAX_ROWS 300
-#define MAX_COLS 3
-#define MAX_SIZE 231762
-// Don't know what the below values need to be
-// #define NUM_OF_CHANNELS
-// #define FREQ_MAX
+#include "DelayAndSum.h"
 
 double timeDelay(float RX_x, float RX_y, float RX_z, float ID_x, float ID_y, float ID_z)
 {
@@ -40,7 +28,7 @@ void delayAndSum(int intArray[MAX_ROWS][MAX_COLS],
             for (int f = 0; f < FREQ_MAX; f++)
             {
                 long double complex IQData = complexArray[f][m];
-                int channel = intArray[m];
+                int channel = intArray[m][1];
                 double freq = doubleArray[f];
                 int RXAnt = (intArray[m])[1];
                 float RX_x = (intArray[RXAnt])[0];
