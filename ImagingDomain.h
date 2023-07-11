@@ -12,14 +12,16 @@ Colton Cox - ccox60@uco.edu
 #include <stdio.h>
 #include <math.h>
 
-#define SPHERE_RADIUS 5
-#define RESOLUTION 0.25                 // Space between points on x, y, z axes
-#define ANGULAR_RESOLUTION M_PI/180     // angle delta used to generate one circle
-#define MAX_SIZE 231762                 // maximum number of points generated
+#define WIDTH 0.14
+#define LENGTH 0.14
+#define RESOLUTION 0.0025
+#define Z 0
+#define MAX_SIZE 231762
 
 
 #define WRITE_TO_FILE                 // Uncomment to write results to output.csv
 
-void generateImagingDomain(double imaging_domain[MAX_SIZE][3]);
+int generateImagingDomain(float imaging_domain[MAX_SIZE][3]);
+
 
 #endif

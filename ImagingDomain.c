@@ -6,24 +6,24 @@ Colton Cox - ccox60@uco.edu
 
 #include "ImagingDomain.h"
 
-void generateImagingDomain(double imaging_domain[MAX_SIZE][3])
+
+int generateImagingDomain(float imaging_domain[MAX_SIZE][3])
 {
+
     int index = 0;
-    for(double height = 0; height < SPHERE_RADIUS * 2; height += RESOLUTION)
+
+    for (float x=0;x<LENGTH;x+=RESOLUTION)
     {
-        float circle_radius = sqrtf(powf(SPHERE_RADIUS, 2) - powf((SPHERE_RADIUS - height), 2));
-        for (float angle = 0; angle < 2 * M_PI; angle += ANGULAR_RESOLUTION)
+        
+        for (float y=0;y<WIDTH;y+=RESOLUTION)
         {
-            for (float r = 0; r < circle_radius; r += RESOLUTION)
-            {
-                imaging_domain[index][0] = r * cosf(angle);
-                imaging_domain[index][1] = r * sinf(angle);
-                imaging_domain[index][2] = height;
-                index++;
-            }
+            imaging_domain[index][0] = x;
+            imaging_domain[index][1] = y;
+            imaging_domain[index][2] = rand();
+            index++;
         }
     }
-
+    
 // If WRITE_TO_FILE defined in .h will write results to output.csv
 #ifdef WRITE_TO_FILE
     FILE* fp;
@@ -36,4 +36,6 @@ void generateImagingDomain(double imaging_domain[MAX_SIZE][3])
     }
     fclose(fp);
 #endif
+
+    return index;
 }
