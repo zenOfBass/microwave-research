@@ -8,5 +8,5 @@ Nathan Wiley - nwiley@uco.edu
 
 void callHeatmap()
 {
-    system("gnuplot -p PlotImage.p"); // Run the GNU script using the system() function
+    system("gnuplot -p PlotImage.p"); // Run the GNU script
 }

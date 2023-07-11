@@ -21,7 +21,7 @@ void readIntArray(const char *fileName, int intArray[MAX_ROWS][MAX_COLS], int *n
     int rows = 0, cols = 0;
     while (fscanf(file, "%d,%d,", &intArray[rows][cols], &intArray[rows][cols + 1]) == 2)
     {
-        /* Read two integers separated by a comma from file1
+        /* Read two integers separated by a comma from file
            Store the first integer in intArray[rows1][cols1]
            Store the second integer in intArray[rows1][cols1 + 1] */
         rows++;
@@ -51,7 +51,7 @@ void readDoubleArray(const char *fileName, double doubleArray[MAX_ROWS], int *nu
     int rows = 0;
     while (fscanf(file, "%lf,", &doubleArray[rows]) == 1)
     {
-        /* Read a double value followed by a comma from file2
+        /* Read a double value followed by a comma from file
            Store the double value in doubleArray[rows2] */
         rows++;
         if (rows >= MAX_ROWS) // If the number of rows read exceeds what is allowed for the array...
@@ -80,7 +80,7 @@ void readFloatArray(const char *fileName, float floatArray[MAX_ROWS][MAX_COLS], 
     int rows = 0, cols = 0;
     while (fscanf(file, "%f,%f,%f,", &floatArray[rows][cols], &floatArray[rows][cols + 1], &floatArray[rows][cols + 2]) == 3)
     {
-        /* Read three float values separated by commas from file3
+        /* Read three float values separated by commas from file
            Store the float values in floatArray[rows3][0], floatArray[rows3][1], and floatArray[rows3][2] */
         rows++;
         if (rows >= MAX_ROWS) // If the number of rows read exceeds what is allowed for the array...

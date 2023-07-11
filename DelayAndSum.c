@@ -15,8 +15,7 @@ void delayAndSum(int intArray[MAX_ROWS][MAX_COLS],
                 double doubleArray[MAX_ROWS],
                 float floatArray[MAX_ROWS][MAX_COLS],
                 long double complex **complexArray,
-                float imagingDomain[MAX_SIZE][3],
-                double targetArray[MAX_ROWS][3])
+                float imagingDomain[MAX_SIZE][3])
 {
     for (int r = 0; r < MAX_SIZE; r++)
     {
@@ -34,9 +33,9 @@ void delayAndSum(int intArray[MAX_ROWS][MAX_COLS],
                 float RX_x = (intArray[RXAnt])[0];
                 float RX_y = (intArray[RXAnt])[1];
                 float RX_z = (intArray[RXAnt])[2];
-                targetArray[r][0] = ID_x;
-                targetArray[r][1] = ID_y;
-                targetArray[r][2] += creal(IQData * exp(I * 2 * M_PI * timeDelay(RX_x, RX_y, RX_z, ID_x, ID_y, ID_z)));
+                imagingDomain[r][0] = ID_x;
+                imagingDomain[r][1] = ID_y;
+                imagingDomain[r][2] += creal(IQData * exp(I * 2 * M_PI * timeDelay(RX_x, RX_y, RX_z, ID_x, ID_y, ID_z)));
             }
         }
     }

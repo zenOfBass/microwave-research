@@ -11,6 +11,6 @@ Nathan Wiley - nwiley@uco.edu
 #include <stdlib.h>
 #include <unistd.h>
 
-void callHeatmap();
+void callHeatmap(); // Call and run the GNU script for heatmapping from the command line
 
 #endif
