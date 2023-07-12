@@ -2,7 +2,8 @@
     "files.associations": {
         "complex": "c",
         "csvreader.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "cmath": "c"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools"
 }
