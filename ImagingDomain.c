@@ -10,14 +10,14 @@ int index = 0;
 
 int generateImagingDomain(double imaging_domain[MAX_SIZE][3])
 {
-    for (double x=0;x<LENGTH;x+=RESOLUTION)
+    for (double x=-0.07;x<0.07;x+=RESOLUTION)
     {
         
-        for (double y=0;y<WIDTH;y+=RESOLUTION)
+        for (double y=-0.07;y<0.07;y+=RESOLUTION)
         {
             imaging_domain[index][0] = x;
             imaging_domain[index][1] = y;
-            imaging_domain[index][2] = 0;
+            imaging_domain[index][2] = 0.0;
             index++;
         }
     }
