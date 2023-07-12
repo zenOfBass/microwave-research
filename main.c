@@ -5,13 +5,15 @@
 
 double ID[MAX_SIZE][3];
 
+
+
 int main()
 {
     // Files
     const char *chan = "Example_csv_files\\file1.csv";   // Channel names
     const char *freq = "Example_csv_files\\file2.csv";   // fi frequencies
     const char *antloc = "Example_csv_files\\file3.csv"; // Antenna locations
-    const char *iq1 = "Example_csv_files\\file4.csv";    // First IQ data set (Sm(f) complex)
+    const char *iq1 = "Example_csv_files\\[0007].csv";    // First IQ data set (Sm(f) complex)
     const char *iq2 = "Example_csv_files\\file5.csv";    // Second IQ data set (Sm(f) complex)
 
     // Arrays
@@ -58,17 +60,19 @@ int main()
     // iqData = iqArray1 - iqArray2;
     // #endif
 
-    generateImagingDomain(ID);
-
-    // // print first 20 for testing
-    // for (int i=0;i<20;i++)
+    int imagingDomainSize = generateImagingDomain(ID);
+    
+    // for (int r=0;r<imagingDomainSize;r++)
     // {
-    //    printf("%f\n", ID[i][0]);
+    //     for (int c=0;c<3;c++)
+    //     {
+    //         printf("%lf, ", ID[r][c]);
+    //     }
+    //     printf("\n");
     // }
 
-    // Delay and Sum
-    delayAndSum(chanArray, freqArray, antlocArray, iqArray1, ID);
-
+    delayAndSum(chanArray, freqArray, antlocArray, iqArray1, ID, imagingDomainSize);
+   
     writeImageFile(ID);
 
     callHeatmap();
