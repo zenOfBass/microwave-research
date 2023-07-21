@@ -21,7 +21,7 @@ Colton Cox - ccox60@uco.edu
 
 // #define WRITE_TO_FILE                 // Uncomment to write results to output.csv
 
-int generateImagingDomain(double imaging_domain[MAX_SIZE][3]);
-void writeImageFile(double imaging_domain[MAX_SIZE][3]);
+int generateImagingDomain(long double imaging_domain[MAX_SIZE][3]);
+void writeImageFile(long double imaging_domain[MAX_SIZE][3]);
 
 #endif

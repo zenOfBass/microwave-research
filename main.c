@@ -3,9 +3,7 @@
 #include "CallHeatmap.h"
 #include "DelayAndSum.h"
 
-double ID[MAX_SIZE][3];
-
-
+long double ID[MAX_SIZE][3];
 
 int main()
 {
@@ -17,6 +15,7 @@ int main()
     const char *iq2 = "Example_csv_files\\file5.csv";    // Second IQ data set (Sm(f) complex)
 
     // Arrays
+
     int chanArray[MAX_ROWS][MAX_COLS];
     int chanNumRows = 0;
 
@@ -27,7 +26,7 @@ int main()
     int antlocNumRows = 0;
     
     long double complex **iqArray1 = malloc(MAX_ROWS_COMPLEX * sizeof(long double complex *)); // Allocate memory for array in heap
-    for (int i = 0; i < MAX_ROWS_COMPLEX; i++)                                                      // Loop over all elements
+    for (int i = 0; i < MAX_ROWS_COMPLEX; i++)                                                 // Loop over all elements
     {
         iqArray1[i] = malloc(MAX_COMPLEX_NUMBERS * sizeof(long double complex)); // Allocate memory for each element in array in heap
     }
@@ -35,14 +34,12 @@ int main()
     int iqNumRows1 = 0;
 
     long double complex **iqArray2 = malloc(MAX_ROWS_COMPLEX * sizeof(long double complex *)); // Allocate memory for array in heap
-    for (int i = 0; i < MAX_ROWS_COMPLEX; i++)                                                      // Loop over all elements
+    for (int i = 0; i < MAX_ROWS_COMPLEX; i++)                                                 // Loop over all elements
     {
         iqArray2[i] = malloc(MAX_COMPLEX_NUMBERS * sizeof(long double complex)); // Allocate memory for each element in array in heap
     }
     int iqNums2[MAX_ROWS_COMPLEX] = {0}; // Set all elements to zero
     int iqNumRows2 = 0;
-
-
 
     readIntArray(chan, chanArray, &chanNumRows);
     readDoubleArray(freq, freqArray, &freqNumRows);
@@ -62,11 +59,10 @@ int main()
     //     {
     //         printf("%Lf + %Lfi\n", creall(iqArray1[r][c]), cimagl(iqArray1[r][c]));
     //     }
-        
     // }
 
     delayAndSum(chanArray, freqArray, antlocArray, iqArray1, ID, imagingDomainSize);
-   
+
     writeImageFile(ID);
 
     callHeatmap();
@@ -74,12 +70,12 @@ int main()
     // Memory deallocation
     for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over the array
     {
-       free(iqArray1[i]); // Deallocate heap memory for each element in array
+        free(iqArray1[i]); // Deallocate heap memory for each element in array
     }
     free(iqArray1); // Deallocate memory heap for array itself
     for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over the array
     {
-       free(iqArray2[i]); // Deallocate heap memory for each element in array
+        free(iqArray2[i]); // Deallocate heap memory for each element in array
     }
     free(iqArray2); // Deallocate memory heap for array itself
     // for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over the array
