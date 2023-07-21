@@ -1,3 +1,9 @@
+/*
+CSVReader.c
+Revised 7/21/2023
+Nathan Wiley - nwiley@uco.edu
+*/
+
 #include "CSVReader.h"
 
 void readIntArray(const char *fileName, int intArray[MAX_ROWS][MAX_COLS], int *numRows)

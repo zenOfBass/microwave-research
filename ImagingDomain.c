@@ -1,7 +1,7 @@
 /*
 ImagingDomain.c
-Revised 6/22/2023 
-Colton Cox - ccox60@uco.edu
+Revised 7/21/2023
+Nathan Wiley - nwiley@uco.edu
 */
 
 #include "ImagingDomain.h"

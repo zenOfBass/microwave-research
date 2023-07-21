@@ -1,6 +1,6 @@
 /*
 CSVReader.h
-Revised 7/11/2023
+Revised 7/21/2023
 Nathan Wiley - nwiley@uco.edu
 */
 
@@ -13,7 +13,6 @@ Nathan Wiley - nwiley@uco.edu
 #include <complex.h>
 
 #define C 299792458.0
-#define PI 3.14159265358979323846264338327950288419716939937510
 #define ER 1
 #define MAX_ROWS 300
 #define MAX_COLS 3

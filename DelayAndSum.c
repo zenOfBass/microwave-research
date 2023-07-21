@@ -1,6 +1,6 @@
 /*
 CSVReader.h
-Revised 7/12/2023
+Revised 7/21/2023
 Nathan Wiley - nwiley@uco.edu
 */
 
@@ -8,7 +8,7 @@ Nathan Wiley - nwiley@uco.edu
 
 double timeDelay(float Rx, float RXy, float RXz, double IDx, double IDy, double IDz)
 {
-    return sqrt(pow(((double)Rx - IDx), 2) + pow(((double)RXy - IDy), 2) + pow(((double)RXz - IDz), 2)) / C / sqrt(ER);
+    return sqrt(pow((Rx - IDx), 2) + pow((RXy - IDy), 2) + pow((RXz - IDz), 2)) / C / sqrt(ER);
 }
 
 void delayAndSum(int chan[MAX_ROWS][MAX_COLS],
