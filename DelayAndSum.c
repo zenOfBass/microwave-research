@@ -6,9 +6,9 @@ Nathan Wiley - nwiley@uco.edu
 
 #include "DelayAndSum.h"
 
-double timeDelay(float Rx, float RXy, float RXz, double IDx, double IDy, double IDz)
+double timeDelay(float Rx, float Ry, float Rz, double IDx, double IDy, double IDz)
 {
-    return sqrt(pow((Rx - IDx), 2) + pow((RXy - IDy), 2) + pow((RXz - IDz), 2)) / C / sqrt(ER);
+    return sqrt(pow((Rx - IDx), 2) + pow((Ry - IDy), 2) + pow((Rz - IDz), 2)) / (C / sqrt(ER));
 }
 
 void delayAndSum(int chan[MAX_ROWS][MAX_COLS],
@@ -28,10 +28,10 @@ void delayAndSum(int chan[MAX_ROWS][MAX_COLS],
                 double IDy = imagingDomain[r][1];
                 double IDz = 0;
                 long double complex IQData = iq[f][m];
-                int RXAnt = chan[m][1];
-                float Rx = antLoc[RXAnt][0];
-                float Ry = antLoc[RXAnt][1];
-                float Rz = antLoc[RXAnt][2];
+                int RAnt = chan[m][1];
+                float Rx = antLoc[RAnt][0];
+                float Ry = antLoc[RAnt][1];
+                float Rz = antLoc[RAnt][2];
                 imagingDomain[r][2] += creall(IQData * cexp(-1 * I * 2 * M_PI * timeDelay(Rx, Ry, Rz, IDx, IDy, IDz) * freq[f]));
             }
         }

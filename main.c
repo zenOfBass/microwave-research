@@ -56,18 +56,9 @@ int main()
     // iqData = iqArray1 - iqArray2;
     // #endif
 
-    int imagingDomainSize = generateImagingDomain(ID);
-    
-    // for (int r=0;r<FREQ_MAX;r++)
-    // {
-    //     printf("%d\n", r);
-    //     for (int c=0;c<NUM_OF_CHANNELS;c++)
-    //     {
-    //         printf("%Lf + %Lfi\n", creall(iqArray1[r][c]), cimagl(iqArray1[r][c]));
-    //     }
-    // }
+    // int imagingDomainSize = generateImagingDomain(ID);
 
-    delayAndSum(chanArray, freqArray, antlocArray, iqArray1, ID, imagingDomainSize);
+    delayAndSum(chanArray, freqArray, antlocArray, iqArray1, ID, generateImagingDomain(ID));
 
     writeImageFile(ID);
 
