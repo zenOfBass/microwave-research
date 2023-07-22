@@ -18,3 +18,6 @@ main.o: main.c ImagingDomain.h CSVReader.h CallHeatmap.h
 
 clean:
 	rm *.o a.exe
+
+cleanWin:
+	del *.o a.exe
