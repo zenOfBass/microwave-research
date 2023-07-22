@@ -21,20 +21,6 @@ int generateImagingDomain(long double imaging_domain[MAX_SIZE][3])
             index++;
         }
     }
-    
-// If WRITE_TO_FILE defined in .h will write results to output.csv
-#ifdef WRITE_TO_FILE
-    FILE* fp;
-    fp = fopen("output.csv", "w+");
-    for (int i = 0; i < index; i++)
-    {
-        fprintf(fp, "%lf,", imaging_domain[i][0]);
-        fprintf(fp, "%lf,", imaging_domain[i][1]);
-        fprintf(fp, "%lf\n", imaging_domain[i][2]);
-    }
-    fclose(fp);
-#endif
-
     return index;
 }
 

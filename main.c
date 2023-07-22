@@ -21,7 +21,6 @@ int main()
     const char *iq2 = "Example_csv_files\\file5.csv";    // Second IQ data set (Sm(f) complex)
 
     // Arrays
-
     int chanArray[MAX_ROWS][MAX_COLS];
     int chanNumRows = 0;
 
@@ -56,12 +55,8 @@ int main()
     // iqData = iqArray1 - iqArray2;
     // #endif
 
-    // int imagingDomainSize = generateImagingDomain(ID);
-
     delayAndSum(chanArray, freqArray, antlocArray, iqArray1, ID, generateImagingDomain(ID));
-
     writeImageFile(ID);
-
     callHeatmap();
 
     // Memory deallocation
@@ -70,11 +65,13 @@ int main()
         free(iqArray1[i]); // Deallocate heap memory for each element in array
     }
     free(iqArray1); // Deallocate memory heap for array itself
+
     for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over the array
     {
         free(iqArray2[i]); // Deallocate heap memory for each element in array
     }
     free(iqArray2); // Deallocate memory heap for array itself
+
     // for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over the array
     // {
     //    free(iqData[i]); // Deallocate heap memory for each element in array

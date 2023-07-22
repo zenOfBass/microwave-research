@@ -18,9 +18,6 @@ Nathan Wiley - nwiley@uco.edu
 #define Z 0
 #define MAX_SIZE 231762
 
-
-// #define WRITE_TO_FILE                 // Uncomment to write results to output.csv
-
 int generateImagingDomain(long double imaging_domain[MAX_SIZE][3]);
 void writeImageFile(long double imaging_domain[MAX_SIZE][3]);
 
