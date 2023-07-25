@@ -15,15 +15,14 @@ Nathan Wiley - nwiley@uco.edu
 #define C 299792458.0
 #define ER 1
 #define MAX_ROWS 300
-#define MAX_COLS 3
 #define MAX_SIZE 231762
 #define NUM_OF_CHANNELS 112
 #define FREQ_MAX 201
 
 double timeDelay(float Rx, float Ry, float Rz, double IDx, double IDy, double IDz);
-void delayAndSum(int chan[MAX_ROWS][MAX_COLS],
+void delayAndSum(int chan[MAX_ROWS][3],
                 double freq[MAX_ROWS],
-                float antLoc[MAX_ROWS][MAX_COLS],
+                float antLoc[MAX_ROWS][3],
                 long double complex **iq,
                 long double imagingDomain[MAX_SIZE][3],
                 int imagingDomainSize);

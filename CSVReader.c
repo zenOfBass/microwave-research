@@ -6,7 +6,7 @@ Nathan Wiley - nwiley@uco.edu
 
 #include "CSVReader.h"
 
-void readIntArray(const char *fileName, int intArray[MAX_ROWS][MAX_COLS], int *numRows)
+void readIntArray(const char *fileName, int intArray[MAX_ROWS][3], int *numRows)
 {
     FILE *file = fopen(fileName, "r"); // Open file
     if (file == NULL)                  // If the file isn't found...
@@ -63,7 +63,7 @@ void readDoubleArray(const char *fileName, double doubleArray[MAX_ROWS], int *nu
     *numRows = rows;
 }
 
-void readFloatArray(const char *fileName, float floatArray[MAX_ROWS][MAX_COLS], int *numRows)
+void readFloatArray(const char *fileName, float floatArray[MAX_ROWS][3], int *numRows)
 {
     FILE *file = fopen(fileName, "r"); // Open file
     if (file == NULL)                  // If the file isn't found...
@@ -110,9 +110,9 @@ void readComplexArray(const char *fileName, long double complex **complexArray, 
         char *rest = line;
         while ((token = strtok_r(rest, ",", &rest))) // Split 'line' into tokens using the delimiter ',' and store each 'token'
         {
-            char *endptr; // Extract the real and imaginary parts from 'token'
-            long double real = strtold(token, &endptr);  // Convert the token to a real number
-            long double imag = strtold(endptr, &endptr); // Convert the remaining string to an imaginary number
+            char *endptr;                                                // Extract the real and imaginary parts from 'token'
+            long double real = strtold(token, &endptr);                  // Convert the token to a real number
+            long double imag = strtold(endptr, &endptr);                 // Convert the remaining string to an imaginary number
             complexArray[row][numComplexNumbers[row]] = real + imag * I; // Store complex number in array by adding and multiplying by 'i'
             numComplexNumbers[row]++;                                    // Increment the count of complex numbers for the current row
         }

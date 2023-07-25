@@ -21,15 +21,15 @@ int main()
     const char *iq2 = "Example_csv_files\\file5.csv";    // Second IQ data set (Sm(f) complex)
 
     // Arrays
-    int chanArray[MAX_ROWS][MAX_COLS];
+    int chanArray[MAX_ROWS][3];
     int chanNumRows = 0;
 
     double freqArray[MAX_ROWS];
     int freqNumRows = 0;
 
-    float antlocArray[MAX_ROWS][MAX_COLS];
+    float antlocArray[MAX_ROWS][3];
     int antlocNumRows = 0;
-    
+
     long double complex **iqArray1 = malloc(MAX_ROWS_COMPLEX * sizeof(long double complex *)); // Allocate memory for array in heap
     for (int i = 0; i < MAX_ROWS_COMPLEX; i++)                                                 // Loop over all elements
     {
@@ -49,7 +49,7 @@ int main()
     readIntArray(chan, chanArray, &chanNumRows);
     readDoubleArray(freq, freqArray, &freqNumRows);
     readFloatArray(antloc, antlocArray, &antlocNumRows);
-    readComplexArray(iq1, iqArray1, &iqNumRows1, iqNums1);
+    readComplexArray(iq1, iqArray1, &iqNumRows1, iqNums1); 
 
     // #ifdef IMAGE_SUBTRACTION
     // iqData = iqArray1 - iqArray2;
@@ -64,19 +64,19 @@ int main()
     {
         free(iqArray1[i]); // Deallocate heap memory for each element in array
     }
-    free(iqArray1); // Deallocate memory heap for array itself
+    free(iqArray1); // Deallocate heap memory for array itself
 
     for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over the array
     {
         free(iqArray2[i]); // Deallocate heap memory for each element in array
     }
-    free(iqArray2); // Deallocate memory heap for array itself
+    free(iqArray2); // Deallocate heap memory for array itself
 
     // for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over the array
     // {
     //    free(iqData[i]); // Deallocate heap memory for each element in array
     // }
-    // free(iqData); // Deallocate memory heap for array itself
+    // free(iqData); // Deallocate heap memory for array itself
 
     return 0;
 }

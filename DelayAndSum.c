@@ -11,9 +11,9 @@ double timeDelay(float Rx, float Ry, float Rz, double IDx, double IDy, double ID
     return sqrt(pow((Rx - IDx), 2) + pow((Ry - IDy), 2) + pow((Rz - IDz), 2)) / (C / sqrt(ER));
 }
 
-void delayAndSum(int chan[MAX_ROWS][MAX_COLS],
+void delayAndSum(int chan[MAX_ROWS][3],
                 double freq[MAX_ROWS],
-                float antLoc[MAX_ROWS][MAX_COLS],
+                float antLoc[MAX_ROWS][3],
                 long double complex **iq,
                 long double imagingDomain[MAX_SIZE][3],
                 int imagingDomainSize)
