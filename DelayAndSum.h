@@ -19,7 +19,9 @@ Nathan Wiley - nwiley@uco.edu
 #define NUM_OF_CHANNELS 112 // Number of antenna channels
 #define FREQ_MAX 201        // Maximum number of frequencies
 
-double timeDelay(float Tx, float Ty, float Tz, float Rx, float Ry, float Rz, double IDx, double IDy, double IDz);
+double timeDelay(float Tx, float Ty, float Tz, 
+                float Rx, float Ry, float Rz, 
+                double IDx, double IDy, double IDz);
 void delayAndSum(int chan[MAX_ROWS][3],
                 double freq[MAX_ROWS],
                 float antLoc[MAX_ROWS][3],
@@ -27,10 +29,10 @@ void delayAndSum(int chan[MAX_ROWS][3],
                 long double imagingDomain[MAX_SIZE][3],
                 int imagingDomainSize);
 void delayMultiplyAndSum(int chan[MAX_ROWS][3],
-                double freq[MAX_ROWS],
-                float antLoc[MAX_ROWS][3],
-                long double complex **iq,
-                long double imagingDomain[MAX_SIZE][3],
-                int imagingDomainSize);
+                        double freq[MAX_ROWS],
+                        float antLoc[MAX_ROWS][3],
+                        long double complex **iq,
+                        long double imagingDomain[MAX_SIZE][3],
+                        int imagingDomainSize);
 
 #endif

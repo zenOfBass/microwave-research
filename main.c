@@ -1,6 +1,6 @@
 /*
 ImagingDomain.c
-Revised 7/25/2023
+Revised 8/2/2023
 Nathan Wiley - nwiley@uco.edu
 */
 
@@ -24,9 +24,9 @@ int main()
     // antenna locations
     const char *antloc = "configuration\\antenna_locations_cylinder.csv";
     // first IQ data set (Sm(f) complex)
-    const char *iq1 = "data\\[0013]SW_Center_0(1.4-3.2).csv";
+    const char *iq1 = "data\\[0014]SW_Left_SG_Right_0(1.4-3.2).csv";
     // second IQ data set (Sm(f) complex)
-    const char *iq2 = "data\\[0013]SW_Center_22.5(1.4-3.2).csv";
+    const char *iq2 = "data\\[0014]SW_Left_SG_Right_22.5(1.4-3.2).csv";
 
     // Arrays
     // channel names
