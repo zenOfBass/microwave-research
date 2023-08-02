@@ -11,16 +11,22 @@ Nathan Wiley - nwiley@uco.edu
 #include <stdlib.h>
 #include <math.h>
 #include <complex.h>
+#include "Config.h"
 
 #define C 299792458.0
-#define ER 1
 #define MAX_ROWS 300
 #define MAX_SIZE 231762
 #define NUM_OF_CHANNELS 112
 #define FREQ_MAX 201
 
-double timeDelay(float Rx, float Ry, float Rz, double IDx, double IDy, double IDz);
+double timeDelay(float Tx, float Ty, float Tz, float Rx, float Ry, float Rz, double IDx, double IDy, double IDz);
 void delayAndSum(int chan[MAX_ROWS][3],
+                double freq[MAX_ROWS],
+                float antLoc[MAX_ROWS][3],
+                long double complex **iq,
+                long double imagingDomain[MAX_SIZE][3],
+                int imagingDomainSize);
+void delayMultiplyAndSum(int chan[MAX_ROWS][3],
                 double freq[MAX_ROWS],
                 float antLoc[MAX_ROWS][3],
                 long double complex **iq,
