@@ -15,10 +15,10 @@ long double ID[MAX_SIZE][3];
 int main()
 {
     // Files
-    const char *chan = "Example_csv_files\\file1.csv";   // Channel names
-    const char *freq = "Example_csv_files\\file2.csv";   // fi frequencies
-    const char *antloc = "Example_csv_files\\file3.csv"; // Antenna locations
-    const char *iq1 = "Example_csv_files\\file4.csv";    // First IQ data set (Sm(f) complex)
+    const char *chan = "Benchmarking\\channel_names.csv";                  // Channel names
+    const char *freq = "Benchmarking\\frequencies_1.4-3.2.csv";           // fi frequencies
+    const char *antloc = "Benchmarking\\antenna_locations_cylinder.csv"; // Antenna locations
+    const char *iq1 = "Benchmarking\\0012SG_Center_01.4-3.2.csv"; // First IQ data set (Sm(f) complex)
     const char *iq2 = "Example_csv_files\\file5.csv";    // Second IQ data set (Sm(f) complex)
 
     // Arrays
@@ -63,17 +63,17 @@ int main()
     readComplexArray(iq2, iqArray2, &iqNumRows2, iqNums2);
 
     // Image subtraction
-    #ifdef IMAGE_SUBTRACTION
-    for (int i = 0; i < MAX_ROWS_COMPLEX; i++)
-    {
-        for (int j = 0; j < MAX_COMPLEX_NUMBERS; j++)
-        {
-            iqData[i][j] = iqArray2[i][j] - iqArray1[i][j];
-        }
-    }
-    #endif
+    // #ifdef IMAGE_SUBTRACTION
+    // for (int i = 0; i < MAX_ROWS_COMPLEX; i++)
+    // {
+    //     for (int j = 0; j < MAX_COMPLEX_NUMBERS; j++)
+    //     {
+    //         iqData[i][j] = iqArray2[i][j] - iqArray1[i][j];
+    //     }
+    // }
+    // #endif
 
-    delayAndSum(chanArray, freqArray, antlocArray, iqData, ID, generateImagingDomain(ID));
+    delayAndSum(chanArray, freqArray, antlocArray, iqArray1, ID, generateImagingDomain(ID));
     writeImageFile(ID);
     callHeatmap();
 
