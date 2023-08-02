@@ -1,6 +1,6 @@
 /*
 CSVReader.c
-Revised 7/25/2023
+Revised 8/2/2023
 Nathan Wiley - nwiley@uco.edu
 */
 
@@ -13,7 +13,7 @@ void readIntArray(const char *fileName, int intArray[MAX_ROWS][3], int *numRows)
     {
         printf("Error opening file (%s).\n", fileName); // Print error to terminal
         *numRows = 0;
-        return; // Exit
+        exit(1); // Exit
     }
 
     // Read file
@@ -42,7 +42,7 @@ void readDoubleArray(const char *fileName, double doubleArray[MAX_ROWS], int *nu
     {
         printf("Error opening file (%s).\n", fileName); // Print error to terminal
         *numRows = 0;
-        return; // Exit
+        exit(1); // Exit
     }
 
     // Read file
@@ -70,7 +70,7 @@ void readFloatArray(const char *fileName, float floatArray[MAX_ROWS][3], int *nu
     {
         printf("Error opening file (%s).\n", fileName); // Print error to terminal
         *numRows = 0;
-        return; // Exit
+        exit(1); // Exit
     }
 
     // Read file
@@ -98,7 +98,7 @@ void readComplexArray(const char *fileName, long double complex **complexArray, 
     {
         printf("Error opening IQ CSV (%s).\n", fileName); // Print error to terminal
         *numRows = 0;
-        return; // Exit
+        exit(1); // Exit
     }
 
     // Read file

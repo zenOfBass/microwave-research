@@ -13,7 +13,7 @@ CallHeatmap.o: CallHeatmap.c CallHeatmap.h
 DelayAndSum.o: DelayAndSum.c DelayAndSum.c
 	gcc -c -Wall DelayAndSum.c
 
-main.o: main.c ImagingDomain.h CSVReader.h CallHeatmap.h
+main.o: main.c ImagingDomain.h CSVReader.h CallHeatmap.h Config.h
 	gcc -c -Wall main.c
 
 clean:

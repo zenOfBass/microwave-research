@@ -1,6 +1,6 @@
 /*
 CSVReader.h
-Revised 7/25/2023
+Revised 8/2/2023
 Nathan Wiley - nwiley@uco.edu
 */
 
@@ -13,11 +13,11 @@ Nathan Wiley - nwiley@uco.edu
 #include <complex.h>
 #include "Config.h"
 
-#define C 299792458.0
-#define MAX_ROWS 300
-#define MAX_SIZE 231762
-#define NUM_OF_CHANNELS 112
-#define FREQ_MAX 201
+#define C 299792458.0       // Speed of light
+#define MAX_ROWS 300        // Maximun rows for 2D channel names, frequencies, and 2D antenna locations arrays//
+#define MAX_SIZE 231762     // Maximum number of points that can be in the image domain
+#define NUM_OF_CHANNELS 112 // Number of antenna channels
+#define FREQ_MAX 201        // Maximum number of frequencies
 
 double timeDelay(float Tx, float Ty, float Tz, float Rx, float Ry, float Rz, double IDx, double IDy, double IDz);
 void delayAndSum(int chan[MAX_ROWS][3],

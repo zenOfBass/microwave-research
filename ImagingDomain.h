@@ -1,6 +1,6 @@
 /*
 ImagingDomain.h
-Revised 7/21/2023
+Revised 8/2/2023
 Nathan Wiley - nwiley@uco.edu
 */
 
@@ -12,11 +12,10 @@ Nathan Wiley - nwiley@uco.edu
 #include <stdio.h>
 #include <math.h>
 
-#define WIDTH 0.14
-#define LENGTH 0.14
-#define RESOLUTION 0.0025
-#define Z 0
-#define MAX_SIZE 231762
+#define WIDTH 0.14        // Width of image
+#define LENGTH 0.14       // Height of image
+#define RESOLUTION 0.0025 // Resolution taken of the image based on the distance between sampled points
+#define MAX_SIZE 231762   // Maximum number of points that can be in the image domain
 
 int generateImagingDomain(long double imaging_domain[MAX_SIZE][3]);
 void writeImageFile(long double imaging_domain[MAX_SIZE][3]);
