@@ -11,15 +11,16 @@ Nathan Wiley - nwiley@uco.edu
 #include "Config.h"
 
 long double ID[MAX_SIZE][3];
+long double ID_2[MAX_SIZE][3];
 
 int main()
 {
     // Files
-    const char *chan = "Benchmarking\\channel_names.csv";                  // Channel names
-    const char *freq = "Benchmarking\\frequencies_1.4-3.2.csv";           // fi frequencies
-    const char *antloc = "Benchmarking\\antenna_locations_cylinder.csv"; // Antenna locations
-    const char *iq1 = "Benchmarking\\0012SG_Center_01.4-3.2.csv"; // First IQ data set (Sm(f) complex)
-    const char *iq2 = "Example_csv_files\\file5.csv";    // Second IQ data set (Sm(f) complex)
+    const char *chan = "configuration\\channel_names.csv";   // Channel names
+    const char *freq = "configuration\\frequencies_1.4-3.2.csv";   // fi frequencies
+    const char *antloc = "configuration/antenna_locations_cylinder.csv"; // Antenna locations
+    const char *iq1 = "data\\[0013]SW_Center_0(1.4-3.2).csv";    // First IQ data set (Sm(f) complex)
+    const char *iq2 = "data\\[0013]SW_Center_22.5(1.4-3.2).csv";    // Second IQ data set (Sm(f) complex)
 
     // Arrays
     int chanArray[MAX_ROWS][3];
@@ -62,18 +63,18 @@ int main()
     readComplexArray(iq1, iqArray1, &iqNumRows1, iqNums1);
     readComplexArray(iq2, iqArray2, &iqNumRows2, iqNums2);
 
-    // Image subtraction
-    // #ifdef IMAGE_SUBTRACTION
-    // for (int i = 0; i < MAX_ROWS_COMPLEX; i++)
-    // {
-    //     for (int j = 0; j < MAX_COMPLEX_NUMBERS; j++)
-    //     {
-    //         iqData[i][j] = iqArray2[i][j] - iqArray1[i][j];
-    //     }
-    // }
-    // #endif
+    int num_points = generateImagingDomain(ID);
+    delayAndSum(chanArray, freqArray, antlocArray, iqArray1, ID, num_points);
 
-    delayAndSum(chanArray, freqArray, antlocArray, iqArray1, ID, generateImagingDomain(ID));
+    #ifdef IMAGE_SUBTRACTION
+    delayAndSum(chanArray, freqArray, antlocArray, iqArray2, ID_2, generateImagingDomain(ID_2));
+
+    for (int i=0;i<num_points;i++)
+    {
+        ID[i][2] -= ID_2[i][2];
+    }
+    #endif
+
     writeImageFile(ID);
     callHeatmap();
 
