@@ -24,9 +24,9 @@ int main()
     // antenna locations
     const char *antloc = "configuration\\antenna_locations_cylinder.csv";
     // first IQ data set (Sm(f) complex)
-    const char *iq1 = "data\\[0014]SW_Left_SG_Right_0(1.4-3.2).csv";
+    const char *iq1 = "data\\[0013]SW_Center_0(1.4-3.2).csv";
     // second IQ data set (Sm(f) complex)
-    const char *iq2 = "data\\[0014]SW_Left_SG_Right_22.5(1.4-3.2).csv";
+    const char *iq2 = "data\\[0013]SW_Center_22.5(1.4-3.2).csv";
 
     // Arrays
     // channel names
@@ -74,10 +74,10 @@ int main()
     readComplexArray(iq2, iqArray2, &iqNumRows2, iqNums2); // second IQ data set (Sm(f) complex)
 
     int num_points = generateImagingDomain(ID);            // Get the number of points for the image domain
-    delayAndSum(chanArray, freqArray, antlocArray, iqArray1, ID, num_points); // Do the Delay and Sum algorithm
+    delayMultiplyAndSum(chanArray, freqArray, antlocArray, iqArray1, ID, num_points); // Do the Delay and Sum algorithm
 
     #ifdef IMAGE_SUBTRACTION  // If defined in Config.h image subtraction will be applied
-    delayAndSum(chanArray, freqArray, antlocArray, iqArray2, ID_2, generateImagingDomain(ID_2)); // Do the Delay and Sum algorithm for second image
+    delayMultiplyAndSum(chanArray, freqArray, antlocArray, iqArray2, ID_2, generateImagingDomain(ID_2)); // Do the Delay and Sum algorithm for second image
 
     for (int i = 0; i < num_points; i++) // Loop to subtract the two images
     {

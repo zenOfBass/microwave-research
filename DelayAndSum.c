@@ -65,9 +65,6 @@ void delayMultiplyAndSum(int chan[MAX_ROWS][3],
     {
         for (int m = 0; m < NUM_OF_CHANNELS; m++) // Loop over the number of antenna channels
         {
-            long double complex weightedSum = 0.0; // Initialize the weighted sum for each imaging point
-            double sumOfWeights = 0.0;             // Initialize the sum of weighting coefficients for normalization
-
             for (int f = 0; f < FREQ_MAX; f++) // Loop over the number of frequencies
             {
                 // Set image point coordinates and data
@@ -88,21 +85,16 @@ void delayMultiplyAndSum(int chan[MAX_ROWS][3],
                 float Ty = antLoc[TAnt][1]; // y
                 float Tz = antLoc[TAnt][2]; // z
 
-                // Calculate the time delay
+                // Compute time delay
                 double delay = timeDelay(Tx, Ty, Tz, Rx, Ry, Rz, IDx, IDy, IDz);
 
-                // Calculate the weighting coefficient for the current point and frequency
-                double weight = cabs(cexp(-1 * I * 2 * M_PI * freq[f] * delay));
+                // Apply weighting coefficients
+                // For simplicity, let's assume a constant weighting coefficient for all antennas (e.g., 1)
+                double weightingCoefficient = 1.0;
 
-                // Apply the weighting coefficient to the IQ data and sum them up
-                weightedSum += IQData * weight;
-
-                // Sum up the weighting coefficients for normalization
-                sumOfWeights += weight;
+                // Run algorithm using data with weighting
+                imagingDomain[r][2] += creall(IQData * cexp(-1 * I * 2 * M_PI * delay * freq[f])) * weightingCoefficient;
             }
-
-            // Normalize the weighted sum by dividing it by the sum of weighting coefficients
-            imagingDomain[r][2] += creall(weightedSum / sumOfWeights);
         }
     }
 }
