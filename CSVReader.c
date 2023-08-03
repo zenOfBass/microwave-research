@@ -18,7 +18,7 @@ void readIntArray(const char *fileName, int intArray[MAX_ROWS][3], int *numRows)
 
     // Read file
     int rows = 0, cols = 0;
-    while (fscanf(file, "%d,%d,", &intArray[rows][cols], &intArray[rows][cols + 1]) == 2)
+    while (fscanf(file, "%d,%d", &intArray[rows][cols], &intArray[rows][cols + 1]) == 2)
     {
         /*  Read two integers separated by a comma
             Store the first integer in intArray[rows1][cols1]

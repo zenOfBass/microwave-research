@@ -47,7 +47,7 @@ void delayAndSum(int chan[MAX_ROWS][3],
                 // Calculate the time delay
                 double delay = timeDelay(Tx, Ty, Tz, Rx, Ry, Rz, IDx, IDy, IDz);
 
-                // Run algorithm using data
+                // Calculate phase shift and sum
                 imagingDomain[r][2] += creall(IQData * cexp(-1 * I * 2 * M_PI * delay * freq[f]));
             }
         }

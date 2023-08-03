@@ -11,8 +11,8 @@ Nathan Wiley - nwiley@uco.edu
 #include <stdlib.h>
 #include <complex.h>
 #include <string.h>
+#include "Config.h"
 
-#define MAX_ROWS 300            // Maximun rows for 2D channel names, frequencies, and 2D antenna locations arrays
 #define MAX_ROWS_COMPLEX 500    // Maximun rows for 2D complex number array (IQ data)
 #define MAX_COMPLEX_NUMBERS 500 // Maximun comlumns for 2D complex number array (IQ data)
 #define BUFFER_SIZE 6000        // Maximum buffer size for line when reading complex number CSV data file
