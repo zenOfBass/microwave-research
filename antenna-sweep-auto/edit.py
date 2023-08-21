@@ -53,22 +53,8 @@ try:
 except:
     print(f"Couldn't find BlackBox on {COM_PORT_ARM} - Is it connected? Ensure motor control program isn't connected.") # If serial connection fails, print error to console
 
-def performTesting():
-    cont = True  # Initialize the 'cont' variable to True
-    while cont:
-        code = input("Enter channel code to send to Arduino (q to quit): ")  # Prompt the user to enter a channel code
-        if code == "q":
-            cont = False  # Set 'cont' to False if the code is 'q'
-            break         # Exit the loop
-        else:
-            antennas.write(bytes(str(code), 'utf-8'))  # Write the channel code to the antennas using serial communication
-            print(f"Code: {code} sent")                # Print the code for console
-
-if iterations == 0:
-    performTesting()
-
-mouse = MouseController()
-keyboard = KeyboardController()
+# mouse = MouseController()
+# keyboard = KeyboardController()
 
 """ 
 This bit of code opens the software in the correct position
@@ -77,52 +63,33 @@ win2 is CONTROL
 """
 os.startfile("C:/Program Files (x86)/MegiQ/VNA/MiQVNA.exe")  # Start the MiQVNA.exe software
 time.sleep(15)      # Pause for 15 seconds
-gw.getAllTitles()   # Get all the window titles
-gw.getAllWindows()  # Get all the windows
-gw.getWindowsWithTitle('MegiQ VNA')  # Get the windows with the title 'MegiQ VNA'
-gw.getActiveWindow()    # Get the active window
-win = gw.getWindowsWithTitle('MegiQ VNA')[0]  # Get the first window with the title 'MegiQ VNA'
-win.activate()          # Activate the window
-win.moveTo(10, 10)      # Move the window to coordinates (10, 10)
-win.resizeTo(727, 767)  # Resize the window to dimensions (727, 767)
-
-# Minimize the command program
-mouse.position = (1254, 15) # Set the mouse position for the minimize button
-mouse.click(Button.left, 1) # Click the left mouse button once
-
 
 #####################################################
 # Function Definitions
 
 # Initiates sweep in MegiQ
-def sweep():
-    mouse.position = (514, 553) # Set the mouse position for the sweep button
-    mouse.click(Button.left, 1) # Click the left mouse button once
-    time.sleep(1)               # Pause for 1 second
+# def sweep():
+#     mouse.position = (514, 553) # Set the mouse position for the sweep button
+#     mouse.click(Button.left, 1) # Click the left mouse button once
+#     time.sleep(1)               # Pause for 1 second
 
 # Clicks save in MegiQ
-def save():
-    mouse.position = (699, 558) # Set the mouse position for the save button
-    mouse.click(Button.left, 1) # Click the left mouse button once
-    time.sleep(1)               # Pause for 1 second
+# def save():
+#     mouse.position = (699, 558) # Set the mouse position for the save button
+#     mouse.click(Button.left, 1) # Click the left mouse button once
+#     time.sleep(1)               # Pause for 1 second
 
 # Saves data in MegiQ - Integer parameter used for loop
-def file(filename):
-    filename = str(filename)  # Convert filename from int to string for keyboard input
-    for f in filename:        # Splits filename into individual digits for each key press
-        keyboard.tap(f)       # Simulate pressing the corresponding key on the keyboard
-        time.sleep(0.2)       # Pause for 0.2 seconds between key presses
-    time.sleep(1)             # Pause for 1 second (outside of loop)
+# def file(filename):
+#     filename = str(filename)  # Convert filename from int to string for keyboard input
+#     for f in filename:        # Splits filename into individual digits for each key press
+#         keyboard.tap(f)       # Simulate pressing the corresponding key on the keyboard
+#         time.sleep(0.2)       # Pause for 0.2 seconds between key presses
+#     time.sleep(1)             # Pause for 1 second (outside of loop)
 
 # Hits enter key
-def ok():
-    keyboard.tap(Key.enter)
-
-# Initiates rotation in Control
-def rotate():
-    mouse.position = (1320, 236) # Set the mouse position for the rotation button
-    mouse.click(Button.left, 1)  # Click the left mouse button once
-    time.sleep(0.5)              # Pause for 0.5 seconds
+# def ok():
+#     keyboard.tap(Key.enter)
 
 # Sends g-code commands to the control arm
 def sendGCode(gcode):
@@ -166,12 +133,12 @@ for j in range(iterations):
         else:
             switch(i + 1)     # Change the signal path on the switch to the RF channel (i + 1)
             time.sleep(0.25)  # Pause for 0.25 seconds
-            sweep()           # Initiate sweep in MegiQ
+            # sweep()         # Initiate sweep in MegiQ
             time.sleep(2.5)   # Pause for 2.5 seconds
-            save()            # Click save in MegiQ
+            # save()          # Click save in MegiQ
             time.sleep(0.25)  # Pause for 0.25 seconds
-            file("Channel " + str(transmitting_antenna) + str(i + 1))  # Save data with a filename based on the transmitting and receiving antenna numbers
-            ok()              # Press the Enter key
+            # file("Channel " + str(transmitting_antenna) + str(i + 1))  # Save data with a filename based on the transmitting and receiving antenna numbers
+            # ok()              # Press the Enter key
 
 endTime = time.time()                               # Record end time for data collection
 print(f"Total time: {endTime - startTime} seconds") # Print end time to console
