@@ -75,14 +75,22 @@ using (StreamWriter writer = new StreamWriter(filePath))
                     iVal = val.IVal;
                     qVal = val.QVal;
 
-                    writer.Write(((qVal.ToString()[0] == '-') ? iVal.ToString() + qVal.ToString() + "i" : iVal.ToString() + "+" + qVal.ToString() + "i"));
-                    writer.WriteLine(",");
+                    int columnIndex = (j * (iterations - 1)) + i + 1; // Calculate the column index
+                    writer.Write(((qVal.ToString()[0] == '-') ? iVal.ToString() + qVal.ToString() + "i" : iVal.ToString() + "+" + qVal.ToString() + "i"), columnIndex);
+                    if (i < iterations - 1)
+                    {
+                        writer.WriteLine(",");
+                    }
+                    else
+                    {
+                        writer.WriteLine();
+                    }
                 }
                 writer.Flush(); // Flush the writer to make sure the data is written immediately
 
-                // Move the file pointer back to the beginning of the file for the next iteration
+                // Move the file pointer back to the end of the first line for the next iteration
                 writer.BaseStream.Seek(0, SeekOrigin.Begin);
-                writer.BaseStream.Seek(writer.BaseStream.Length - 2, SeekOrigin.Current);
+                writer.BaseStream.Seek(writer.BaseStream.Length - 4, SeekOrigin.Current);
             }
         }
     }
