@@ -1,5 +1,6 @@
 using MiQVNA;
 using System.IO.Ports;
+using System.Numerics;
 
 DateTime startTime = DateTime.Now;
 
@@ -47,52 +48,70 @@ catch (Exception ex)
 } */
 
 mvnaIQData S21;
+mvnaIQData S12;
 double qVal;
 double iVal;
+Complex[,] complexData = new Complex[201, 112];
 string filePath = "Test.csv";
 
-using (StreamWriter writer = new StreamWriter(filePath))
+int col = 0;
+for (int j = 0; j < iterations; j++)
 {
-    for (int j = 0; j < iterations; j++)
+    // RaiseToCompressor(arm);
+    Switch(antennas, j + 11); // Change the signal path on the switch to the RF channel (j + 11)
+    int transmittingAntenna = j + 1;
+    for (int i = 0; i < iterations; i++)
     {
-        // RaiseToCompressor(arm);
-        Switch(antennas, j + 11); // Change the signal path on the switch to the RF channel (j + 11)
-        int transmittingAntenna = j + 1;
-        for (int i = 0; i < iterations; i++)
+        if ((i + 1) == transmittingAntenna)
         {
-            if ((i + 1) == transmittingAntenna)
+            continue; // Skip this iteration if i + 1 is the same as the transmitting antenna number
+        }
+        else
+        {
+            Switch(antennas, i + 1); // Change the signal path on the switch to the RF channel (i + 1)
+            VNA.RunSweepOnce(); // Initiate sweep in MegiQ
+            S21 = VNA.TraceSet.Traces[1].Channels["S21"].DataSet["Through"];
+            S12 = VNA.TraceSet.Traces[1].Channels["S12"].DataSet["Through"];
+            int row = 0;
+
+            foreach (mvnaIQ val in S21.Values)
             {
-                continue; // Skip this iteration if i + 1 is the same as the transmitting antenna number
+                iVal = val.IVal;
+                qVal = val.QVal;
+                complexData[row, col] = new Complex(iVal, qVal);
+                row++;
             }
-            else
+            row = 0;
+            col++;
+
+            foreach (mvnaIQ val in S12.Values)
             {
-                Switch(antennas, i + 1); // Change the signal path on the switch to the RF channel (i + 1)
-                VNA.RunSweepOnce(); // Initiate sweep in MegiQ
-                S21 = VNA.TraceSet.Traces[1].Channels["S21"].DataSet["Through"];
-
-                foreach (mvnaIQ val in S21.Values)
-                {
-                    iVal = val.IVal;
-                    qVal = val.QVal;
-
-                    int columnIndex = (j * (iterations - 1)) + i + 1; // Calculate the column index
-                    writer.Write(((qVal.ToString()[0] == '-') ? iVal.ToString() + qVal.ToString() + "i" : iVal.ToString() + "+" + qVal.ToString() + "i"), columnIndex);
-                    if (i < iterations - 1)
-                    {
-                        writer.WriteLine(",");
-                    }
-                    else
-                    {
-                        writer.WriteLine();
-                    }
-                }
-                writer.Flush(); // Flush the writer to make sure the data is written immediately
-
-                // Move the file pointer back to the end of the first line for the next iteration
-                writer.BaseStream.Seek(0, SeekOrigin.Begin);
-                writer.BaseStream.Seek(writer.BaseStream.Length - 4, SeekOrigin.Current);
+                iVal = val.IVal;
+                qVal = val.QVal;
+                complexData[row, col] = new Complex(iVal, qVal);
+                row++;
             }
         }
+        col++;
+    }
+}
+
+// Writing the data to a CSV file
+using (StreamWriter writer = new StreamWriter(filePath))
+{
+    for (int i = 0; i < 201; i++)
+    {
+        for (int j = 0; j < 112; j++)
+        {
+            Complex value = complexData[i, j];
+            writer.Write($"{value.Real} + {value.Imaginary}i");
+
+            if (j < 112 - 1)
+            {
+                writer.Write(",");
+            }
+        }
+        writer.WriteLine();
     }
 }
 
