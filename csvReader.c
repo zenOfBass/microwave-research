@@ -1,7 +1,7 @@
 /*
 CSVReader.c
 Revised 8/2/2023
-Nathan G Wiley - nwiley@uco.edu
+Nathan Wiley - nwiley@uco.edu
 */
 
 #include "CSVReader.h"
