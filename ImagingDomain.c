@@ -1,48 +1,41 @@
+/*
+ImagingDomain.c
+Revised 8/2/2023
+Nathan Wiley - nwiley@uco.edu
+*/
+
 #include "ImagingDomain.h"
 
+int index = 0; // The number of points in the image domain
 
-void GenerateImagingDomain(float imaging_domain[MAX_SIZE][3])
+int generateImagingDomain(long double imaging_domain[MAX_SIZE][3])
 {
-
-    int index = 0;
-    
-
-    for(float height=0; height < SPHERE_RADIUS * 2; height += RESOLUTION)
+    for (double x = -0.07; x < 0.07; x += RESOLUTION) // Loop over x coordinates
     {
-        float circle_radius = sqrtf(powf(SPHERE_RADIUS, 2) - powf((SPHERE_RADIUS - height), 2));
 
-        for (float angle = 0; angle < 2 * M_PI; angle += ANGULAR_RESOLUTION)
+        for (double y = -0.07; y < 0.07; y += RESOLUTION) // Loop over y coordinates
         {
-
-            for (float r = 0; r < circle_radius; r += RESOLUTION)
-            {
-                
-                imaging_domain[index][0] = r * cosf(angle);
-                imaging_domain[index][1] = r * sinf(angle);
-                imaging_domain[index][2] = height;
-                
-                index++;
-
-            }
-
+            imaging_domain[index][0] = x;   // Set point's x coordinate
+            imaging_domain[index][1] = y;   // Set point's y coordinate
+            imaging_domain[index][2] = 0.0; // Set point's IQ data
+            index++;
         }
-
     }
-
-
-// If WRITE_TO_FILE defined in .h will write results to output.csv
-#ifdef WRITE_TO_FILE
-    FILE* fp;
-    fp = fopen("output.csv", "w+");
-    for (int i=0; i < index; i++)
-    {
-        fprintf(fp, "%f,", imaging_domain[i][0]);
-        fprintf(fp, "%f,", imaging_domain[i][1]);
-        fprintf(fp, "%f\n", imaging_domain[i][2]);
-    }
-
-    fclose(fp);
-#endif
-
+    return index; // Return the number of points in the image domain
 }
 
+void writeImageFile(long double imaging_domain[MAX_SIZE][3])
+{
+    // Open output file
+    FILE *fp;
+    fp = fopen("output.csv", "w+");
+
+    // Write the data for the image domain from array to file
+    for (int i = 0; i < index; i++)
+    {
+        fprintf(fp, "%Lf,", imaging_domain[i][0]);  // Write x coordinate
+        fprintf(fp, "%Lf,", imaging_domain[i][1]);  // Write y coordinate
+        fprintf(fp, "%Lf\n", imaging_domain[i][2]); // Wrtie IQ data
+    }
+    fclose(fp); // Close file
+}

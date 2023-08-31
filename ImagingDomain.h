@@ -1,3 +1,9 @@
+/*
+ImagingDomain.h
+Revised 8/3/2023
+Nathan Wiley - nwiley@uco.edu
+*/
+
 #ifndef IMAGING_DOMAIN
 #define IMAGING_DOMAIN
 
@@ -5,16 +11,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include "Config.h"
 
-#define SPHERE_RADIUS 5
-#define RESOLUTION 0.25                 // Space between points on x, y, z axes
-#define ANGULAR_RESOLUTION M_PI/180     // angle delta used to generate one circle
-#define MAX_SIZE 231762                 // maximum number of points generated
+#define WIDTH 0.14        // Width of image
+#define LENGTH 0.14       // Height of image
+#define RESOLUTION 0.0025 // Resolution taken of the image based on the distance between sampled point
 
-
-//#define WRITE_TO_FILE                 // Uncomment to write results to output.csv
-
-void GenerateImagingDomain(float imaging_domain[MAX_SIZE][3]);
-
+int generateImagingDomain(long double imaging_domain[MAX_SIZE][3]);
+void writeImageFile(long double imaging_domain[MAX_SIZE][3]);
 
 #endif
