@@ -1,7 +1,7 @@
 /*
 CallHeatmap.h
 Revised 7/5/2023
-Nathan Wiley - nwiley@uco.edu
+Nathan G Wiley - nwiley@uco.edu
 */
 
 #ifndef CALL_HEATMAP

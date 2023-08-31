@@ -1,7 +1,7 @@
 /*
 CSVReader.h
 Revised 8/2/2023
-Nathan Wiley - nwiley@uco.edu
+Nathan G Wiley - nwiley@uco.edu
 */
 
 #include "DelayAndSum.h"

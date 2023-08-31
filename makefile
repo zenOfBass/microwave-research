@@ -1,23 +1,42 @@
-a.exe: main.o ImagingDomain.o CSVReader.o CallHeatmap.o DelayAndSum.o
-	gcc main.o ImagingDomain.o CSVReader.o CallHeatmap.o DelayAndSum.o
+# makefile
+# Revised 8/31/2023
+# Nathan G Wiley - nwiley@uco.edu
 
-ImagingDomain.o: ImagingDomain.c ImagingDomain.h
-	gcc -c -Wall ImagingDomain.c
+# Compiler
+CC = gcc
 
-CSVReader.o: CSVReader.c CSVReader.h
-	gcc -c -Wall CSVReader.c
+# Flags
+CFLAGS = -Wall
 
-CallHeatmap.o: CallHeatmap.c CallHeatmap.h
-	gcc -c -Wall CallHeatmap.c
+# Output name
+OUTPUT_NAME = a.exe
 
-DelayAndSum.o: DelayAndSum.c DelayAndSum.c
-	gcc -c -Wall DelayAndSum.c
+# Source files
+SRCS = main.c ImagingDomain.c CSVReader.c CallHeatmap.c DelayAndSum.c
 
-main.o: main.c ImagingDomain.h CSVReader.h CallHeatmap.h Config.h
-	gcc -c -Wall main.c
+# Object files
+OBJS = $(SRCS:.c=.o)
+
+# OS detection
+ifeq ($(OS),Windows_NT)
+    RM = del /Q
+    EXE_EXT = .exe
+else
+    UNAME_S := $(shell uname -s)
+    ifeq ($(UNAME_S),Linux)
+        RM = rm -f
+        EXE_EXT =
+    endif
+endif
+
+# Targets
+all: $(OUTPUT_NAME)
+
+$(OUTPUT_NAME): $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $^
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
-	rm *.o a.exe
-
-cleanWin:
-	del *.o a.exe
+	$(RM) $(OBJS) $(OUTPUT_NAME)$(EXE_EXT)
