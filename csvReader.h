@@ -1,7 +1,7 @@
 /*
 CSVReader.h
 Revised 8/3/2023
-Nathan G Wiley - nwiley@uco.edu
+Nathan Wiley - nwiley@uco.edu
 */
 
 #ifndef CSV_READER
