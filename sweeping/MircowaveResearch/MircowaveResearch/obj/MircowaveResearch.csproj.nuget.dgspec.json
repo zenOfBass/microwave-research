@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kick_\\source\\repos\\MircowaveResearch\\MircowaveResearch\\MircowaveResearch.csproj": {}
+    "c:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\sweeping\\MircowaveResearch\\MircowaveResearch\\MircowaveResearch.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kick_\\source\\repos\\MircowaveResearch\\MircowaveResearch\\MircowaveResearch.csproj": {
+    "c:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\sweeping\\MircowaveResearch\\MircowaveResearch\\MircowaveResearch.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kick_\\source\\repos\\MircowaveResearch\\MircowaveResearch\\MircowaveResearch.csproj",
+        "projectUniqueName": "c:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\sweeping\\MircowaveResearch\\MircowaveResearch\\MircowaveResearch.csproj",
         "projectName": "MircowaveResearch",
-        "projectPath": "C:\\Users\\kick_\\source\\repos\\MircowaveResearch\\MircowaveResearch\\MircowaveResearch.csproj",
+        "projectPath": "c:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\sweeping\\MircowaveResearch\\MircowaveResearch\\MircowaveResearch.csproj",
         "packagesPath": "C:\\Users\\kick_\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kick_\\source\\repos\\MircowaveResearch\\MircowaveResearch\\obj\\",
+        "outputPath": "c:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\sweeping\\MircowaveResearch\\MircowaveResearch\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\kick_\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -61,7 +61,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -6,6 +6,7 @@ Nathan G Wiley - nwiley@uco.edu
 
 using MiQVNA;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.IO.Ports;
 using System.Numerics;
 
@@ -33,6 +34,19 @@ int antTimeout = 100;        // Timeout in milliseconds
 SerialPort antennas = null;
 ConnectAntennas(antennas, comPortAnt, antBaudrate, antTimeout);
 
+mvnaSession Session = VNA.OpenSession("");
+mvnaMeasurement Measurement = VNA.get_Measurement();
+
+foreach (mvnaMeasurement mea in Session.Measurements)
+{
+    foreach (mvnaParameter par in mea.Parameters)
+    {
+        par.Steps = 200;
+        par.StartValue = 1800;
+        par.StopValue = 3200;
+    }
+}
+
 // Sweeping process
 for (int j = 0; j < iterations; j++)
 {
@@ -47,7 +61,7 @@ for (int j = 0; j < iterations; j++)
         else
         {
             Switch(antennas, i + 1); // Change the signal path on the switch to the RF channel (i + 1)
-            VNA.RunSweepOnce(); // Initiate sweep in MegiQ
+            VNA.RunSweepOnce();      // Initiate sweep in MegiQ
             S21 = VNA.TraceSet.Traces[1].Channels["S21"].DataSet["Through"];
             S12 = VNA.TraceSet.Traces[1].Channels["S12"].DataSet["Through"];
             int row = 0;
@@ -129,7 +143,6 @@ static void Switch(SerialPort antennas, int rfPath)
 static void CloseMegiQ()
 {
     Process[] processes = Process.GetProcessesByName("MiQVNA");
-
     if (processes.Length > 0)
     {
         foreach (Process process in processes)
@@ -137,7 +150,7 @@ static void CloseMegiQ()
             try
             {
                 process.CloseMainWindow(); // Close the main window of the process
-                process.WaitForExit(); // Wait for the process to exit
+                process.WaitForExit();     // Wait for the process to exit
                 Console.WriteLine($"Process MiQVNA closed.");
             }
             catch (Exception ex)

@@ -16,17 +16,16 @@ long double ID_2[MAX_SIZE][3]; // Array for second image domain
 int main()
 {
     // Files
-
     // channel names
-    const char *chan = "configuration\\channel_names.csv";
+    const char *chan = "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\data\\old\\file1.csv";
     // frequencies
-    const char *freq = "configuration\\frequencies_1.4-3.2.csv";
+    const char *freq = "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\data\\old\\file2.csv";
     // antenna locations
-    const char *antloc = "configuration\\antenna_locations_cylinder.csv";
+    const char *antloc = "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\data\\old\\file3.csv";
     // first IQ data set (Sm(f) complex)
-    const char *iq1 = "data\\[0013]SW_Center_0(1.4-3.2).csv";
+    const char *iq1 = "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\data\\Test.csv";
     // second IQ data set (Sm(f) complex)
-    const char *iq2 = "data\\[0013]SW_Center_22.5(1.4-3.2).csv";
+    const char *iq2 = "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\data\\[0012]SG_Center_22.5(1.4-3.2).csv";
 
     // Arrays
     // channel names
@@ -76,14 +75,14 @@ int main()
     int num_points = generateImagingDomain(ID);            // Get the number of points for the image domain
     delayMultiplyAndSum(chanArray, freqArray, antlocArray, iqArray1, ID, num_points); // Do the Delay and Sum algorithm
 
-    #ifdef IMAGE_SUBTRACTION  // If defined in Config.h image subtraction will be applied
-    delayMultiplyAndSum(chanArray, freqArray, antlocArray, iqArray2, ID_2, generateImagingDomain(ID_2)); // Do the Delay and Sum algorithm for second image
+    // #ifdef IMAGE_SUBTRACTION  // If defined in Config.h image subtraction will be applied
+    // delayMultiplyAndSum(chanArray, freqArray, antlocArray, iqArray2, ID_2, generateImagingDomain(ID_2)); // Do the Delay and Sum algorithm for second image
 
-    for (int i = 0; i < num_points; i++) // Loop to subtract the two images
-    {
-        ID[i][2] -= ID_2[i][2];
-    }
-    #endif
+    // for (int i = 0; i < num_points; i++) // Loop to subtract the two images
+    // {
+    //     ID[i][2] -= ID_2[i][2];
+    // }
+    // #endif
 
     writeImageFile(ID); // Write the image domain array out the the output file
     callHeatmap();      // Call the GNUplot script to generate the heatmap image

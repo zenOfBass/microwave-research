@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zTEqTYdYfA9ZGTfTLa0JEucc1lE3Gh6rwzSAVwv8eAuZv6amWznmXvsolQQGaomg/9eFUi4lBW4PQAVzHUAFxA==",
+  "dgSpecHash": "E3aS2zciy+4b8V5LKRNT34i9tidU4U1yByZfkviKrVez6fPpLgq7VzcDcu1D5hx3wm0bd/mV/IjUy/kAKPXexg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\kick_\\source\\repos\\MircowaveResearch\\MircowaveResearch\\MircowaveResearch.csproj",
+  "projectFilePath": "c:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\sweeping\\MircowaveResearch\\MircowaveResearch\\MircowaveResearch.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kick_\\.nuget\\packages\\runtime.linux-arm.runtime.native.system.io.ports\\7.0.0\\runtime.linux-arm.runtime.native.system.io.ports.7.0.0.nupkg.sha512",
     "C:\\Users\\kick_\\.nuget\\packages\\runtime.linux-arm64.runtime.native.system.io.ports\\7.0.0\\runtime.linux-arm64.runtime.native.system.io.ports.7.0.0.nupkg.sha512",
