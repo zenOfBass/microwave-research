@@ -6,7 +6,6 @@ Nathan G Wiley - nwiley@uco.edu
 
 using MiQVNA;
 using System.Diagnostics;
-using System.Diagnostics.Metrics;
 using System.IO.Ports;
 using System.Numerics;
 
@@ -32,7 +31,17 @@ string comPortAnt = "COM19"; // COM port used for communicating with antennas
 int antBaudrate = 115200;    // Baudrate for antennas
 int antTimeout = 100;        // Timeout in milliseconds
 SerialPort antennas = null;
-ConnectAntennas(antennas, comPortAnt, antBaudrate, antTimeout);
+try
+{
+    antennas = new SerialPort(comPortAnt, antBaudrate);
+    antennas.ReadTimeout = antTimeout;
+    antennas.Open();
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Couldn't find Arduino on {comPortAnt} - Is it connected?");
+    Console.WriteLine($"Error message: {ex.Message}");
+}
 
 mvnaSession Session = VNA.OpenSession("");
 mvnaMeasurement Measurement = VNA.get_Measurement();
@@ -116,21 +125,6 @@ antennas.Close();
 VNA.Disconnect();
 CloseMegiQ();
 Console.WriteLine($"Total time: {totalTime.TotalSeconds} seconds");
-
-static void ConnectAntennas(SerialPort antennas, string comPortAnt, int antBaudrate, int antTimeout)
-{
-    try
-    {
-        antennas = new SerialPort(comPortAnt, antBaudrate);
-        antennas.ReadTimeout = antTimeout;
-        antennas.Open();
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Couldn't find Arduino on {comPortAnt} - Is it connected?");
-        Console.WriteLine($"Error message: {ex.Message}");
-    }
-}
 
 static void Switch(SerialPort antennas, int rfPath)
 {
