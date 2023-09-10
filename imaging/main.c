@@ -23,7 +23,7 @@ int main()
     // antenna locations
     const char *antloc = "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\data\\old\\file3.csv";
     // first IQ data set (Sm(f) complex)
-    const char *iq1 = "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\data\\Test.csv";
+    const char *iq1 = "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\data\\old\\file4.csv";
     // second IQ data set (Sm(f) complex)
     const char *iq2 = "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\data\\[0012]SG_Center_22.5(1.4-3.2).csv";
 
@@ -75,14 +75,14 @@ int main()
     int num_points = generateImagingDomain(ID);            // Get the number of points for the image domain
     delayMultiplyAndSum(chanArray, freqArray, antlocArray, iqArray1, ID, num_points); // Do the Delay and Sum algorithm
 
-    // #ifdef IMAGE_SUBTRACTION  // If defined in Config.h image subtraction will be applied
-    // delayMultiplyAndSum(chanArray, freqArray, antlocArray, iqArray2, ID_2, generateImagingDomain(ID_2)); // Do the Delay and Sum algorithm for second image
+    #ifdef IMAGE_SUBTRACTION  // If defined in Config.h image subtraction will be applied
+    delayMultiplyAndSum(chanArray, freqArray, antlocArray, iqArray2, ID_2, generateImagingDomain(ID_2)); // Do the Delay and Sum algorithm for second image
 
-    // for (int i = 0; i < num_points; i++) // Loop to subtract the two images
-    // {
-    //     ID[i][2] -= ID_2[i][2];
-    // }
-    // #endif
+    for (int i = 0; i < num_points; i++) // Loop to subtract the two images
+    {
+        ID[i][2] -= ID_2[i][2];
+    }
+    #endif
 
     writeImageFile(ID); // Write the image domain array out the the output file
     callHeatmap();      // Call the GNUplot script to generate the heatmap image
