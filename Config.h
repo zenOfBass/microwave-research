@@ -8,8 +8,12 @@ Nathan Wiley - nwiley@uco.edu
 #define CONFIG_H
 
 // #define IMAGE_SUBTRACTION
+#define CHANNEL_ARRAY_SIZE 224  // 112 * 2 integers in channels
+#define NUMBER_OF_CHANNELS 112
+#define NUMBER_OF_FREQUENCIES 201
+#define NUMBER_OF_ANTENNAS 8
 
-#define NUM_OF_CHANNELS 112     // Number of antenna channels
+
 #define FREQ_MAX 201            // Maximum number of frequencies
 #define RELATIVE_PERMITTIVITY 1 // Relative permittivity of subject
 #define Z_HEIGHT 0              // Z coordinate of image taken of subject

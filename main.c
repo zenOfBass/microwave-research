@@ -30,15 +30,14 @@ int main()
 
     // Arrays
     // channel names
-    int channels[NUM_OF_CHANNELS][2];
+    int channels[NUMBER_OF_CHANNELS][2];
 
     // frequencies
-    double freqArray[MAX_ROWS];
-    int freqNumRows = 0;
+    double freqArray[NUMBER_OF_FREQUENCIES];
+
 
     // antenna locations
     float antlocArray[MAX_ROWS][3];
-    int antlocNumRows = 0;
 
     // first IQ data set (Sm(f) complex)
     long double complex **iqArray1 = malloc(MAX_ROWS_COMPLEX * sizeof(long double complex *)); // Allocate memory for array in heap
@@ -67,18 +66,14 @@ int main()
 
     // Read CSV files in into memory
     readIntArray(chan, channels);                          // channel names
-    readDoubleArray(freq, freqArray, &freqNumRows);        // frequencies
-    readFloatArray(antloc, antlocArray, &antlocNumRows);   // antenna locations
+    readDoubleArray(freq, freqArray);                      // frequencies
+    readFloatArray(antloc, antlocArray);   // antenna locations
     readComplexArray(iq1, iqArray1, &iqNumRows1, iqNums1); // first IQ data set (Sm(f) complex)
     readComplexArray(iq2, iqArray2, &iqNumRows2, iqNums2); // second IQ data set (Sm(f) complex)
 
-    for (int i=0;i<NUM_OF_CHANNELS;i++)
-    {
-        printf("%d%d\n",channels[i][0], channels[i][1]);
-    }
 
-    //int num_points = generateImagingDomain(ID);            // Get the number of points for the image domain
-    //delayMultiplyAndSum(chanArray, freqArray, antlocArray, iqArray1, ID, num_points); // Do the Delay and Sum algorithm
+
+    delayAndSum(channels, freqArray, antlocArray, iqArray1, ID, generateImagingDomain(ID)); 
 
     #ifdef IMAGE_SUBTRACTION  // If defined in Config.h image subtraction will be applied
     delayMultiplyAndSum(chanArray, freqArray, antlocArray, iqArray2, ID_2, generateImagingDomain(ID_2)); // Do the Delay and Sum algorithm for second image
@@ -89,8 +84,8 @@ int main()
     }
     #endif
 
-    //writeImageFile(ID); // Write the image domain array out the the output file
-    //callHeatmap();      // Call the GNUplot script to generate the heatmap image
+    writeImageFile(ID); // Write the image domain array out the the output file
+    callHeatmap();      // Call the GNUplot script to generate the heatmap image
 
     // Memory deallocation
     for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over the array
