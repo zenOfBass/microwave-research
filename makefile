@@ -17,7 +17,5 @@ main.o: main.c ImagingDomain.h CSVReader.h CallHeatmap.h Config.h
 	gcc -c -Wall main.c
 
 clean:
-	rm *.o a.exe
-
-cleanWin:
 	del *.o a.exe
+

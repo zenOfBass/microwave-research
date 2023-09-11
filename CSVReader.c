@@ -6,33 +6,22 @@ Nathan Wiley - nwiley@uco.edu
 
 #include "CSVReader.h"
 
-void readIntArray(const char *fileName, int intArray[MAX_ROWS][3], int *numRows)
+void readIntArray(const char *fileName, int channels[NUM_OF_CHANNELS][2])
 {
     FILE *file = fopen(fileName, "r"); // Open file
     if (file == NULL)                  // If the file isn't found...
     {
         printf("Error opening file (%s).\n", fileName); // Print error to terminal
-        *numRows = 0;
-        exit(1); // Exit
+        exit(1);
     }
 
-    // Read file
-    int rows = 0, cols = 0;
-    while (fscanf(file, "%d,%d", &intArray[rows][cols], &intArray[rows][cols + 1]) == 2)
+    for (int i=0;i<NUM_OF_CHANNELS;i++)
     {
-        /*  Read two integers separated by a comma
-            Store the first integer in intArray[rows1][cols1]
-            Store the second integer in intArray[rows1][cols1 + 1] */
-        rows++;
-        if (rows >= MAX_ROWS) // If the number of rows read exceeds what is allowed for the array...
-        {
-            printf("Maximum number of rows exceeded (%s).\n", fileName); // Print error to terminal
-            break;                                                       // Break loop from error
-        }
+        fscanf(file, "%u,%u,\n", &channels[i][0], &channels[i][1]);
     }
-    fclose(file); // Close file
 
-    *numRows = rows;
+    fclose(file); // Close file
+    
 }
 
 void readDoubleArray(const char *fileName, double doubleArray[MAX_ROWS], int *numRows)

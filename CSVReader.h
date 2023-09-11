@@ -13,11 +13,13 @@ Nathan Wiley - nwiley@uco.edu
 #include <string.h>
 #include "Config.h"
 
+#define CHANNEL_ARRAY_SIZE 224  // 112 * 2 integers in channels
+#define NUMBER_OF_CHANNELS 112
 #define MAX_ROWS_COMPLEX 500    // Maximun rows for 2D complex number array (IQ data)
 #define MAX_COMPLEX_NUMBERS 500 // Maximun comlumns for 2D complex number array (IQ data)
 #define BUFFER_SIZE 6000        // Maximum buffer size for line when reading complex number CSV data file
 
-void readIntArray(const char *fileName, int intArray[MAX_ROWS][3], int *numRows);
+void readIntArray(const char *fileName, int channels[NUM_OF_CHANNELS][2]);
 void readDoubleArray(const char *fileName, double doubleArray[MAX_ROWS], int *numRows);
 void readFloatArray(const char *fileName, float floatArray[MAX_ROWS][3], int *numRows);
 void readComplexArray(const char *fileName, long double complex **complexArray, int *numRows, int numComplexNumbers[]);
