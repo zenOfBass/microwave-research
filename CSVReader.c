@@ -97,3 +97,27 @@ void readComplexArray(const char *fileName, long double complex **complexArray, 
     
     *numRows = row;
 }
+
+
+void readDataFiles(int channelsArray[NUMBER_OF_CHANNELS][2], double frequenciesArray[NUMBER_OF_FREQUENCIES] , float antennaLocationsArray[NUMBER_OF_ANTENNAS][3], long double complex **iqArray1, long double complex **iqArray2)
+{
+     for (int i = 0; i < MAX_ROWS_COMPLEX; i++)                                                 // Loop over all elements
+    {
+        iqArray1[i] = malloc(MAX_COMPLEX_NUMBERS * sizeof(long double complex)); // Allocate memory for each element in array in heap
+    }
+    int iqNums1[MAX_ROWS_COMPLEX] = {0}; // Set all elements to zero
+    int iqNumRows1 = 0;
+
+     for (int i = 0; i < MAX_ROWS_COMPLEX; i++)                                                 // Loop over all elements
+    {
+        iqArray2[i] = malloc(MAX_COMPLEX_NUMBERS * sizeof(long double complex)); // Allocate memory for each element in array in heap
+    }
+    int iqNums2[MAX_ROWS_COMPLEX] = {0}; // Set all elements to zero
+    int iqNumRows2 = 0;
+    
+    readIntArray(CHANNELS_FILE, channelsArray);                          // channel names
+    readDoubleArray(FREQUENCIES_FILE, frequenciesArray);                      // frequencies
+    readFloatArray(ANTENNA_LOCATIONS_FILE, antennaLocationsArray);   // antenna locations
+    readComplexArray(DATA_FILE_1, iqArray1, &iqNumRows1, iqNums1); // first IQ data set (Sm(f) complex)
+    readComplexArray(DATA_FILE_2, iqArray2, &iqNumRows2, iqNums2); // second IQ data set (Sm(f) complex)
+}

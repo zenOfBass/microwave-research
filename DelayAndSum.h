@@ -13,7 +13,7 @@ Nathan Wiley - nwiley@uco.edu
 #include <complex.h>
 #include "Config.h"
 
-#define C 299792458.0       // Speed of light
+
 
 double timeDelay(float Tx, float Ty, float Tz, 
                 float Rx, float Ry, float Rz, 

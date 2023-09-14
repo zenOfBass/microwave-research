@@ -13,6 +13,7 @@ and this project adheres to *[Semantic Versioning](https://semver.org/spec/v2.0.
 - Changelog
 
 ### Changed
+- readIntArray, readDoubleArray, and readFloatArray simplified to use fixed array sizes defined in Config.h as number of channels, frequencies, and antenna locations respectively.
 
 ### Deprecated
 
