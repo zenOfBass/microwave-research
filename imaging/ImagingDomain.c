@@ -1,7 +1,7 @@
 /*
 ImagingDomain.c
 Revised 8/2/2023
-Nathan G Wiley - nwiley@uco.edu
+Nathan Wiley - nwiley@uco.edu
 */
 
 #include "ImagingDomain.h"
@@ -12,7 +12,6 @@ int generateImagingDomain(long double imaging_domain[MAX_SIZE][3])
 {
     for (double x = -0.07; x < 0.07; x += RESOLUTION) // Loop over x coordinates
     {
-
         for (double y = -0.07; y < 0.07; y += RESOLUTION) // Loop over y coordinates
         {
             imaging_domain[index][0] = x;   // Set point's x coordinate

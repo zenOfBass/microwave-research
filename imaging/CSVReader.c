@@ -1,95 +1,65 @@
 /*
 CSVReader.c
 Revised 8/2/2023
-Nathan G Wiley - nwiley@uco.edu
+Nathan Wiley - nwiley@uco.edu
 */
 
 #include "CSVReader.h"
 
-void readIntArray(const char *fileName, int intArray[MAX_ROWS][3], int *numRows)
+void readIntArray(const char *fileName, int channels[NUMBER_OF_CHANNELS][2])
 {
     FILE *file = fopen(fileName, "r"); // Open file
     if (file == NULL)                  // If the file isn't found...
     {
         printf("Error opening file (%s).\n", fileName); // Print error to terminal
-        *numRows = 0;
-        exit(1); // Exit
+        exit(1);
     }
 
-    // Read file
-    int rows = 0, cols = 0;
-    while (fscanf(file, "%d,%d", &intArray[rows][cols], &intArray[rows][cols + 1]) == 2)
+    for (int i=0;i<NUMBER_OF_CHANNELS;i++)
     {
-        /*  Read two integers separated by a comma
-            Store the first integer in intArray[rows1][cols1]
-            Store the second integer in intArray[rows1][cols1 + 1] */
-        rows++;
-        if (rows >= MAX_ROWS) // If the number of rows read exceeds what is allowed for the array...
-        {
-            printf("Maximum number of rows exceeded (%s).\n", fileName); // Print error to terminal
-            break;                                                       // Break loop from error
-        }
+        fscanf(file, "%u,%u,\n", &channels[i][0], &channels[i][1]);
     }
-    fclose(file); // Close file
 
-    *numRows = rows;
+    fclose(file); // Close file
+    
 }
 
-void readDoubleArray(const char *fileName, double doubleArray[MAX_ROWS], int *numRows)
+void readDoubleArray(const char *fileName, double doubleArray[NUMBER_OF_FREQUENCIES])
 {
     FILE *file = fopen(fileName, "r"); // Open file
     if (file == NULL)                  // If the file isn't found...
     {
         printf("Error opening file (%s).\n", fileName); // Print error to terminal
-        *numRows = 0;
         exit(1); // Exit
     }
 
     // Read file
-    int rows = 0;
-    while (fscanf(file, "%lf,", &doubleArray[rows]) == 1)
+    for (int i = 0; i < NUMBER_OF_FREQUENCIES; i++)
     {
-        /*  Read a double value followed by a comma
-            Store the double value in doubleArray[rows2] */
-        rows++;
-        if (rows >= MAX_ROWS) // If the number of rows read exceeds what is allowed for the array...
-        {
-            printf("Maximum number of rows exceeded (%s).\n", fileName); // Print error to terminal
-            break;                                                       // Break loop from error
-        }
+        fscanf(file, "%lf,", &doubleArray[i]);
     }
     fclose(file); // Close file
 
-    *numRows = rows;
 }
 
-void readFloatArray(const char *fileName, float floatArray[MAX_ROWS][3], int *numRows)
+void readFloatArray(const char *fileName, float floatArray[NUMBER_OF_ANTENNAS][3])
 {
     FILE *file = fopen(fileName, "r"); // Open file
     if (file == NULL)                  // If the file isn't found...
     {
         printf("Error opening file (%s).\n", fileName); // Print error to terminal
-        *numRows = 0;
         exit(1); // Exit
     }
 
     // Read file
-    int rows = 0, cols = 0;
-    while (fscanf(file, "%f,%f,%f,", &floatArray[rows][cols], &floatArray[rows][cols + 1], &floatArray[rows][cols + 2]) == 3)
+    for (int i=0;i<NUMBER_OF_ANTENNAS;i++)
     {
-        /*  Read three float values separated by commas from file3
-            Store the float values in floatArray[rows3][0], floatArray[rows3][1], and floatArray[rows3][2] */
-        rows++;
-        if (rows >= MAX_ROWS) // If the number of rows read exceeds what is allowed for the array...
-        {
-            printf("Maximum number of rows exceeded (%s).\n", fileName); // Print error to terminal
-            break;                                                       // Break loop from error
-        }
+        fscanf(file, "%f,%f,%f,", &floatArray[i][0], &floatArray[i][1], &floatArray[i][3]);
     }
     fclose(file); // Close file
 
-    *numRows = rows;
 }
+
 
 void readComplexArray(const char *fileName, long double complex **complexArray, int *numRows, int numComplexNumbers[])
 {
@@ -126,4 +96,28 @@ void readComplexArray(const char *fileName, long double complex **complexArray, 
     fclose(file); // Close file
     
     *numRows = row;
+}
+
+
+void readDataFiles(int channelsArray[NUMBER_OF_CHANNELS][2], double frequenciesArray[NUMBER_OF_FREQUENCIES] , float antennaLocationsArray[NUMBER_OF_ANTENNAS][3], long double complex **iqArray1, long double complex **iqArray2)
+{
+     for (int i = 0; i < MAX_ROWS_COMPLEX; i++)                                                 // Loop over all elements
+    {
+        iqArray1[i] = malloc(MAX_COMPLEX_NUMBERS * sizeof(long double complex)); // Allocate memory for each element in array in heap
+    }
+    int iqNums1[MAX_ROWS_COMPLEX] = {0}; // Set all elements to zero
+    int iqNumRows1 = 0;
+
+     for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over all elements
+    {
+        iqArray2[i] = malloc(MAX_COMPLEX_NUMBERS * sizeof(long double complex)); // Allocate memory for each element in array in heap
+    }
+    int iqNums2[MAX_ROWS_COMPLEX] = {0}; // Set all elements to zero
+    int iqNumRows2 = 0;
+    
+    readIntArray(CHANNELS_FILE, channelsArray);                    // channel names
+    readDoubleArray(FREQUENCIES_FILE, frequenciesArray);           // frequencies
+    readFloatArray(ANTENNA_LOCATIONS_FILE, antennaLocationsArray); // antenna locations
+    readComplexArray(DATA_FILE_1, iqArray1, &iqNumRows1, iqNums1); // first IQ data set (Sm(f) complex)
+    readComplexArray(DATA_FILE_2, iqArray2, &iqNumRows2, iqNums2); // second IQ data set (Sm(f) complex)
 }
