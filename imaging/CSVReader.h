@@ -2,7 +2,7 @@
 CSVReader.h
 Revised 9/14/2023
 Colton Cox - ccox60@uco.edu
-Nathan Wiley - nwiley@uco.edu
+Nathan G Wiley - nwiley@uco.edu
 */
 
 #ifndef CSV_READER

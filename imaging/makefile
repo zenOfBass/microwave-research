@@ -1,5 +1,6 @@
 # makefile
-# Revised 8/31/2023
+# Revised 9/15/2023
+# Colton Cox - ccox60@uco.edu
 # Nathan G Wiley - nwiley@uco.edu
 
 # Compiler
@@ -13,6 +14,9 @@ OUTPUT_NAME = a.exe
 
 # Source files
 SRCS = main.c ImagingDomain.c CSVReader.c CallHeatmap.c DelayAndSum.c
+
+# Header files
+HDRS = ImagingDomain.h CSVReader.h CallHeatmap.h Config.h DelayAndSum.h
 
 # Object files
 OBJS = $(SRCS:.c=.o)
@@ -35,7 +39,7 @@ all: $(OUTPUT_NAME)
 $(OUTPUT_NAME): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 
-%.o: %.c
+%.o: %.c $(HDRS)  # Add header files as dependencies
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:

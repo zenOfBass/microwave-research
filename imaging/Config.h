@@ -2,17 +2,17 @@
 ImagingDomain.c
 Revised 9/14/2023
 Colton Cox - ccox60@uco.edu
-Nathan Wiley - nwiley@uco.edu
+Nathan G Wiley - nwiley@uco.edu
 */
 
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define CHANNELS_FILE "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\configuration\\channel_names.csv"
-#define FREQUENCIES_FILE "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\configuration\\frequencies_1.4-3.2.csv"
-#define ANTENNA_LOCATIONS_FILE "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\configuration\\antenna_locations_cylinder.csv"
-#define DATA_FILE_1 "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\data\\Test.csv"
-#define DATA_FILE_2 "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\data\\[0012]SG_Center_0(1.4-3.2).csv"
+#define CHANNELS_FILE "configuration\\channel_names.csv"
+#define FREQUENCIES_FILE "configuration\\frequencies_1.4-3.2.csv"
+#define ANTENNA_LOCATIONS_FILE "configuration\\antenna_locations_cylinder.csv"
+#define DATA_FILE_1 "data\\benchmarking\\[0014]SW_Left_SG_Right_0(1.4-3.2).csv"
+#define DATA_FILE_2 "data\\benchmarking\\[0014]SW_Left_SG_Right_22.5(1.4-3.2).csv"
 
 //#define USE_PROPORTIONAL_PERMITTIVITY
 #define ANTENNA_RADIUS 0.077
@@ -29,7 +29,7 @@ Nathan Wiley - nwiley@uco.edu
 #define NUMBER_OF_ANTENNAS 8
 
 #define GLOBAL_Z 0
-#define C 299792458.0       // Speed of light
+#define C 299792458.0           // Speed of light
 
 #define FREQ_MAX 201            // Maximum number of frequencies
 

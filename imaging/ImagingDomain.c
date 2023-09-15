@@ -2,7 +2,7 @@
 ImagingDomain.c
 Revised 8/2/2023
 Colton Cox - ccox60@uco.edu
-Nathan Wiley - nwiley@uco.edu
+Nathan G Wiley - nwiley@uco.edu
 */
 
 #include "ImagingDomain.h"

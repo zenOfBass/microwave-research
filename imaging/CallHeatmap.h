@@ -2,7 +2,7 @@
 CallHeatmap.h
 Revised 7/5/2023
 Colton Cox - ccox60@uco.edu
-Nathan Wiley - nwiley@uco.edu
+Nathan G Wiley - nwiley@uco.edu
 */
 
 #ifndef CALL_HEATMAP
