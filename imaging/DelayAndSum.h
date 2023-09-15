@@ -1,6 +1,7 @@
 /*
-CSVReader.h
-Revised 8/3/2023
+DelayAndSum.h
+Revised 9/14/2023
+Colton Cox - ccox60@uco.edu
 Nathan Wiley - nwiley@uco.edu
 */
 

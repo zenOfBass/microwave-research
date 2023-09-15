@@ -1,6 +1,7 @@
 /*
 CSVReader.c
-Revised 8/2/2023
+Revised 9/14/2023
+Colton Cox - ccox60@uco.edu
 Nathan Wiley - nwiley@uco.edu
 */
 
@@ -99,16 +100,20 @@ void readComplexArray(const char *fileName, long double complex **complexArray, 
 }
 
 
-void readDataFiles(int channelsArray[NUMBER_OF_CHANNELS][2], double frequenciesArray[NUMBER_OF_FREQUENCIES] , float antennaLocationsArray[NUMBER_OF_ANTENNAS][3], long double complex **iqArray1, long double complex **iqArray2)
+void readDataFiles(int channelsArray[NUMBER_OF_CHANNELS][2], 
+                double frequenciesArray[NUMBER_OF_FREQUENCIES], 
+                float antennaLocationsArray[NUMBER_OF_ANTENNAS][3], 
+                long double complex **iqArray1, 
+                long double complex **iqArray2)
 {
-     for (int i = 0; i < MAX_ROWS_COMPLEX; i++)                                                 // Loop over all elements
+    for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over all elements
     {
         iqArray1[i] = malloc(MAX_COMPLEX_NUMBERS * sizeof(long double complex)); // Allocate memory for each element in array in heap
     }
     int iqNums1[MAX_ROWS_COMPLEX] = {0}; // Set all elements to zero
     int iqNumRows1 = 0;
 
-     for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over all elements
+    for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over all elements
     {
         iqArray2[i] = malloc(MAX_COMPLEX_NUMBERS * sizeof(long double complex)); // Allocate memory for each element in array in heap
     }

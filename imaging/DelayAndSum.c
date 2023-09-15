@@ -1,6 +1,7 @@
 /*
-CSVReader.h
-Revised 8/2/2023
+DelayAndSum.c
+Revised 9/14/2023
+Colton Cox - ccox60@uco.edu
 Nathan Wiley - nwiley@uco.edu
 */
 
@@ -11,9 +12,11 @@ double timeDelay(float Tx, float Ty, float Tz,
                 double IDx, double IDy, double IDz)
 {
     #ifdef USE_PROPORTIONAL_PERMITTIVITY
-    return (sqrt(pow((Rx - IDx), 2) + pow((Ry - IDy), 2) + pow((Rz - IDz), 2)) + sqrt(pow((Tx - IDx), 2) + pow((Ty - IDy), 2) + pow((Tz - IDz), 2))) / (C / (BOUNDARY_RADIUS * sqrt(INNER_PERMITTIVITY)/(ANTENNA_RADIUS * sqrt(OUTER_PERMITTIVITY))));
+    return (sqrt(pow((Rx - IDx), 2) + pow((Ry - IDy), 2) + pow((Rz - IDz), 2)) + sqrt(pow((Tx - IDx), 2) + pow((Ty - IDy), 2) + pow((Tz - IDz), 2)))
+            / (C / (BOUNDARY_RADIUS * sqrt(INNER_PERMITTIVITY)/(ANTENNA_RADIUS * sqrt(OUTER_PERMITTIVITY))));
     #else
-    return (sqrt(pow((Rx - IDx), 2) + pow((Ry - IDy), 2) + pow((Rz - IDz), 2)) + sqrt(pow((Tx - IDx), 2) + pow((Ty - IDy), 2) + pow((Tz - IDz), 2))) / (C / (sqrt(RELATIVE_PERMITTIVITY)));
+    return (sqrt(pow((Rx - IDx), 2) + pow((Ry - IDy), 2) + pow((Rz - IDz), 2)) + sqrt(pow((Tx - IDx), 2) + pow((Ty - IDy), 2) + pow((Tz - IDz), 2))) 
+            / (C / (sqrt(RELATIVE_PERMITTIVITY)));
     #endif
 }
 
