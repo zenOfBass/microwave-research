@@ -46,7 +46,7 @@ catch (Exception ex)
     Console.WriteLine($"Error message: {ex.Message}");                              // Display the specific error message
 }
 
-mvnaSession Session = VNA.OpenSession(""); // Create a new VNA session object
+mvnaSession Session = VNA.OpenSession("");           // Create a new VNA session object
 mvnaMeasurement Measurement = VNA.get_Measurement(); // Get access to the most recent measurement
 
 foreach (mvnaMeasurement mea in Session.Measurements)
@@ -73,18 +73,18 @@ for (int j = 0; j < iterations; j++)
         }
         else
         {
-            Switch(antennas, i + 1); // Change the signal path on the switch to the RF channel (i + 1)
-            VNA.RunSweepOnce();      // Initiate sweep in MegiQ
+            Switch(antennas, i + 1);                                         // Change the signal path on the switch to the RF channel (i + 1)
+            VNA.RunSweepOnce();                                              // Initiate sweep in MegiQ
             S21 = VNA.TraceSet.Traces[1].Channels["S21"].DataSet["Through"]; // Set data for for 21 channel
             S12 = VNA.TraceSet.Traces[1].Channels["S12"].DataSet["Through"]; // Set data for for 12 channel
-            int row = 0; // Start at first row
+            int row = 0;                                                     // Start at first row
 
             foreach (mvnaIQ val in S21.Values) //  Loop over 21 data
             {
-                iVal = val.IVal; // Get the I value
-                qVal = val.QVal; // Get the Q value
+                iVal = val.IVal;                                 // Get the I value
+                qVal = val.QVal;                                 // Get the Q value
                 complexData[row, col] = new Complex(iVal, qVal); // Store IQ data together in the 2D array of complex numbers
-                row++; // Move to next row
+                row++;                                           // Move to next row
             }
 
             row = 0; // Start at first row
@@ -92,10 +92,10 @@ for (int j = 0; j < iterations; j++)
 
             foreach (mvnaIQ val in S12.Values) //  Loop over 12 data
             {
-                iVal = val.IVal; // Get the I value
-                qVal = val.QVal; // Get the Q value
+                iVal = val.IVal;                                 // Get the I value
+                qVal = val.QVal;                                 // Get the Q value
                 complexData[row, col] = new Complex(iVal, qVal); // Store IQ data together in the 2D array of complex numbers
-                row++; // Move to next row
+                row++;                                           // Move to next row
             }
         }
         col++; // Got to next column
@@ -107,7 +107,7 @@ using (StreamWriter writer = new StreamWriter(filePath))
 {
     for (int i = 0; i < frequencies; i++) // Loop over columns
     {
-        for (int j = 0; j < traces; j++) //  Loop over rows
+        for (int j = 0; j < traces; j++)  //  Loop over rows
         {
             Complex value = complexData[i, j];                  // Set the value to be recorded from the 2D array
             writer.Write($"{value.Real} + {value.Imaginary}i"); // Write the value to the .csv file

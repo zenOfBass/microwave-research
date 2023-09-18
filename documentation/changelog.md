@@ -8,17 +8,20 @@ and this project adheres to *[Semantic Versioning](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
-## [1.0.0] - 2023-09-08
+## [1.0.0] - 2023-09-16
 ### Added
 - Changelog
 
 ### Changed
+- Brought sweeping and imaging into the same project
 
 ### Deprecated
 
 ### Removed
+- Delay Multiply and Sum Algorithm
 
 ### Fixed
 - Imaging process
+- Makefile misses headers
 
 ### Security
