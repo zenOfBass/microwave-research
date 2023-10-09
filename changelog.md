@@ -14,13 +14,15 @@ and this project adheres to *[Semantic Versioning](https://semver.org/spec/v2.0.
 - Clock time measured in main
 - Various comments and re-arranging to simplify main.c for readability
 - Number of points in imaging domain is hand-calculated and defined in config.h as IMAGING_DOMAIN_POINTS
+- Added -g flag in makefile for debugging
 
 ### Changed
 - Memory de-allocation moved out of main to cleanup function defined in CSVReader.h
 - All instances of MAX_POINTS changed to IMAGING_DOMAIN_POINTS, defined in config.h
 - Variable name "index" in ImagingDomain.c changed to "idx"
 
-
+### Removed
+- Deleted unnecessary folders and data files
 
 
 ## [1.0.0] - 2023-09-08
