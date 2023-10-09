@@ -1,9 +1,3 @@
-/*
-CSVReader.h
-Revised 8/3/2023
-Nathan Wiley - nwiley@uco.edu
-*/
-
 #ifndef DELAY_AND_SUM
 #define DELAY_AND_SUM
 
@@ -22,7 +16,7 @@ void delayAndSum(int chan[NUMBER_OF_CHANNELS][2],
                 double freq[NUMBER_OF_FREQUENCIES],
                 float antLoc[NUMBER_OF_ANTENNAS][3],
                 long double complex **iq,
-                long double imagingDomain[MAX_SIZE][3],
+                long double imagingDomain[IMAGING_DOMAIN_POINTS][3],
                 int imagingDomainSize);
 
 

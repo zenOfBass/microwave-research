@@ -5,7 +5,8 @@
         "stdlib.h": "c",
         "cmath": "c",
         "complex.h": "c",
-        "config.h": "c"
+        "config.h": "c",
+        "imagingdomain.h": "c"
     },
     "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools"
 }

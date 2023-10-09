@@ -1,10 +1,20 @@
-/*
-CSVReader.c
-Revised 8/2/2023
-Nathan Wiley - nwiley@uco.edu
-*/
-
 #include "CSVReader.h"
+
+void readImagingDomainFile(const char *fileName, long double imaging_domain[IMAGING_DOMAIN_POINTS][3])
+{
+    FILE *file = fopen(fileName, "r"); // Open file
+    if (file == NULL)                  // If the file isn't found...
+    {
+        printf("Error opening file (%s).\n", fileName); // Print error to terminal
+        exit(1);
+    }
+
+    for (int i=0;i<IMAGING_DOMAIN_POINTS; i++)
+    {
+        fscanf(file, "%Lf,%Lf,%Lf,\n", &imaging_domain[i][0],&imaging_domain[i][1],&imaging_domain[i][2]);
+    }
+    fclose(file);
+}
 
 void readIntArray(const char *fileName, int channels[NUMBER_OF_CHANNELS][2])
 {
@@ -120,4 +130,20 @@ void readDataFiles(int channelsArray[NUMBER_OF_CHANNELS][2], double frequenciesA
     readFloatArray(ANTENNA_LOCATIONS_FILE, antennaLocationsArray);   // antenna locations
     readComplexArray(DATA_FILE_1, iqArray1, &iqNumRows1, iqNums1); // first IQ data set (Sm(f) complex)
     readComplexArray(DATA_FILE_2, iqArray2, &iqNumRows2, iqNums2); // second IQ data set (Sm(f) complex)
+}
+
+void cleanUp(long double complex **complexArray1, long double complex **complexArray2)
+{
+       // Memory deallocation
+    for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over the array
+    {
+        free(complexArray1[i]);                     // Deallocate heap memory for each element in array
+    }
+    free(complexArray1);                            // Deallocate heap memory for array itself
+
+    for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over the array
+    {
+        free(complexArray2[i]);                     // Deallocate heap memory for each element in array
+    }
+    free(complexArray2);                            // Deallocate heap memory for array itself
 }

@@ -1,10 +1,5 @@
-/*
-CSVReader.h
-Revised 8/2/2023
-Nathan Wiley - nwiley@uco.edu
-*/
-
 #include "DelayAndSum.h"
+
 
 double timeDelay(float Tx, float Ty, float Tz, 
                 float Rx, float Ry, float Rz, 
@@ -13,7 +8,7 @@ double timeDelay(float Tx, float Ty, float Tz,
     #ifdef USE_PROPORTIONAL_PERMITTIVITY
     return (sqrt(pow((Rx - IDx), 2) + pow((Ry - IDy), 2) + pow((Rz - IDz), 2)) + sqrt(pow((Tx - IDx), 2) + pow((Ty - IDy), 2) + pow((Tz - IDz), 2))) / (C / (BOUNDARY_RADIUS * sqrt(INNER_PERMITTIVITY)/(ANTENNA_RADIUS * sqrt(OUTER_PERMITTIVITY))));
     #else
-    return (sqrt(pow((Rx - IDx), 2) + pow((Ry - IDy), 2) + pow((Rz - IDz), 2)) + sqrt(pow((Tx - IDx), 2) + pow((Ty - IDy), 2) + pow((Tz - IDz), 2))) / (C / (sqrt(RELATIVE_PERMITTIVITY)));
+    return (sqrt(pow((Rx - IDx), 2) + pow((Ry - IDy), 2) + pow((Rz - IDz), 2)) + sqrt(pow((Tx - IDx), 2) + pow((Ty - IDy), 2) + pow((Tz - IDz), 2))) / (C / (sqrtl(RELATIVE_PERMITTIVITY)));
     #endif
 
 }
@@ -22,7 +17,7 @@ void delayAndSum(int chan[NUMBER_OF_CHANNELS][2],
                 double freq[NUMBER_OF_FREQUENCIES],
                 float antLoc[NUMBER_OF_ANTENNAS][3],
                 long double complex **iq,
-                long double imagingDomain[MAX_SIZE][3],
+                long double imagingDomain[IMAGING_DOMAIN_POINTS][3],
                 int imagingDomainSize)
 {
     for (int r = 0; r < imagingDomainSize; r++) // Loop over number of points in image
@@ -52,8 +47,10 @@ void delayAndSum(int chan[NUMBER_OF_CHANNELS][2],
                 // Calculate the time delay
                 double delay = timeDelay(Tx, Ty, Tz, Rx, Ry, Rz, IDx, IDy, IDz);
 
+                //long double complex data = IQData * cexp(I * 2 * M_PI * freq[f] * delay);
+                //printf("%Lf\n", cabsl(data));
                 // Calculate phase shift and sum
-                imagingDomain[r][2] += creall(IQData * cexp(-1 * I * 2 * M_PI * delay * freq[f]));
+                imagingDomain[r][2] += (creall(IQData * cexp(-I * 2 * M_PI * freq[f] * delay)));
             }
         }
     }

@@ -1,9 +1,3 @@
-/*
-CSVReader.h
-Revised 7/5/2023
-Nathan Wiley - nwiley@uco.edu
-*/
-
 #include "CallHeatmap.h"
 
 void callHeatmap()
