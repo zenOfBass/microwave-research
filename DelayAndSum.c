@@ -24,7 +24,7 @@ void delayAndSum(int chan[NUMBER_OF_CHANNELS][2],
     {
         for (int m = 0; m < NUMBER_OF_CHANNELS; m++) // Loop over the number of antenna channels
         {
-            for (int f = 0; f < FREQ_MAX; f++) // Loop over the number of frequensies 
+            for (int f = 0; f < NUMBER_OF_FREQUENCIES; f++) // Loop over the number of frequensies 
             {
                 // Set image point coodinates and data
                 long double complex IQData = iq[f][m]; // IQ data for point over the channel and frequnecy

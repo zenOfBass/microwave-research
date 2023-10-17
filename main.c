@@ -25,11 +25,12 @@ int main()
     double freqArray[NUMBER_OF_FREQUENCIES];
     float antlocArray[MAX_ROWS][3];
 
+
     // Array declarations for complex IQ Data
     long double complex **iqArray1 = malloc(MAX_ROWS_COMPLEX * sizeof(long double complex *)); // Allocate memory for array in heap
     long double complex **iqArray2 = malloc(MAX_ROWS_COMPLEX * sizeof(long double complex *)); // Allocate memory for array in heap
 
-    
+
 
     // Read data from files
     readDataFiles(channels, freqArray, antlocArray, iqArray1, iqArray2);
@@ -40,9 +41,9 @@ int main()
     */
 
 
-    //generateImagingDomain(ID);                        // Generate an imaging domain at runtime in memory
+    generateImagingDomain(ID);           // Generate an imaging domain at runtime in memory
     //writeImagingDomainFile("Imaging_Domain.csv");     // Write an imaging domain file
-    readImagingDomainFile("Imaging_Domain.csv", ID);    // Read imaging domain from a file
+    //readImagingDomainFile("Imaging_Domain.csv", ID);    // Read imaging domain from a file
 
     /*!!IMPORTANT!!
     Note that if IMAGE_SUBTRACTION is defined, a unique imaging domain will need to be used for 
