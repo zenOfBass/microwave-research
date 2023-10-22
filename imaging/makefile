@@ -1,5 +1,5 @@
 # makefile
-# Revised 9/15/2023
+# Revised 2023-09-15
 # Colton Cox - ccox60@uco.edu
 # Nathan G Wiley - nwiley@uco.edu
 

@@ -3,7 +3,7 @@ Microwave Imaging System Readme
 
 **Authors:** Colton Cox (<ccox60@uco.edu>), Nathan G Wiley (<nwiley@uco.edu>)
 
-This project involves the development of a microwave imaging system. The system processes IQ data from a VNA system and generates a microwave image using the Delay-and-Sum algorithm.
+This system processes IQ data from a VNA system and generates a microwave image using the Delay-and-Sum algorithm.
 
 ## Prerequisites
 - C Compiler (e.g., GCC)

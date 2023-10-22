@@ -1,6 +1,6 @@
 /*
 CSVReader.c
-Revised 9/14/2023
+Revised 2023-09-14
 Colton Cox - ccox60@uco.edu
 Nathan G Wiley - nwiley@uco.edu
 */

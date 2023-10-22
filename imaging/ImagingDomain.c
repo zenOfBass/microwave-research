@@ -1,6 +1,6 @@
 /*
 ImagingDomain.c
-Revised 8/2/2023
+Revised 2023-08-02
 Colton Cox - ccox60@uco.edu
 Nathan G Wiley - nwiley@uco.edu
 */

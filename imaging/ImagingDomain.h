@@ -1,6 +1,6 @@
 /*
 ImagingDomain.h
-Revised 8/3/2023
+Revised 2023-08-02
 Colton Cox - ccox60@uco.edu
 Nathan G Wiley - nwiley@uco.edu
 */

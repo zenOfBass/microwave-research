@@ -8,7 +8,6 @@ and this project adheres to *[Semantic Versioning](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
-
 ## [1.0.0] - 2023-09-16
 ### Added
 - Changelog
@@ -17,17 +16,12 @@ and this project adheres to *[Semantic Versioning](https://semver.org/spec/v2.0.
 ### Changed
 - Brought sweeping and imaging into the same project
 
-### Deprecated
-
 ### Removed
 - Delay Multiply and Sum algorithm
 
 ### Fixed
 - Imaging process
 - Makefile's missing header files
-
-### Security
-
 
 ## [1.1.0] - 2023-10-10
 ### Added
@@ -51,11 +45,5 @@ and this project adheres to *[Semantic Versioning](https://semver.org/spec/v2.0.
     - Removed some arguments for csv reading functions
     - Moved variables to header files
 
-### Deprecated
-
 ### Removed
 - Gcode support
-
-### Fixed
-
-### Security

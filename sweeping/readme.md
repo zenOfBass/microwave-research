@@ -1,9 +1,9 @@
-Antenna Sweep Program Readme
+Antenna Sweep System Readme
 ===============================
 
 **Authors:** Colton Cox (ccox60@uco.edu), Nathan G Wiley (nwiley@uco.edu)
 
-This C# program facilitates electromagnetic measurements using a Vector Network Analyzer (VNA) and a custom antenna setup. The program connects to the VNA, configures experiment parameters, performs a series of sweeps, and records the data in both CSV and SQL formats.
+This C# program facilitates electromagnetic measurements using a Vector Network Analyzer (VNA) and an antenna setup. The program connects to the VNA, configures experiment parameters, performs a series of sweeps, and records the data in both CSV and SQL formats.
 
 ## Prerequisites
 - Microsoft .NET Core SDK
