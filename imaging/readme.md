@@ -35,6 +35,12 @@ This makefile automates the build process for the microwave imaging system.
 ### PlotImage.p
 This GNUplot script is responsible for generating the heatmap visualization from the output CSV file.
 
+## Usage
+1. Compile the code using a C compiler.
+2. Ensure the necessary CSV files (`channels.csv`, `frequencies.csv`, `antenna_locations.csv`, `iq_data_1.csv`, `iq_data_2.csv`) are in the same directory as the executable.
+3. Run the program. It will generate microwave imaging data in `output.csv`.
+4. The program will generate a heatmap visualization as an image using the GNUplot script command `gnuplot -p PlotImage.p`.
+
 ## Functions
 - `generateImagingDomain(long double imaging_domain[MAX_SIZE][3])`: Generates points in the imaging domain based on specified coordinates and resolution.
 - `writeImageFile(long double imaging_domain[MAX_SIZE][3])`: Writes the imaging domain data to an output CSV file.
@@ -43,12 +49,6 @@ This GNUplot script is responsible for generating the heatmap visualization from
 - `readIntArray(const char *fileName, int channels[NUMBER_OF_CHANNELS][2])`, `readDoubleArray(const char *fileName, double doubleArray[NUMBER_OF_FREQUENCIES])`, `readFloatArray(const char *fileName, float floatArray[NUMBER_OF_ANTENNAS][3])`, `readComplexArray(const char *fileName, long double complex **complexArray, int *numRows, int numComplexNumbers[])`: Functions for reading data from CSV files.
 - `readDataFiles(int channelsArray[NUMBER_OF_CHANNELS][2], double frequenciesArray[NUMBER_OF_FREQUENCIES] , float antennaLocationsArray[NUMBER_OF_ANTENNAS][3], long double complex **iqArray1, long double complex **iqArray2)`: Reads data from CSV files and allocates memory dynamically.
 - `callHeatmap()`: Invokes GNUplot to generate a heatmap.
-
-## Usage
-1. Compile the code using a C compiler.
-2. Ensure the necessary CSV files (`channels.csv`, `frequencies.csv`, `antenna_locations.csv`, `iq_data_1.csv`, `iq_data_2.csv`) are in the same directory as the executable.
-3. Run the program. It will generate microwave imaging data in `output.csv`.
-4. The program will generate a heatmap visualization as an image using the GNUplot script command `gnuplot -p PlotImage.p`.
 
 ## Notes
 - Ensure the constants like `RESOLUTION`, `NUMBER_OF_CHANNELS`, `NUMBER_OF_FREQUENCIES`, etc., are correctly defined in `Config.h`.

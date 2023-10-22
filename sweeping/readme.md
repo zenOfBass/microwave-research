@@ -44,3 +44,6 @@ This C# command line program facilitates electromagnetic measurements using a Ve
 ## Database
 - Server: `(localdb)\mssqllocaldb`
 - Database: `ComplexDataDb`
+
+## Notes
+- Ensure the COM port connection and ensure the Arduino board is operational.
