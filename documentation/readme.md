@@ -39,6 +39,11 @@ The Microwave Imaging System processes IQ data from the VNA system and generates
 - `PlotImage.p`: A GNUplot script responsible for generating the heatmap visualization from the output CSV file.
 - `makefile`: Automates the build process for the microwave imaging system.
 
+### Prerequisites
+   - C Compiler (e.g., GCC)
+   - GNUplot
+   - C Standard Library
+
 ### Usage
 1. Compile the code using a C compiler.
 2. Ensure the necessary CSV files are in the same directory as the executable.

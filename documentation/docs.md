@@ -7,6 +7,7 @@ Microwave Antenna Sweep and Imaging System Documentation
 3. [Using the Antenna Sweep System](#using-the-antenna-sweep-system)
 4. [Using the Microwave Imaging System](#using-the-microwave-imaging-system)
 5. [FAQs and Troubleshooting](#faqs-and-troubleshooting)
+6. [Version Control and Change Logs](#version-control-and-change-logs)
 
 ---
 
@@ -70,5 +71,11 @@ The Microwave Imaging System processes IQ data from the VNA and generates an ima
    - Ensure that the system meets the prerequisites. Double-check CSV files and their format.
 2. **I'm having trouble generating a heatmap. What could be the issue?**
    - Verify that GNUplot is installed and properly configured.
+
+---
+
+## Version Control and Change Logs
+
+The change logs for all program code files are kept here in the same folder as this file. All notable changes to this project will be documented there. The format used is based on *[Keep a Changelog](https://keepachangelog.com/en/1.0.0/)*, and this project adheres to *[Semantic Versioning](https://semver.org/spec/v2.0.0.html)* for version control. A template for newly released versions is also here in the documentation folder, and contains helpful instructions for recording version documentation.
 
 ---
