@@ -12,7 +12,7 @@ This C# command line program facilitates electromagnetic measurements using a Ve
 
 ## Usage
 1. **Connecting to MegiQ**
-   - Ensure that the MegiQ VNA software is properly connected.
+   - Ensure that the MegiQ VNA software is and API are installed correctly.
 2. **Connecting to Antennas**
    - Connect an Arduino board to the specified COM port.
    - The program will establish a connection to the antennas.
@@ -20,11 +20,11 @@ This C# command line program facilitates electromagnetic measurements using a Ve
    - Run the program, and it will attempt to connect to the VNA.
    - The program will prompt for experiment details such as code, object name, frequency range, steps, and number of antennas.
    - Data will be saved in both CSV and SQL formats. The CSV file will be named based on the experiment parameters.
-5. **Repeating or Exiting**
+4. **Repeating or Exiting**
    - After a scan is completed, the program will prompt if you want to scan again.
 
 ## Error Handling
-- If a connection to MegiQ or antennas fails, the program will prompt for a retry or exit.
+- If the connection to MegiQ or antennas fails, the program will prompt for a retry or exit.
 
 ## Functions
 - `ConnectToMegiQ()`: Connects to the MegiQ VNA hardware.

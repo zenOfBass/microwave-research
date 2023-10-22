@@ -35,7 +35,7 @@ and this project adheres to *[Semantic Versioning](https://semver.org/spec/v2.0.
 - Proportional permittivity in time delay
 
 ### Changed
-- Broke sweeping, csv writing, and connetion processes into functions
+- Moved sweeping, csv writing, and connetion processes into functions
 - Cleaned up Sweep()
     - Split foreach loops in Sweep() into seperate functions
     - Switched i and j in nested loops and set them to start at 1

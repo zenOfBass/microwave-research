@@ -24,7 +24,7 @@ The Delay-and-Sum algorithm is implemented in this file. It computes the imaging
 These files provide functions for reading data from CSV files. They handle the extraction of channel names, frequencies, antenna locations, and IQ data sets.
 
 ### CallHeatmap.c and CallHeatmap.h
-These files facilitate the generation of a heatmap from the radar imaging data. The `callHeatmap` function invokes GNUplot to produce visual outputs.
+These files facilitate the generation of a heatmap from the microwave imaging data. The `callHeatmap` function invokes GNUplot to produce visual outputs.
 
 ### Config.h
 This file contains various constants and configurations used throughout the program.

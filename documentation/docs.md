@@ -11,7 +11,7 @@ Microwave Antenna Sweep and Imaging System Documentation
 ---
 
 ## Overview
-This integrated system comprises two distinct components: the Antenna Sweep and the Microwave Imaging sytems. Together, they enable electromagnetic measurements using a Vector Network Analyzer (VNA) and imaging with the resulting data. This documentation is tailored for individuals with a basic understanding of electromagnetism, microwave imaging, and software operation. Some familiarity with C and C# will be beneficial.
+This sytem is comprised of two distinct components: the Antenna Sweep and the Microwave Imaging sytems. Together, they enable electromagnetic measurements using a Vector Network Analyzer (VNA) and imaging with the resulting data. This documentation is tailored for individuals with a basic understanding of electromagnetism, microwave imaging, and software operation. Some familiarity with C and C# will be beneficial.
 
 ---
 
@@ -30,7 +30,7 @@ This integrated system comprises two distinct components: the Antenna Sweep and 
 The Antenna Sweep System is designed to complement the Microwave Imaging System. It enables electromagnetic measurements using a VNA and a custom antenna setup. The program connects to the VNA, configures experiment parameters, performs sweeps, and records data in CSV and SQL formats.
 
 ### Microwave Imaging System
-The Microwave Imaging System processes IQ data from the VNA and generates a microwave image using the Delay-and-Sum algorithm. This system is implemented in C and consists of several components:
+The Microwave Imaging System processes IQ data from the VNA and generates an image using the Delay-and-Sum algorithm. This system is implemented in C and consists of several components:
 - `main.c`: Contains the main program logic.
 - `ImagingDomain.c` and `ImagingDomain.h`: Generates points in the imaging domain.
 - `DelayAndSum.c` and `DelayAndSum.h`: Implements the Delay-and-Sum algorithm.
@@ -61,7 +61,7 @@ The Microwave Imaging System processes IQ data from the VNA and generates a micr
 ## FAQs and Troubleshooting
 ### Antenna Sweep Program
 1. **The program is not connecting to the MegiQ VNA. What should I check?**
-   - Confirm that the MegiQ VNA hardware is connected correctly and the MiQVNA API is installed.
+   - Confirm that the MegiQ VNA software and API are installed.
 2. **The Arduino board isn't connecting. What could be the problem?**
    - Check the COM port connection and ensure the Arduino board is operational.
 

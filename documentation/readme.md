@@ -12,21 +12,19 @@ The Antenna Sweep Program is implemented in C# and is designed to work in tandem
 ### Prerequisites
 - Microsoft .NET Core SDK
 - MiQVNA API
-- MegiQ VNA hardware
-- Arduino board for antenna control
+- MiQVNA sofware and API
 
 ### Usage
 1. **Connecting to MegiQ**
-   - Ensure that the MegiQ VNA hardware is properly connected.
-   - Run the program, and it will attempt to connect to the VNA.
+   - Ensure that the MegiQ VNA software is and API are installed correctly.
 2. **Connecting to Antennas**
    - Connect an Arduino board to the specified COM port.
    - The program will establish a connection to the antennas.
 3. **Performing a Sweep**
+   - Run the program, and it will attempt to connect to the VNA.
    - The program will prompt for experiment details such as code, object name, frequency range, steps, and number of antennas.
-4. **Saving Data**
-   - Data will be saved in both CSV and SQL formats. The CSV file will be named based on the experiment parameters.
-5. **Repeating or Exiting**
+   - Data will be saved in both CSV and SQL formats. The CSV file and SQL table will be named based on the experiment parameters.
+4. **Repeating or Exiting**
    - After a scan is completed, the program will prompt if you want to scan again.
 
 ## Microwave Imaging System
@@ -43,6 +41,6 @@ The Microwave Imaging System processes IQ data from the VNA system and generates
 
 ### Usage
 1. Compile the code using a C compiler.
-2. Ensure the necessary CSV files (`channels.csv`, `frequencies.csv`, `antenna_locations.csv`, `iq_data_1.csv`, `iq_data_2.csv`) are in the same directory as the executable.
+2. Ensure the necessary CSV files are in the same directory as the executable.
 3. Run the program. It will generate microwave imaging data in `output.csv`.
-4. To generate a heatmap visualization, execute the GNUplot script using the command `gnuplot -p PlotImage.p`.
+4. The program will generate a heatmap visualization as an image using the GNUplot script command `gnuplot -p PlotImage.p`.
