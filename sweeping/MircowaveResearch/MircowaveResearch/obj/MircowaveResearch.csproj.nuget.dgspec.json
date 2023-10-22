@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\sweeping\\MircowaveResearch\\MircowaveResearch\\MircowaveResearch.csproj": {}
+    "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\sweeping\\MircowaveResearch\\MircowaveResearch\\MircowaveResearch.csproj": {}
   },
   "projects": {
-    "c:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\sweeping\\MircowaveResearch\\MircowaveResearch\\MircowaveResearch.csproj": {
+    "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\sweeping\\MircowaveResearch\\MircowaveResearch\\MircowaveResearch.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\sweeping\\MircowaveResearch\\MircowaveResearch\\MircowaveResearch.csproj",
+        "projectUniqueName": "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\sweeping\\MircowaveResearch\\MircowaveResearch\\MircowaveResearch.csproj",
         "projectName": "MircowaveResearch",
-        "projectPath": "c:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\sweeping\\MircowaveResearch\\MircowaveResearch\\MircowaveResearch.csproj",
+        "projectPath": "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\sweeping\\MircowaveResearch\\MircowaveResearch\\MircowaveResearch.csproj",
         "packagesPath": "C:\\Users\\kick_\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\sweeping\\MircowaveResearch\\MircowaveResearch\\obj\\",
+        "outputPath": "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\sweeping\\MircowaveResearch\\MircowaveResearch\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\kick_\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.11, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.11, )"
+            },
             "System.IO.Ports": {
               "target": "Package",
               "version": "[7.0.0, )"

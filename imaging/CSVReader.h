@@ -14,7 +14,6 @@ Nathan G Wiley - nwiley@uco.edu
 #include <string.h>
 #include "Config.h"
 
-
 #define MAX_ROWS_COMPLEX 500    // Maximun rows for 2D complex number array (IQ data)
 #define MAX_COMPLEX_NUMBERS 500 // Maximun comlumns for 2D complex number array (IQ data)
 #define BUFFER_SIZE 6000        // Maximum buffer size for line when reading complex number CSV data file

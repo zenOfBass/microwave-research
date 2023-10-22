@@ -11,7 +11,7 @@ Nathan G Wiley - nwiley@uco.edu
 #include "DelayAndSum.h"
 #include "Config.h"
 
-long double ID[MAX_SIZE][3];   // Array for first image domain
+long double ID[MAX_SIZE][3]; // Array for first image domain
 
 int main()
 {

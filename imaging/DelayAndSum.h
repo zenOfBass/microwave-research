@@ -14,7 +14,6 @@ Nathan G Wiley - nwiley@uco.edu
 #include <complex.h>
 #include "Config.h"
 
-
 double timeDelay(float Tx, float Ty, float Tz, 
                 float Rx, float Ry, float Rz, 
                 double IDx, double IDy, double IDz);

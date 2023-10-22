@@ -22,7 +22,6 @@ void readIntArray(const char *fileName, int channels[NUMBER_OF_CHANNELS][2])
     }
 
     fclose(file); // Close file
-    
 }
 
 void readDoubleArray(const char *fileName, double doubleArray[NUMBER_OF_FREQUENCIES])
@@ -40,7 +39,6 @@ void readDoubleArray(const char *fileName, double doubleArray[NUMBER_OF_FREQUENC
         fscanf(file, "%lf,", &doubleArray[i]);
     }
     fclose(file); // Close file
-
 }
 
 void readFloatArray(const char *fileName, float floatArray[NUMBER_OF_ANTENNAS][3])
@@ -58,9 +56,7 @@ void readFloatArray(const char *fileName, float floatArray[NUMBER_OF_ANTENNAS][3
         fscanf(file, "%f,%f,%f,", &floatArray[i][0], &floatArray[i][1], &floatArray[i][3]);
     }
     fclose(file); // Close file
-
 }
-
 
 void readComplexArray(const char *fileName, long double complex **complexArray, int *numRows, int numComplexNumbers[])
 {
@@ -95,10 +91,8 @@ void readComplexArray(const char *fileName, long double complex **complexArray, 
         }
     }
     fclose(file); // Close file
-    
     *numRows = row;
 }
-
 
 void readDataFiles(int channelsArray[NUMBER_OF_CHANNELS][2], 
                 double frequenciesArray[NUMBER_OF_FREQUENCIES], 
