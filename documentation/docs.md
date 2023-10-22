@@ -12,7 +12,7 @@ Microwave Antenna Sweep and Imaging System Documentation
 ---
 
 ## Overview
-This sytem is comprised of two distinct components: the Antenna Sweep and the Microwave Imaging sytems. Together, they enable electromagnetic measurements using a Vector Network Analyzer (VNA) and imaging with the resulting data. This documentation is tailored for individuals with a basic understanding of electromagnetism, microwave imaging, and software operation. Some familiarity with C and C# will be beneficial.
+This sytem is comprised of two distinct components: the Antenna Sweep and the Microwave Imaging sytems. Together, they enable electromagnetic measurements using a Vector Network Analyzer (VNA) and imaging with the resulting data. This documentation is tailored for individuals with a basic understanding of electromagnetism and medical imaging. Some familiarity with C and C# will be beneficial.
 
 ---
 

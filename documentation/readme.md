@@ -17,7 +17,7 @@ The Antenna Sweep Program is implemented in C# and is designed to work in tandem
 ### Usage
 1. **Connecting to MegiQ**
    - Ensure that the MegiQ VNA software is and API are installed correctly.
-2. **Connecting to Antennas**
+2. **Connecting to AnThe project requires installationtennas**
    - Connect an Arduino board to the specified COM port.
    - The program will establish a connection to the antennas.
 3. **Performing a Sweep**

@@ -46,4 +46,4 @@ This C# command line program facilitates electromagnetic measurements using a Ve
 - Database: `ComplexDataDb`
 
 ## Notes
-- Ensure the COM port connection and ensure the Arduino board is operational.
+- Ensure the COM port is connected and the Arduino board is operational.
