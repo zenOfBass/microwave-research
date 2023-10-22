@@ -11,7 +11,7 @@ Microwave Antenna Sweep and Imaging System Documentation
 ---
 
 ## Overview
-This integrated system comprises two distinct components: the Antenna Sweep and the Microwave Imaging programs. Together, they enable electromagnetic measurements using a Vector Network Analyzer (VNA) and imaging with the resulting data. This documentation is tailored for individuals with a basic understanding of electromagnetism, microwave imaging, and software operation. Some familiarity with C and C# will be beneficial.
+This integrated system comprises two distinct components: the Antenna Sweep and the Microwave Imaging sytems. Together, they enable electromagnetic measurements using a Vector Network Analyzer (VNA) and imaging with the resulting data. This documentation is tailored for individuals with a basic understanding of electromagnetism, microwave imaging, and software operation. Some familiarity with C and C# will be beneficial.
 
 ---
 
@@ -19,8 +19,7 @@ This integrated system comprises two distinct components: the Antenna Sweep and 
 ### Prerequisites
 - For the Antenna Sweep System:
    - Microsoft .NET Core SDK
-   - MiQVNA API
-   - MegiQ VNA hardware
+   - MiQVNA sofware and API
    - Arduino board for antenna control
 - For the Microwave Imaging System: 
    - C Compiler (e.g., GCC)
@@ -31,7 +30,7 @@ This integrated system comprises two distinct components: the Antenna Sweep and 
 The Antenna Sweep System is designed to complement the Microwave Imaging System. It enables electromagnetic measurements using a VNA and a custom antenna setup. The program connects to the VNA, configures experiment parameters, performs sweeps, and records data in CSV and SQL formats.
 
 ### Microwave Imaging System
-The Microwave Imaging System processes IQ data from the VNA system and generates a microwave image using the Delay-and-Sum algorithm. This system is implemented in C and consists of several components:
+The Microwave Imaging System processes IQ data from the VNA and generates a microwave image using the Delay-and-Sum algorithm. This system is implemented in C and consists of several components:
 - `main.c`: Contains the main program logic.
 - `ImagingDomain.c` and `ImagingDomain.h`: Generates points in the imaging domain.
 - `DelayAndSum.c` and `DelayAndSum.h`: Implements the Delay-and-Sum algorithm.
@@ -44,11 +43,10 @@ The Microwave Imaging System processes IQ data from the VNA system and generates
 ---
 
 ## Using the Antenna Sweep System
-1. Connect the MegiQ VNA hardware properly.
+1. Connect an Arduino board to the specified COM port.
 2. Run the program. It will attempt to connect to the VNA.
-3. Connect an Arduino board to the specified COM port.
-4. The program will establish a connection to the antennas.
-5. Follow on-screen prompts to perform sweeps and save data.
+3. The program will establish a connection to the antennas.
+4. Follow on-screen prompts to perform sweeps and save data.
 
 ---
 
@@ -56,7 +54,7 @@ The Microwave Imaging System processes IQ data from the VNA system and generates
 1. Compile the code using a C compiler.
 2. Ensure the required CSV files are in the same directory as the executable.
 3. Run the program. It will generate microwave imaging data in `output.csv`.
-4. To generate a heatmap visualization, execute the GNUplot script using the command `gnuplot -p PlotImage.p`.
+4. The program will generate a heatmap visualization as an image using the GNUplot script command `gnuplot -p PlotImage.p`.
 
 ---
 
