@@ -8,21 +8,6 @@ and this project adheres to *[Semantic Versioning](https://semver.org/spec/v2.0.
 
 ## [Unreleased]
 
-## [1.0.0] - 2023-09-16
-### Added
-- Changelog
-- CloseMegiQ function
-
-### Changed
-- Brought sweeping and imaging into the same project
-
-### Removed
-- Delay Multiply and Sum algorithm
-
-### Fixed
-- Imaging process
-- Makefile's missing header files
-
 ## [1.1.0] - 2023-10-10
 ### Added
 - SQL database
@@ -47,3 +32,18 @@ and this project adheres to *[Semantic Versioning](https://semver.org/spec/v2.0.
 
 ### Removed
 - Gcode support
+
+## [1.0.0] - 2023-09-16
+### Added
+- Changelog
+- CloseMegiQ function
+
+### Changed
+- Brought sweeping and imaging into the same project
+
+### Removed
+- Delay Multiply and Sum algorithm
+
+### Fixed
+- Imaging process
+- Makefile's missing header files

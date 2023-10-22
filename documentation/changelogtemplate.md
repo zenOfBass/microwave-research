@@ -10,7 +10,7 @@ Semantic Versioning, is a versioning scheme for software that aims to convey mea
 
 **PATCH:** The third digit, PATCH, is for backward-compatible bug fixes. If there are only minor changes or bug fixes that do not introduce new features or break existing ones, then the PATCH version is updated.
 
-The date is recorded in the **YEAR**-**MONTH**-**DAY** format for all documentation.
+The date is recorded in the **YEAR**-**MONTH**-**DAY** format for all documentation. Versions are writen in the change log in order of youngest to oldest.
 
 ## [MAJOR.MINOR.PATCH] - YEAR-MONTH-DAY
 ### Added
