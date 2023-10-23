@@ -1,41 +1,54 @@
-/*
-ImagingDomain.c
-Revised 2023-08-02
-Colton Cox - ccox60@uco.edu
-Nathan G Wiley - nwiley@uco.edu
-*/
-
 #include "ImagingDomain.h"
 
-int index = 0; // The number of points in the image domain
+int idx = 0; // The number of points in the image domain
 
-int generateImagingDomain(long double imaging_domain[MAX_SIZE][3])
+int generateImagingDomain(long double imaging_domain[IMAGING_DOMAIN_POINTS][3])
 {
-    for (double x = -0.07; x < 0.07; x += RESOLUTION) // Loop over x coordinates
+    for (double x = -IMAGING_DOMAIN_RADIUS; x < IMAGING_DOMAIN_RADIUS; x += RESOLUTION) // Loop over x coordinates
     {
-        for (double y = -0.07; y < 0.07; y += RESOLUTION) // Loop over y coordinates
+
+        for (double y = -IMAGING_DOMAIN_RADIUS; y < IMAGING_DOMAIN_RADIUS; y += RESOLUTION) // Loop over y coordinates
         {
-            imaging_domain[index][0] = x;   // Set point's x coordinate
-            imaging_domain[index][1] = y;   // Set point's y coordinate
-            imaging_domain[index][2] = 0.0; // Set point's IQ data
-            index++;
+            imaging_domain[idx][0] = x;   // Set point's x coordinate
+            imaging_domain[idx][1] = y;   // Set point's y coordinate
+            imaging_domain[idx][2] = 0.0; // Set point's IQ data
+            idx++;
         }
     }
-    return index; // Return the number of points in the image domain
+    return idx; // Return the number of points in the image domain
 }
 
-void writeImageFile(long double imaging_domain[MAX_SIZE][3])
+int writeImagingDomainFile(const char* filename)
+{
+    FILE* imagingDomainFile;
+    imagingDomainFile = fopen(filename, "w");
+
+    for (long double x = -IMAGING_DOMAIN_RADIUS; x < IMAGING_DOMAIN_RADIUS; x += RESOLUTION) // Loop over x coordinates
+    {
+        for (long double y = -IMAGING_DOMAIN_RADIUS; y < IMAGING_DOMAIN_RADIUS; y += RESOLUTION) // Loop over y coordinates
+        {
+            fprintf(imagingDomainFile, "%Lf,%Lf,%Lf\n", x, y, 0.0L);
+            idx++;
+        }
+    }
+    return idx; // Return the number of points in the image domain
+
+}
+
+
+
+void writeImageFile(long double imaging_domain[IMAGING_DOMAIN_POINTS][3])
 {
     // Open output file
     FILE *fp;
     fp = fopen("output.csv", "w+");
 
     // Write the data for the image domain from array to file
-    for (int i = 0; i < index; i++)
+    for (int i = 0; i < IMAGING_DOMAIN_POINTS; i++)
     {
         fprintf(fp, "%Lf,", imaging_domain[i][0]);  // Write x coordinate
         fprintf(fp, "%Lf,", imaging_domain[i][1]);  // Write y coordinate
-        fprintf(fp, "%Lf\n", imaging_domain[i][2]); // Wrtie IQ data
+        fprintf(fp, "%.10Le\n", imaging_domain[i][2]); // Wrtie IQ data
     }
     fclose(fp); // Close file
 }

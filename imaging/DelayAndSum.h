@@ -1,10 +1,3 @@
-/*
-DelayAndSum.h
-Revised 2023-09-14
-Colton Cox - ccox60@uco.edu
-Nathan G Wiley - nwiley@uco.edu
-*/
-
 #ifndef DELAY_AND_SUM
 #define DELAY_AND_SUM
 
@@ -14,6 +7,8 @@ Nathan G Wiley - nwiley@uco.edu
 #include <complex.h>
 #include "Config.h"
 
+
+
 double timeDelay(float Tx, float Ty, float Tz, 
                 float Rx, float Ry, float Rz, 
                 double IDx, double IDy, double IDz);
@@ -21,7 +16,8 @@ void delayAndSum(int chan[NUMBER_OF_CHANNELS][2],
                 double freq[NUMBER_OF_FREQUENCIES],
                 float antLoc[NUMBER_OF_ANTENNAS][3],
                 long double complex **iq,
-                long double imagingDomain[MAX_SIZE][3],
+                long double imagingDomain[IMAGING_DOMAIN_POINTS][3],
                 int imagingDomainSize);
+
 
 #endif

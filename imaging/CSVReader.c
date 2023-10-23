@@ -1,11 +1,20 @@
-/*
-CSVReader.c
-Revised 2023-09-14
-Colton Cox - ccox60@uco.edu
-Nathan G Wiley - nwiley@uco.edu
-*/
-
 #include "CSVReader.h"
+
+void readImagingDomainFile(const char *fileName, long double imaging_domain[IMAGING_DOMAIN_POINTS][3])
+{
+    FILE *file = fopen(fileName, "r"); // Open file
+    if (file == NULL)                  // If the file isn't found...
+    {
+        printf("Error opening file (%s).\n", fileName); // Print error to terminal
+        exit(1);
+    }
+
+    for (int i=0;i<IMAGING_DOMAIN_POINTS; i++)
+    {
+        fscanf(file, "%Lf,%Lf,%Lf,\n", &imaging_domain[i][0],&imaging_domain[i][1],&imaging_domain[i][2]);
+    }
+    fclose(file);
+}
 
 void readIntArray(const char *fileName, int channels[NUMBER_OF_CHANNELS][2])
 {
@@ -22,6 +31,7 @@ void readIntArray(const char *fileName, int channels[NUMBER_OF_CHANNELS][2])
     }
 
     fclose(file); // Close file
+    
 }
 
 void readDoubleArray(const char *fileName, double doubleArray[NUMBER_OF_FREQUENCIES])
@@ -34,11 +44,12 @@ void readDoubleArray(const char *fileName, double doubleArray[NUMBER_OF_FREQUENC
     }
 
     // Read file
-    for (int i = 0; i < NUMBER_OF_FREQUENCIES; i++)
+    for (int i=0;i<NUMBER_OF_FREQUENCIES;i++)
     {
         fscanf(file, "%lf,", &doubleArray[i]);
     }
     fclose(file); // Close file
+
 }
 
 void readFloatArray(const char *fileName, float floatArray[NUMBER_OF_ANTENNAS][3])
@@ -56,7 +67,9 @@ void readFloatArray(const char *fileName, float floatArray[NUMBER_OF_ANTENNAS][3
         fscanf(file, "%f,%f,%f,", &floatArray[i][0], &floatArray[i][1], &floatArray[i][3]);
     }
     fclose(file); // Close file
+
 }
+
 
 void readComplexArray(const char *fileName, long double complex **complexArray, int *numRows, int numComplexNumbers[])
 {
@@ -91,32 +104,46 @@ void readComplexArray(const char *fileName, long double complex **complexArray, 
         }
     }
     fclose(file); // Close file
+    
     *numRows = row;
 }
 
-void readDataFiles(int channelsArray[NUMBER_OF_CHANNELS][2], 
-                double frequenciesArray[NUMBER_OF_FREQUENCIES], 
-                float antennaLocationsArray[NUMBER_OF_ANTENNAS][3], 
-                long double complex **iqArray1, 
-                long double complex **iqArray2)
+
+void readDataFiles(int channelsArray[NUMBER_OF_CHANNELS][2], double frequenciesArray[NUMBER_OF_FREQUENCIES] , float antennaLocationsArray[NUMBER_OF_ANTENNAS][3], long double complex **iqArray1, long double complex **iqArray2)
 {
-    for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over all elements
+     for (int i = 0; i < MAX_ROWS_COMPLEX; i++)                                                 // Loop over all elements
     {
         iqArray1[i] = malloc(MAX_COMPLEX_NUMBERS * sizeof(long double complex)); // Allocate memory for each element in array in heap
     }
     int iqNums1[MAX_ROWS_COMPLEX] = {0}; // Set all elements to zero
     int iqNumRows1 = 0;
 
-    for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over all elements
+     for (int i = 0; i < MAX_ROWS_COMPLEX; i++)                                                 // Loop over all elements
     {
         iqArray2[i] = malloc(MAX_COMPLEX_NUMBERS * sizeof(long double complex)); // Allocate memory for each element in array in heap
     }
     int iqNums2[MAX_ROWS_COMPLEX] = {0}; // Set all elements to zero
     int iqNumRows2 = 0;
     
-    readIntArray(CHANNELS_FILE, channelsArray);                    // channel names
-    readDoubleArray(FREQUENCIES_FILE, frequenciesArray);           // frequencies
-    readFloatArray(ANTENNA_LOCATIONS_FILE, antennaLocationsArray); // antenna locations
+    readIntArray(CHANNELS_FILE, channelsArray);                          // channel names
+    readDoubleArray(FREQUENCIES_FILE, frequenciesArray);                      // frequencies
+    readFloatArray(ANTENNA_LOCATIONS_FILE, antennaLocationsArray);   // antenna locations
     readComplexArray(DATA_FILE_1, iqArray1, &iqNumRows1, iqNums1); // first IQ data set (Sm(f) complex)
     readComplexArray(DATA_FILE_2, iqArray2, &iqNumRows2, iqNums2); // second IQ data set (Sm(f) complex)
+}
+
+void cleanUp(long double complex **complexArray1, long double complex **complexArray2)
+{
+       // Memory deallocation
+    for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over the array
+    {
+        free(complexArray1[i]);                     // Deallocate heap memory for each element in array
+    }
+    free(complexArray1);                            // Deallocate heap memory for array itself
+
+    for (int i = 0; i < MAX_ROWS_COMPLEX; i++) // Loop over the array
+    {
+        free(complexArray2[i]);                     // Deallocate heap memory for each element in array
+    }
+    free(complexArray2);                            // Deallocate heap memory for array itself
 }

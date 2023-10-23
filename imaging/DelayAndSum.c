@@ -1,37 +1,30 @@
-/*
-DelayAndSum.c
-Revised 2023-09-14
-Colton Cox - ccox60@uco.edu
-Nathan G Wiley - nwiley@uco.edu
-*/
-
 #include "DelayAndSum.h"
+
 
 double timeDelay(float Tx, float Ty, float Tz, 
                 float Rx, float Ry, float Rz, 
                 double IDx, double IDy, double IDz)
 {
     #ifdef USE_PROPORTIONAL_PERMITTIVITY
-    return (sqrt(pow((Rx - IDx), 2) + pow((Ry - IDy), 2) + pow((Rz - IDz), 2)) + sqrt(pow((Tx - IDx), 2) + pow((Ty - IDy), 2) + pow((Tz - IDz), 2)))
-            / (C / (BOUNDARY_RADIUS * sqrt(INNER_PERMITTIVITY)/(ANTENNA_RADIUS * sqrt(OUTER_PERMITTIVITY))));
+    return (sqrt(pow((Rx - IDx), 2) + pow((Ry - IDy), 2) + pow((Rz - IDz), 2)) + sqrt(pow((Tx - IDx), 2) + pow((Ty - IDy), 2) + pow((Tz - IDz), 2))) / (C / (BOUNDARY_RADIUS * sqrt(INNER_PERMITTIVITY)/(ANTENNA_RADIUS * sqrt(OUTER_PERMITTIVITY))));
     #else
-    return (sqrt(pow((Rx - IDx), 2) + pow((Ry - IDy), 2) + pow((Rz - IDz), 2)) + sqrt(pow((Tx - IDx), 2) + pow((Ty - IDy), 2) + pow((Tz - IDz), 2))) 
-            / (C / (sqrt(RELATIVE_PERMITTIVITY)));
+    return (sqrt(pow((Rx - IDx), 2) + pow((Ry - IDy), 2) + pow((Rz - IDz), 2)) + sqrt(pow((Tx - IDx), 2) + pow((Ty - IDy), 2) + pow((Tz - IDz), 2))) / (C / (sqrtl(RELATIVE_PERMITTIVITY)));
     #endif
+
 }
 
 void delayAndSum(int chan[NUMBER_OF_CHANNELS][2],
                 double freq[NUMBER_OF_FREQUENCIES],
                 float antLoc[NUMBER_OF_ANTENNAS][3],
                 long double complex **iq,
-                long double imagingDomain[MAX_SIZE][3],
+                long double imagingDomain[IMAGING_DOMAIN_POINTS][3],
                 int imagingDomainSize)
 {
     for (int r = 0; r < imagingDomainSize; r++) // Loop over number of points in image
     {
         for (int m = 0; m < NUMBER_OF_CHANNELS; m++) // Loop over the number of antenna channels
         {
-            for (int f = 0; f < FREQ_MAX; f++) // Loop over the number of frequensies 
+            for (int f = 0; f < NUMBER_OF_FREQUENCIES; f++) // Loop over the number of frequensies 
             {
                 // Set image point coodinates and data
                 long double complex IQData = iq[f][m]; // IQ data for point over the channel and frequnecy
@@ -54,9 +47,12 @@ void delayAndSum(int chan[NUMBER_OF_CHANNELS][2],
                 // Calculate the time delay
                 double delay = timeDelay(Tx, Ty, Tz, Rx, Ry, Rz, IDx, IDy, IDz);
 
+                //long double complex data = IQData * cexp(I * 2 * M_PI * freq[f] * delay);
+                //printf("%Lf\n", cabsl(data));
                 // Calculate phase shift and sum
-                imagingDomain[r][2] += creall(IQData * cexp(-1 * I * 2 * M_PI * delay * freq[f]));
+                imagingDomain[r][2] += (creall(IQData * cexp(-I * 2 * M_PI * freq[f] * delay)));
             }
         }
     }
 }
+
