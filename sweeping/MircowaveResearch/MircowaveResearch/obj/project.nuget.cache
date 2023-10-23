@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "H0XrYeIkjk0JDp/wgUjCbPdt7CbMQerZpPLhLb7EZ1uuc1DN9bYZSndCkiMrg90qhxVqulqtIvF6cEE4S0cfpg==",
+  "dgSpecHash": "Pui91KQ94sYEA28phQ75WZylS/0CVqmyH/zToYI4qJJ+AfvV8aOn7ayywqCb0w04Wd52rs8wkzOTI+krqmKIOg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\sweeping\\MircowaveResearch\\MircowaveResearch\\MircowaveResearch.csproj",
+  "projectFilePath": "C:\\Users\\kick_\\OneDrive\\Documents\\Work\\autosweep\\sweeping\\MircowaveResearch\\MircowaveResearch\\MicrowaveResearch.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kick_\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\kick_\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

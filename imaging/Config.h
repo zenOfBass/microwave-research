@@ -1,10 +1,10 @@
-/*
-Colton Cox   - ccox60@uco.edu
-Nathan Wiley - nwiley@uco.edu
-
-University of Central OKlahoma - 2023
-See changelog.md for detailed changes
-*/
+/**********************************
+/ Config.h
+/ Colton Cox - ccox60@uco.edu
+/ Nathan G Wiley - nwiley@uco.edu
+/ University of Central Oklahoma
+/ See changelog.md for detailed changes
+**********************************/
 
 #ifndef CONFIG_H
 #define CONFIG_H
