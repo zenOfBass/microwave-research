@@ -226,12 +226,12 @@ void ProcessTraceValues(mvnaIQData data)
 
 void Sweep()
 {
-    for (int i = 1; i < intNumAntennas; i++)
+    for (int i = 1; i <= intNumAntennas; i++)
     {
         Switch(i + 10);          // Change the signal path on the switch to the RF channel (i + 10)
         transmittingAntenna = i; // Set transmitting antenna
 
-        for (int j = 1; j < intNumAntennas; j++)
+        for (int j = 1; j <= intNumAntennas; j++)
         {
             if (j == transmittingAntenna)
             {
