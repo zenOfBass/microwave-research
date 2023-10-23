@@ -7,12 +7,11 @@
 **********************************/
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using MiQVNA;
-using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.IO.Ports;
 using System.Numerics;
+
 
 // VNA,MegIQ, and experiment variables
 mvnaVNAMain vna;
@@ -287,25 +286,6 @@ void WriteToSQL(string fullExpName)
         }
     }
     db.SaveChanges();
-}
-
-#endregion
-
-#region Classes
-
-public class ComplexData
-{
-    [Key]
-    public int Id { get; set; }
-    public double Real { get; set; }
-    public double Imaginary { get; set; }
-}
-
-public class AppDbContext : DbContext
-{
-    public DbSet<ComplexData> ComplexData { get; set; }
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-        => options.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ComplexDataDb;Integrated Security=True");
 }
 
 #endregion

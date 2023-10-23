@@ -1,5 +1,6 @@
 #include "ImagingDomain.h"
 
+
 int idx = 0; // The number of points in the image domain
 
 int generateImagingDomain(long double imaging_domain[IMAGING_DOMAIN_POINTS][3])

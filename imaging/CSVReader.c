@@ -1,5 +1,6 @@
 #include "CSVReader.h"
 
+
 void readImagingDomainFile(const char *fileName, long double imaging_domain[IMAGING_DOMAIN_POINTS][3])
 {
     FILE *file = fopen(fileName, "r"); // Open file
