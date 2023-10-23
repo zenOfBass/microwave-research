@@ -1,9 +1,10 @@
-﻿/*
-AntennaSweep.cs
-Revised 2023-10-22
-Colton Cox - ccox60@uco.edu
-Nathan G Wiley - nwiley@uco.edu
-*/
+﻿/**********************************
+/ AntennaSweep.cs            
+/ Colton Cox - ccox60@uco.edu
+/ Nathan G Wiley - nwiley@uco.edu
+/ University of Central Oklahoma
+/ See changelog.md for detailed changes 
+**********************************/
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;

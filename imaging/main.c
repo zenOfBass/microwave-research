@@ -1,10 +1,11 @@
-/*
-Colton Cox   - ccox60@uco.edu
-Nathan Wiley - nwiley@uco.edu
+/**********************************
+/ main.c
+/ Colton Cox - ccox60@uco.edu
+/ Nathan G Wiley - nwiley@uco.edu
+/ University of Central Oklahoma
+/ See changelog.md for detailed changes
+**********************************/
 
-University of Central OKlahoma - 2023
-See changelog.md for detailed changes
-*/
 #include <time.h>
 #include "ImagingDomain.h"
 #include "CSVReader.h"
@@ -25,12 +26,9 @@ int main()
     double freqArray[NUMBER_OF_FREQUENCIES];
     float antlocArray[MAX_ROWS][3];
 
-
     // Array declarations for complex IQ Data
     long double complex **iqArray1 = malloc(MAX_ROWS_COMPLEX * sizeof(long double complex *)); // Allocate memory for array in heap
     long double complex **iqArray2 = malloc(MAX_ROWS_COMPLEX * sizeof(long double complex *)); // Allocate memory for array in heap
-
-
 
     // Read data from files
     readDataFiles(channels, freqArray, antlocArray, iqArray1, iqArray2);
@@ -71,8 +69,6 @@ int main()
     // Pixel intensity data is written to the third column of the imaging domain file
     writeImageFile(ID);
     callHeatmap();      // Call the GNUplot script to generate the heatmap image
-
-
 
     cleanUp(iqArray1, iqArray2); // De-allocate heap memory used
 

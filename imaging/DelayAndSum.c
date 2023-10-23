@@ -55,4 +55,3 @@ void delayAndSum(int chan[NUMBER_OF_CHANNELS][2],
         }
     }
 }
-

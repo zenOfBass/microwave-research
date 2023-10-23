@@ -49,6 +49,4 @@ See changelog.md for detailed changes
 #define MAX_ROWS 1200            // Maximun rows for 2D channel names, frequencies, and 2D antenna locations arrays//
 #define MAX_SIZE 231762         // Maximum number of points that can be in the image domain
 
-
-
 #endif
