@@ -7,6 +7,9 @@ The formatting is based on *[Keep a Changelog](https://keepachangelog.com/en/1.0
 and this project adheres to *[Semantic Versioning](https://semver.org/spec/v2.0.0.html)*.
 
 ## [Unreleased]
+- Added Readme.md files, docs, and change log template / 2023-10-22 - Nathan
+- Added Experiment struct / 2023-10-23 - Nathan
+- Added Connection struct / 2023-10-24 - Nathan
 
 ## [1.1.0] - 2023-10-23
 ### Added

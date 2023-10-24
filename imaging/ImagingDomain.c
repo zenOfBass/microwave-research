@@ -7,7 +7,6 @@ int generateImagingDomain(long double imaging_domain[IMAGING_DOMAIN_POINTS][3])
 {
     for (double x = -IMAGING_DOMAIN_RADIUS; x < IMAGING_DOMAIN_RADIUS; x += RESOLUTION) // Loop over x coordinates
     {
-
         for (double y = -IMAGING_DOMAIN_RADIUS; y < IMAGING_DOMAIN_RADIUS; y += RESOLUTION) // Loop over y coordinates
         {
             imaging_domain[idx][0] = x;   // Set point's x coordinate
