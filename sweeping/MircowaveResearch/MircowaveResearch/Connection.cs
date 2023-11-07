@@ -3,15 +3,16 @@ using System.Diagnostics;
 using System.IO.Ports;
 
 
-public struct Connection : IDisposable
+public class Connection : IDisposable
 {
+    private readonly string comPortAnt;         // COM port used for communicating with antennas
+    private readonly int antBaudrate;           // Baudrate for antennas
+    private readonly int antTimeout;            // Timeout in milliseconds
     private mvnaVNAMain vna;
-    private SerialPort? antennas = null; // Initialize serial port for antennas
-    private string comPortAnt;           // COM port used for communicating with antennas
-    private int antBaudrate;             // Baudrate for antennas
-    private int antTimeout;              // Timeout in milliseconds
+    private SerialPort? antennas = null;        // Initialize serial port for antennas
+    private static Connection? instance = null; // Self instance for singleton pattern
 
-    public Connection()
+    private Connection()
     {
         vna = new mvnaVNAMain();
         comPortAnt = "COM19";
@@ -20,6 +21,16 @@ public struct Connection : IDisposable
 
         ConnectToMegiQ();
         ConnectToAntennas();
+    }
+
+    // Method to get the singleton instance
+    public static Connection Instance
+    {
+        get
+        {
+            instance ??= new Connection();
+            return instance;
+        }
     }
 
     private void ConnectToMegiQ()
@@ -58,7 +69,7 @@ public struct Connection : IDisposable
         {
             Console.WriteLine("Connecting to antennas.");
             antennas = new SerialPort(comPortAnt, antBaudrate) { ReadTimeout = antTimeout }; // Create a new SerialPort object with specified port and baud rate                                      
-            antennas.Open();                                                               // Open the serial port for communication
+            antennas.Open();                                                                 // Open the serial port for communication
         }
         catch (Exception ex)
         {
@@ -68,12 +79,11 @@ public struct Connection : IDisposable
         }
     }
 
-    public void CloseMegiQ() // Function to close the MegiQ process
+    public static void CloseMegiQ() // Function to close the MegiQ process
     {
-        Process[] processes = Process.GetProcessesByName("MiQVNA");
-        if (processes.Length > 0)
+        if (Process.GetProcessesByName("MiQVNA").Length > 0)
         {
-            foreach (Process process in processes)
+            foreach (Process process in Process.GetProcessesByName("MiQVNA"))
             {
                 try
                 {
@@ -90,9 +100,9 @@ public struct Connection : IDisposable
         else Console.WriteLine($"MiQVNA does not appear to be running.");
     }
 
-    public readonly SerialPort Antennas => antennas;
+    public SerialPort GetAntennas() => antennas;
 
-    public readonly mvnaVNAMain VNA => vna;
+    public mvnaVNAMain GetVNA() => vna;
 
     public void Dispose()
     {

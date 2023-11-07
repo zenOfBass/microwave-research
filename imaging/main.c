@@ -1,10 +1,10 @@
-/**********************************
+/***************************************
 / main.c
 / Colton Cox - ccox60@uco.edu
 / Nathan G Wiley - nwiley@uco.edu
 / University of Central Oklahoma
 / See changelog.md for detailed changes
-**********************************/
+***************************************/
 
 #include <time.h>
 #include "ImagingDomain.h"

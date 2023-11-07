@@ -7,7 +7,7 @@
 ***************************************/
 
 
-Connection connection = new();
+Connection connection = Connection.Instance;
 
 while (true)
 {
@@ -27,7 +27,7 @@ while (true)
         string repeat = Console.ReadLine();
         if (repeat != null) repeat = repeat.ToUpper();
         if (repeat == "Y") break;                     // Repeat
-        else if (repeat == "N") connection.Dispose(); // Close all connections
+        else if (repeat == "N") ((IDisposable)connection).Dispose(); // Close all connections
         else Console.WriteLine("Invalid input. Please enter Y or N");
     }
 }

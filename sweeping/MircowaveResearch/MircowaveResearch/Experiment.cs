@@ -6,15 +6,16 @@ using System.Numerics;
 public struct Experiment
 {
     // Strings for name of experiment
-    private string fullExpName;
-    private string filePath;
+    private readonly string fullExpName;
+    private readonly string filePath;
     private string minFreq, maxFreq, freqSteps, numAntennas, objName, code;
 
     // Sweeping variables
-    Connection connection;
+    private readonly Connection connection;
     private double doubleMinFreq, doubleMaxFreq;
-    private int intFreqSteps, intNumAntennas, totalTraces;
-    private int row, col;            // Row and column counters for complexData
+    private int intFreqSteps, intNumAntennas;
+    private readonly int totalTraces;
+    private int row, col; // Row and column counters for complexData
     private int transmittingAntenna;
     private Complex[,]? complexData = null;
 
@@ -29,9 +30,10 @@ public struct Experiment
         transmittingAntenna = 0;
 
         PromptUserInput();
+
         intFreqSteps++;
         totalTraces = 2 * intNumAntennas * (intNumAntennas - 1);
-        complexData = new Complex[intFreqSteps, totalTraces];  // Set the number of rows and columns based on user input
+        complexData = new Complex[intFreqSteps, totalTraces]; // Set the number of rows and columns based on user input
         fullExpName = $"{code}_{objName}_{minFreq}_{maxFreq}_{freqSteps}_{numAntennas}";
         filePath = $"data/{code}-{objName}_{minFreq}-{maxFreq}_{freqSteps}_{numAntennas}_0.csv";
     }
@@ -112,12 +114,12 @@ public struct Experiment
                 else
                 {
                     Switch(j);                                                                                // Change the signal path on the switch to the RF channel (j)
-                    connection.VNA.RunSweepOnce();                                                            // Initiate sweep in MegiQ
+                    connection.GetVNA().RunSweepOnce();                                                            // Initiate sweep in MegiQ
                     row = 0;                                                                                  // Start at first row
-                    ProcessTraceValues(connection.VNA.TraceSet.Traces[1].Channels["S21"].DataSet["Through"]); // Loop over 21 trace data
+                    ProcessTraceValues(connection.GetVNA().TraceSet.Traces[1].Channels["S21"].DataSet["Through"]); // Loop over 21 trace data
                     row = 0;                                                                                  // Start at first row again
                     col++;                                                                                    // Go to next column
-                    ProcessTraceValues(connection.VNA.TraceSet.Traces[1].Channels["S12"].DataSet["Through"]); // Loop over 12 trace data
+                    ProcessTraceValues(connection.GetVNA().TraceSet.Traces[1].Channels["S12"].DataSet["Through"]); // Loop over 12 trace data
                 }
                 col++; // Go to next column
             }
@@ -127,7 +129,7 @@ public struct Experiment
     private readonly void Switch(int rfPath) // Function to switch signal path on the switch
     {
         string rfPathStr = rfPath.ToString();                   // Convert the RF path to a string
-        connection.Antennas.Write(rfPathStr);                   // Write the RF path to the antennas using serial communication
+        connection.GetAntennas().Write(rfPathStr);              // Write the RF path to the antennas using serial communication
         Thread.Sleep(3000);                                     // Pause
         Console.WriteLine($"Switching to RF path {rfPathStr}"); // Print the RF path to the console
     }
