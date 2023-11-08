@@ -10,14 +10,14 @@ See changelog.md for detailed changes
 #define CONFIG_H
 
 #define CHANNELS_FILE "configuration\\channel_names.csv"
-#define FREQUENCIES_FILE "configuration\\frequencies_1.4-3.2.csv"
+#define FREQUENCIES_FILE "configuration\\frequencies_3.588-3.656_68.csv"
 #define ANTENNA_LOCATIONS_FILE "configuration\\antenna_locations_cylinder.csv"
-#define DATA_FILE_1 "data\\K003-KSample_1.4-3.2_200_8_0.csv"
-#define DATA_FILE_2 "data\\K004-KSample_1.4-3.2_200_8_0.csv"
+#define DATA_FILE_1 "data\\0001-RectangularParallelpiped5_3.588-3.656_68_8_0.csv"
+#define DATA_FILE_2 "data\\0000-EmptyFieldOrangeDisk_3.588-3.656_68_8_0.csv"
 
 #define CHANNEL_ARRAY_SIZE 224  // 112 * 2 integers in channels
 #define NUMBER_OF_CHANNELS 112
-#define NUMBER_OF_FREQUENCIES 201
+#define NUMBER_OF_FREQUENCIES 69
 #define NUMBER_OF_ANTENNAS 8
 
 
@@ -27,21 +27,21 @@ See changelog.md for detailed changes
 #define IMAGE_SUBTRACTION
 
 
-#define ANTENNA_RADIUS 0.0765
+#define ANTENNA_RADIUS 0.0775
 #define BOUNDARY_RADIUS 0.025
 #define INNER_PERMITTIVITY 80
-#define OUTER_PERMITTIVITY 8
+#define OUTER_PERMITTIVITY 1
 
-#define RELATIVE_PERMITTIVITY 8 // Relative permittivity of subject
+#define RELATIVE_PERMITTIVITY 1 // Relative permittivity of subject
 
-#define IMAGING_DOMAIN_RADIUS 0.0765
+#define IMAGING_DOMAIN_RADIUS 0.0775
 #define RESOLUTION 0.0025 // Resolution taken of the image based on the distance between sampled point
 
 // Calculate as (2*IMAGING_DOMAIN_RADIUS)^2 / RESOLUTION^2;
-#define IMAGING_DOMAIN_POINTS 4000
+#define IMAGING_DOMAIN_POINTS 3844
 
-#define Z_HEIGHT 0.02
-#define GLOBAL_Z 0.02
+#define Z_HEIGHT 0.0
+#define GLOBAL_Z 0.0
 #define C 299792458.0       // Speed of light
 
 //#define FREQ_MAX 1001            // Maximum number of frequencies

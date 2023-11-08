@@ -54,18 +54,18 @@ int main()
     readImagingDomainFile("Imaging_Domain.csv", ID2);
     */
 
+    #ifdef IMAGE_SUBTRACTION
+    for (int f=0;f<NUMBER_OF_FREQUENCIES;f++)
+    {
+        for (int m=0;m<NUMBER_OF_CHANNELS;m++)
+        {
+            iqArray1[f][m]=iqArray1[f][m]-iqArray2[f][m];
+        }
+    }
+    #endif
 
     // DELAY AND SUM
     delayAndSum(channels, freqArray, antlocArray, iqArray1, ID, IMAGING_DOMAIN_POINTS); 
-    
-    #ifdef IMAGE_SUBTRACTION
-    delayAndSum(channels, freqArray, antlocArray, iqArray2, ID2, generateImagingDomain(ID2));
-
-    for (int i=0;i<IMAGING_DOMAIN_POINTS;i++)
-    {
-        ID[i][2] -= ID2[i][2];
-    }
-    #endif
 
 
     // Pixel intensity data is written to the third column of the imaging domain file

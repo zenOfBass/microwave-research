@@ -20,39 +20,45 @@ void delayAndSum(int chan[NUMBER_OF_CHANNELS][2],
                 long double imagingDomain[IMAGING_DOMAIN_POINTS][3],
                 int imagingDomainSize)
 {
+    FILE *fptr;
+    fptr = fopen("log.csv", "w");
+    fprintf(fptr, "IDx,IDy,IDz,Rx,Ry,Rz,Tx,Ty,Tz,Delay\n");
+
     for (int r = 0; r < imagingDomainSize; r++) // Loop over number of points in image
     {
         for (int m = 0; m < NUMBER_OF_CHANNELS; m++) // Loop over the number of antenna channels
         {
-            for (int f = 0; f < NUMBER_OF_FREQUENCIES; f++) // Loop over the number of frequensies 
+            double IDx = imagingDomain[r][0];      // x
+            double IDy = imagingDomain[r][1];      // y
+            double IDz = Z_HEIGHT;                 // z
+            
+            // Receiving antenna coodinates
+            int RAnt = chan[m][0];      // Antenna ID
+            float Rx = antLoc[RAnt][0]; // x
+            float Ry = antLoc[RAnt][1]; // y
+            float Rz = antLoc[RAnt][2]; // z
+
+            // Transmitting antenna coodinates
+            int TAnt = chan[m][1];      // Antenna ID
+            float Tx = antLoc[TAnt][0]; // x
+            float Ty = antLoc[TAnt][1]; // y
+            float Tz = antLoc[TAnt][2]; // z
+            // Calculate the time delay
+            double delay = timeDelay(Tx, Ty, Tz, Rx, Ry, Rz, IDx, IDy, IDz);
+
+            for (int f = 0; f < NUMBER_OF_FREQUENCIES; f++) // Loop over the number of frequencies 
             {
                 // Set image point coodinates and data
                 long double complex IQData = iq[f][m]; // IQ data for point over the channel and frequnecy
-                double IDx = imagingDomain[r][0];      // x
-                double IDy = imagingDomain[r][1];      // y
-                double IDz = Z_HEIGHT;                 // z
-                
-                // Receiving antenna coodinates
-                int RAnt = chan[m][0];      // Antenna ID
-                float Rx = antLoc[RAnt][0]; // x
-                float Ry = antLoc[RAnt][1]; // y
-                float Rz = antLoc[RAnt][2]; // z
 
-                // Transmitting antenna coodinates
-                int TAnt = chan[m][1];      // Antenna ID
-                float Tx = antLoc[TAnt][0]; // x
-                float Ty = antLoc[TAnt][1]; // y
-                float Tz = antLoc[TAnt][2]; // z
-
-                // Calculate the time delay
-                double delay = timeDelay(Tx, Ty, Tz, Rx, Ry, Rz, IDx, IDy, IDz);
-
-                //long double complex data = IQData * cexp(I * 2 * M_PI * freq[f] * delay);
-                //printf("%Lf\n", cabsl(data));
                 // Calculate phase shift and sum
-                imagingDomain[r][2] += (creall(IQData * cexp(-I * 2 * M_PI * freq[f] * delay)));
+                imagingDomain[r][2] += creall(2*(IQData * cexp(-2 * I * M_PI * freq[f] * delay))/NUMBER_OF_ANTENNAS);
             }
+           
+            fprintf(fptr, "%e,%e,%e,%e,%e,%e,%e,%e,%e,%e,%Le\n", IDx,IDy,IDz,Rx,Ry,Rz,Tx,Ty,Tz,delay, creall(imagingDomain[r][2]));
         }
     }
+
+    fclose(fptr);
 }
 
