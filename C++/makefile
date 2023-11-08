@@ -1,7 +1,7 @@
 a.exe: ConfigurationSpace.o main.o Util.o ImagingDomain.o
 	g++ main.o ConfigurationSpace.o Util.o ImagingDomain.o
 
-ConfigurationSpace.o: ConfigurationSpace.cpp ConfigurationSpace.h Util.h ImagingDomain.h
+ConfigurationSpace.o: ConfigurationSpace.cpp ConfigurationSpace.h Util.h ImagingDomain.hpp
 	g++ -c -Wall -g ConfigurationSpace.cpp
 
 main.o: main.cpp ConfigurationSpace.h

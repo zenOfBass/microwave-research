@@ -9,37 +9,29 @@ using namespace std;
 
 struct Antenna {float x, y, z;};
 struct Channel {Antenna TX, RX;};
-struct Files 
-{
-    const string& AntennasFile; 
-    const string& ChannelsFile; 
-    const string& FrequenciesFile; 
-    vector<string> IQFiles;
-};
 
 class ConfigurationSpace
 {
 
 private:
+
+void ReadData(const string&, const string&, const string&, const string&);
+void ReadAntennas(const string&);
+void ReadChannels(const string&);
+void ReadFrequencies(const string&);
+void ReadIQ(const string&);
+
+public:
 vector<Channel> channels;
 vector<Antenna> antennas;
 vector<unsigned long int> frequencies;
 vector<vector<complex<double>>> iq_data;
 ImagingDomain imagingDomain;
 
-void ReadData(const string&, const string&, const string&, vector<string> IQFiles);
-void ReadAntennas(const string&);
-void ReadChannels(const string&);
-void ReadFrequencies(const string&);
-void ReadIQ(vector<string> IQFiles);
-
-void ReadConfig();
-
-
-public:
+void ReadConfig(const string&);
 ConfigurationSpace();
-ConfigurationSpace(const string&, const string&, const string&, vector<string>);
-ConfigurationSpace(Files files);
+ConfigurationSpace(const string&);
+ConfigurationSpace(const string&, const string&, const string&, const string&);
 
 };
 

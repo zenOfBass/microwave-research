@@ -1,13 +1,13 @@
 #include "ConfigurationSpace.h"
 
-void ConfigurationSpace::ReadData(const string& antennasFile, const string& channelsFile, const string& frequenciesFile, vector<string> IQFiles)
+void ConfigurationSpace::ReadData(const string& antennasFile, const string& channelsFile, const string& frequenciesFile, const string& IQFile)
 {
     try
     {
         ReadAntennas(antennasFile);
         ReadChannels(channelsFile);
         ReadFrequencies(frequenciesFile);
-        ReadIQ(IQFiles);
+        ReadIQ(IQFile);
         Log("Succesfully read input files");
     }
     catch(UnknownFiletype& e){std::cerr << e.what() << '\n';}
@@ -17,7 +17,7 @@ void ConfigurationSpace::ReadData(const string& antennasFile, const string& chan
 void ConfigurationSpace::ReadAntennas(const string& antennasFile)
 {
     // CSV file
-    if (antennasFile.substr(antennasFile.find_last_of(".") + 1) == "csv")
+    if (antennasFile.substr(antennasFile.find_last_of('.')+1, 3) == "csv")
     {
         ifstream fileIn;
         string line;
@@ -45,7 +45,7 @@ void ConfigurationSpace::ReadAntennas(const string& antennasFile)
     {
         // read sql    
     }
-    else{ throw UnknownFiletype(antennasFile); }
+    else{ throw UnknownFiletype(antennasFile.substr(antennasFile.find_last_of('.')+1, 3)); }
 }
 
 void ConfigurationSpace::ReadChannels(const string& channelsFile)
@@ -110,58 +110,93 @@ void ConfigurationSpace::ReadFrequencies(const string& frequenciesFile)
     else{throw UnknownFiletype(frequenciesFile);}
 }
 
-void ConfigurationSpace::ReadIQ(vector<string> IQFiles)
+void ConfigurationSpace::ReadIQ(const string& IQFile)
 {
-    for (int i=0;i<IQFiles.size();i++)
+
+    // CSV File
+    if (IQFile.substr(IQFile.find_last_of(".") + 1) == "csv")
     {
-    
-        // CSV File
-        if (IQFiles[i].substr(IQFiles[i].find_last_of(".") + 1) == "csv")
+    ifstream fileIn;
+    string line;
+    vector<complex<double>> iqLine;
+    fileIn.open(IQFile);
+    string z;
+    if (!fileIn.fail())
+    {
+        while(getline(fileIn, line))
         {
-        ifstream fileIn;
-        string line;
-        vector<complex<double>> iqLine;
-        fileIn.open(IQFiles[i]);
-        string z;
-        if (!fileIn.fail())
-        {
-            while(getline(fileIn, line))
+            stringstream s(line);
+            string t;
+            while (getline(s, t, ','))
             {
-                stringstream s(line);
-                string t;
-                while (getline(s, t, ','))
-                {
-                    iqLine.push_back(parseComplex(t));
-                }
-                iq_data.push_back(iqLine);
-                iqLine.clear();
+                iqLine.push_back(parseComplex(t));
             }
-            fileIn.close();
+            iq_data.push_back(iqLine);
+            iqLine.clear();
         }
-        else{throw FileOpenError(IQFiles[i]);}
-        }
-        else if (IQFiles[i].substr(IQFiles[i].find_last_of(".") + 1) == "mdf")
+        fileIn.close();
+    }
+    else{throw FileOpenError(IQFile);}
+    }
+    else if (IQFile.substr(IQFile.find_last_of(".") + 1) == "mdf")
+    {
+        // sql
+    }
+    else {throw UnknownFiletype(IQFile);}
+
+}
+
+
+void ConfigurationSpace::ReadConfig(const string& configFile)
+{
+    ifstream fin;
+    fin.open(configFile);
+    string line;
+    string entry;
+    vector<string> container;
+    float height=0, width=0, depth=0, resolution=0;
+    
+    while (getline(fin, line))
+    {
+        if (line[0] != '#') // Ignore comment lines
         {
-            // sql
+            istringstream iss(line);
+            while (iss >> entry)
+            {
+                container.push_back(entry);
+            }
+
+            if (container.size()!=0)
+            {
+                if (container[0] == "AntennasFilePath"){this->ReadAntennas(container[2]);}
+                else if (container[0] == "ChannelsFilePath"){this->ReadChannels(container[2]);}
+                else if (container[0] == "FrequenciesFilePath"){this->ReadFrequencies(container[2]);}
+                else if (container[0] == "IQFilePath"){this->ReadIQ(container[2]);}
+                else if (container[0] == "height"){height = stof(container[2]);}
+                else if (container[0] == "width"){width = stof(container[2]);}
+                else if (container[0] == "depth"){depth = stof(container[2]);}
+                else if (container[0] == "resolution"){resolution = stof(container[2]);}
+                container.clear();
+            }
+
         }
-        else {throw UnknownFiletype(IQFiles[i]);}
     }
 
+    this->imagingDomain = ImagingDomain(height, width, depth, resolution);
+    fin.close();
 }
 
 
-void ConfigurationSpace::ReadConfig()
+// Constructors
+
+ConfigurationSpace::ConfigurationSpace(){}
+
+ConfigurationSpace::ConfigurationSpace(const string& configFile)
 {
-    
+    this->ReadConfig(configFile);
 }
 
-
-ConfigurationSpace::ConfigurationSpace(const string& antennasFile, const string& channelsFile, const string& frequenciesFile, vector<string> IQFiles)
+ConfigurationSpace::ConfigurationSpace(const string& antennasFile, const string& channelsFile, const string& frequenciesFile, const string& IQFile)
 {
-    ReadData(antennasFile, channelsFile, frequenciesFile, IQFiles);
-}
-
-ConfigurationSpace::ConfigurationSpace(Files files)
-{
-    ReadData(files.AntennasFile, files.ChannelsFile, files.FrequenciesFile, files.IQFiles);
+    ReadData(antennasFile, channelsFile, frequenciesFile, IQFile);
 }

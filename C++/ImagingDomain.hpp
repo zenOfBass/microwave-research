@@ -27,9 +27,9 @@ private:
     float height, width, depth;    // dimensions in meters
     float resolution;              // spacing between points in meters
 
-    vector<point> domain;
-
 public:
+
+    vector<point> points;
 
     ImagingDomain();
     ImagingDomain(float, float, float, float);

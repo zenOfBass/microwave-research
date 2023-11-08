@@ -4,6 +4,7 @@
 #include <complex>
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <iomanip>
 #include <exception>
 #include <time.h>
@@ -24,10 +25,11 @@ private:
 
 public:
 
-    UnknownFiletype(const string& f) {errmsg = "Unknown filetype for file " + f;}
+    UnknownFiletype(const string& f) {errmsg = "Unknown filetype  " + f;}
 
     const char* what() const throw()
     {
+        Log(errmsg);
         return errmsg.c_str();
     }
 };
@@ -44,6 +46,24 @@ public:
 
     const char* what() const throw()
     {
+        Log(errmsg);
+        return errmsg.c_str();
+    }
+};
+
+class ImagingDomainParameterError : public exception
+{
+private:
+
+    string errmsg;
+
+public:
+
+    ImagingDomainParameterError() {errmsg = "Imaging Domain Parameter Error: ";}
+
+    const char* what() const throw()
+    {
+        Log(errmsg);
         return errmsg.c_str();
     }
 };
