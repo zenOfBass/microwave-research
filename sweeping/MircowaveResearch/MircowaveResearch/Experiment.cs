@@ -1,9 +1,8 @@
-using Microsoft.EntityFrameworkCore;
 using MiQVNA;
 using System.Numerics;
 
 
-public struct Experiment
+internal struct Experiment
 {
     // Strings for name of experiment
     private readonly string fullExpName;
@@ -12,16 +11,16 @@ public struct Experiment
 
     // Sweeping variables
     private readonly Connection connection;
+    private readonly int totalTraces;
     private double doubleMinFreq, doubleMaxFreq;
     private int intFreqSteps, intNumAntennas;
-    private readonly int totalTraces;
     private int row, col; // Row and column counters for complexData
     private int transmittingAntenna;
     private Complex[,]? complexData = null;
 
-    public Experiment(Connection connection)
+    internal Experiment(Connection connection)
     {
-        this.connection = connection;
+        this.connection = connection ?? throw new ArgumentNullException(nameof(connection));
 
         doubleMinFreq = doubleMaxFreq = 0;
         intFreqSteps = intNumAntennas = totalTraces = 0;
@@ -34,11 +33,11 @@ public struct Experiment
         intFreqSteps++;
         totalTraces = 2 * intNumAntennas * (intNumAntennas - 1);
         complexData = new Complex[intFreqSteps, totalTraces]; // Set the number of rows and columns based on user input
-        fullExpName = $"{code}_{objName}_{minFreq}_{maxFreq}_{freqSteps}_{numAntennas}";
+        fullExpName = $"Exp_{code}_{objName}_{minFreq}_{maxFreq}_{freqSteps}_{numAntennas}";
         filePath = $"data/{code}-{objName}_{minFreq}-{maxFreq}_{freqSteps}_{numAntennas}_0.csv";
     }
 
-    public void PromptUserInput()
+    internal void PromptUserInput()
     {
         Console.WriteLine("Experiment Code: ");
         while (true)
@@ -80,6 +79,7 @@ public struct Experiment
             else Console.WriteLine("Invalid input. Please enter a valid positive integer value.");
         }
 
+
         Console.WriteLine("Number of Antennas: ");
         while (true)
         {
@@ -89,16 +89,14 @@ public struct Experiment
         }
     }
 
-    public void Run()
+    internal void Run()
     {
-        Console.WriteLine("Scan starting.");                                            // Print a startup message
-        DateTime startTime = DateTime.Now;                                              // Get the current time for measuring execution time
-        Sweep();                                                                        // Start sweep alogrithm
-        WriteToCSV();                                                                   // Write the data to a CSV file
-        WriteToSQL();                                                                   // Write the data to the SQL database
-        TimeSpan totalTime = DateTime.Now - startTime;                                  // Calculate the total time
-        Console.WriteLine("Scan has finished.");
-        Console.WriteLine($"Total time in minutes: {totalTime.TotalMinutes} minutes."); // Report total time
+        Console.WriteLine("Scan starting.");                                                                                 // Print a startup message
+        DateTime startTime = DateTime.Now;                                                                                   // Get the current time for measuring execution time
+        Sweep();                                                                                                             // Start sweep alogrithm
+        Writer.ToCSV(intFreqSteps, totalTraces, complexData, filePath);                                                      // Write the data to a CSV file
+        Writer.ToSQL(intFreqSteps, totalTraces, complexData, filePath);                                                      // Write the data to the SQL database
+        Console.WriteLine($"Scan has finished.\nTotal time in minutes: {(DateTime.Now - startTime).TotalMinutes} minutes."); // Report total time
     }
 
     private void Sweep()
@@ -114,12 +112,12 @@ public struct Experiment
                 else
                 {
                     Switch(j);                                                                                // Change the signal path on the switch to the RF channel (j)
-                    connection.GetVNA().RunSweepOnce();                                                            // Initiate sweep in MegiQ
+                    connection.VNA.RunSweepOnce();                                                            // Initiate sweep in MegiQ
                     row = 0;                                                                                  // Start at first row
-                    ProcessTraceValues(connection.GetVNA().TraceSet.Traces[1].Channels["S21"].DataSet["Through"]); // Loop over 21 trace data
+                    ProcessTraceValues(connection.VNA.TraceSet.Traces[1].Channels["S21"].DataSet["Through"]); // Loop over 21 trace data
                     row = 0;                                                                                  // Start at first row again
                     col++;                                                                                    // Go to next column
-                    ProcessTraceValues(connection.GetVNA().TraceSet.Traces[1].Channels["S12"].DataSet["Through"]); // Loop over 12 trace data
+                    ProcessTraceValues(connection.VNA.TraceSet.Traces[1].Channels["S12"].DataSet["Through"]); // Loop over 12 trace data
                 }
                 col++; // Go to next column
             }
@@ -129,7 +127,7 @@ public struct Experiment
     private readonly void Switch(int rfPath) // Function to switch signal path on the switch
     {
         string rfPathStr = rfPath.ToString();                   // Convert the RF path to a string
-        connection.GetAntennas().Write(rfPathStr);              // Write the RF path to the antennas using serial communication
+        connection.Antennas.Write(rfPathStr);                   // Write the RF path to the antennas using serial communication
         Thread.Sleep(3000);                                     // Pause
         Console.WriteLine($"Switching to RF path {rfPathStr}"); // Print the RF path to the console
     }
@@ -141,37 +139,5 @@ public struct Experiment
             complexData[row, col] = new Complex(val.IVal, val.QVal); // Store IQ data together in the 2D array of complex numbers
             row++;                                                   // Move to next row
         }
-    }
-
-    private readonly void WriteToCSV()
-    {
-        using StreamWriter writer = new(filePath);
-        for (int i = 0; i < intFreqSteps; i++) // Loop over columns
-        {
-            for (int j = 0; j < totalTraces; j++) //  Loop over rows
-            {
-                Complex value = complexData[i, j];                  // Set the value to be recorded from the 2D array
-                writer.Write($"{value.Real} + {value.Imaginary}i"); // Write the value to the .csv file
-                if (j < totalTraces - 1) writer.Write(",");
-            }
-            writer.WriteLine();
-        }
-    }
-
-    private readonly void WriteToSQL()
-    {
-        using AppDbContext db = new(); // Write the SQL database
-        db.Database.EnsureCreated();
-        db.Database.ExecuteSqlRaw($"CREATE TABLE {fullExpName} (Id int PRIMARY KEY IDENTITY(1,1), Real float, Imaginary float)");
-
-        for (int i = 0; i < intFreqSteps; i++) // Populate the table with data
-        {
-            for (int j = 0; j < totalTraces; j++)
-            {
-                Complex value = complexData[i, j];
-                db.ComplexData.Add(new ComplexData { Real = value.Real, Imaginary = value.Imaginary });
-            }
-        }
-        db.SaveChanges();
     }
 }

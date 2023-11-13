@@ -9,7 +9,8 @@ and this project adheres to *[Semantic Versioning](https://semver.org/spec/v2.0.
 ## [Unreleased]
 - Added Readme.md files, docs, and change log template / 2023-10-22 - Nathan
 - Added Experiment struct / 2023-10-23 - Nathan
-- Added Connection struct / 2023-10-24 - Nathan
+- Added Connection record / 2023-10-24 - Nathan
+- Added Writer class / 2023-11-6 - Nathan
 
 ## [1.1.0] - 2023-10-23
 ### Added

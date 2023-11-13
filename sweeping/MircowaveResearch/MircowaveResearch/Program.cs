@@ -19,7 +19,7 @@ while (true)
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"Error message: {ex.Message}\nExiting scan."); // Display the specific error message
+        Console.WriteLine($"Error message: {ex.Message}\nExiting experiment."); // Display the specific error message
     }
     Console.WriteLine("Would you like to scan again? Y/N: ");
     while (true)
@@ -27,7 +27,7 @@ while (true)
         string repeat = Console.ReadLine();
         if (repeat != null) repeat = repeat.ToUpper();
         if (repeat == "Y") break;                     // Repeat
-        else if (repeat == "N") ((IDisposable)connection).Dispose(); // Close all connections
+        else if (repeat == "N") connection.Dispose(); // Close all connections
         else Console.WriteLine("Invalid input. Please enter Y or N");
     }
 }

@@ -2,19 +2,15 @@ using MiQVNA;
 using System.Diagnostics;
 using System.IO.Ports;
 
-
-public class Connection : IDisposable
+public record Connection(SerialPort? Antennas, mvnaVNAMain? VNA) : IDisposable
 {
-    private readonly string comPortAnt;         // COM port used for communicating with antennas
-    private readonly int antBaudrate;           // Baudrate for antennas
-    private readonly int antTimeout;            // Timeout in milliseconds
-    private mvnaVNAMain vna;
-    private SerialPort? antennas = null;        // Initialize serial port for antennas
-    private static Connection? instance = null; // Self instance for singleton pattern
+    private readonly string comPortAnt;  // COM port used for communicating with antennas
+    private readonly int antBaudrate;    // Baudrate for antennas
+    private readonly int antTimeout;     // Timeout in milliseconds
+    private static Connection? instance; // Self instance for singleton pattern
 
-    private Connection()
+    private Connection() : this(null, null)
     {
-        vna = new mvnaVNAMain();
         comPortAnt = "COM19";
         antBaudrate = 115200;
         antTimeout = 100;
@@ -33,6 +29,9 @@ public class Connection : IDisposable
         }
     }
 
+    public SerialPort? Antennas { get; private set; } = Antennas;
+    public mvnaVNAMain VNA { get; private set; } = VNA;
+
     private void ConnectToMegiQ()
     {
         while (true)
@@ -40,8 +39,8 @@ public class Connection : IDisposable
             try
             {
                 Console.WriteLine("Connecting to VNA.");
-                vna = new mvnaVNAMain(); // Open MegIQ and create VNA instance
-                vna.Connect();           // Connect to VNA
+                VNA = new mvnaVNAMain(); // Open MegIQ and create VNA instance
+                VNA.Connect();           // Connect to VNA
                 break;
             }
             catch
@@ -68,8 +67,8 @@ public class Connection : IDisposable
         try
         {
             Console.WriteLine("Connecting to antennas.");
-            antennas = new SerialPort(comPortAnt, antBaudrate) { ReadTimeout = antTimeout }; // Create a new SerialPort object with specified port and baud rate                                      
-            antennas.Open();                                                                 // Open the serial port for communication
+            Antennas = new SerialPort(comPortAnt, antBaudrate) { ReadTimeout = antTimeout }; // Create a new SerialPort object with specified port and baud rate                                      
+            Antennas.Open();                                                                 // Open the serial port for communication
         }
         catch (Exception ex)
         {
@@ -79,7 +78,7 @@ public class Connection : IDisposable
         }
     }
 
-    public static void CloseMegiQ() // Function to close the MegiQ process
+    private static void CloseMegiQ() // Function to close the MegiQ process
     {
         if (Process.GetProcessesByName("MiQVNA").Length > 0)
         {
@@ -100,14 +99,10 @@ public class Connection : IDisposable
         else Console.WriteLine($"MiQVNA does not appear to be running.");
     }
 
-    public SerialPort GetAntennas() => antennas;
-
-    public mvnaVNAMain GetVNA() => vna;
-
     public void Dispose()
     {
-        if (antennas != null && antennas.IsOpen) antennas.Close(); // Close the serial port
-        vna.Disconnect();                                          // Disconnect from the VNA
+        if (Antennas != null && Antennas.IsOpen) Antennas.Close(); // Close the serial port
+        VNA.Disconnect();                                          // Disconnect from the VNA
         CloseMegiQ();                                              // Close MegiQ resources
     }
 }
