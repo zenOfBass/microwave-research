@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-public class ComplexData
+
+namespace MicrowaveResearch
 {
-    [Key]
-    public int Id { get; set; }
-    public double Real { get; set; }
-    public double Imaginary { get; set; }
+    public record ComplexData([property: Key] int Id, double Real, double Imaginary);
 }

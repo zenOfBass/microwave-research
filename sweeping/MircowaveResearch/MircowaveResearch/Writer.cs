@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MicrowaveResearch;
 using System.Numerics;
 
 
@@ -39,7 +40,7 @@ internal static class Writer
                 for (int j = 0; j < totalTraces; j++)
                 {
                     Complex value = complexData[i, j];
-                    db.ComplexData.Add(new ComplexData { Real = value.Real, Imaginary = value.Imaginary });
+                    db.ComplexData.Add(new ComplexData(default, value.Real, value.Imaginary));
                 }
             }
             db.SaveChanges();

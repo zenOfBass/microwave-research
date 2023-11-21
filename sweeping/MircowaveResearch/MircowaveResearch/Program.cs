@@ -6,15 +6,19 @@
 / See changelog.md for detailed changes 
 ***************************************/
 
+using MicrowaveResearch;
+
 
 Connection connection = Connection.Instance;
 
 while (true)
 {
-    Experiment experiment = new(connection);
-
     try
     {
+        Experiment experiment = new ExperimentBuilder()
+            .SetConnection(connection)
+            .SetUserInput()
+            .Build; // Use the Build property to get the constructed Experiment instance
         experiment.Run();
     }
     catch (Exception ex)
@@ -24,7 +28,7 @@ while (true)
     Console.WriteLine("Would you like to scan again? Y/N: ");
     while (true)
     {
-        string repeat = Console.ReadLine();
+        var repeat = Console.ReadLine();
         if (repeat != null) repeat = repeat.ToUpper();
         if (repeat == "Y") break;                     // Repeat
         else if (repeat == "N") connection.Dispose(); // Close all connections
