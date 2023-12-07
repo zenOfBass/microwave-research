@@ -4,5 +4,6 @@
     {
         IExperimentBuilder SetConnection(Connection connection);
         IExperimentBuilder SetUserInput();
+        Experiment Build { get; }
     }
 }
