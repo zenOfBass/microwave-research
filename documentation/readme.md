@@ -60,10 +60,11 @@ The Microwave Imaging System processes IQ data from the VNA system and generates
 - C Standard Library
 
 ### Usage
-1. **Compilation**
-   - Compile the code using a C compiler.
-2. **Data**
+1. **Data and Configuration**
    - Ensure the necessary CSV files are in the `data/` and `configuration/` directories.
+   - Confirm that the correct files with the correct values are in the `configuration/` directory.
+2. **Compilation**
+   - Compile the code using a C compiler.
 3. **Run the Program** 
    - The program will generate microwave imaging data in `output.csv` file.
-   - The program will generate a heatmap visualization as an image using the GNUplot script command `gnuplot -p PlotImage.p`, which will pop-up in a seperate window when it is completed.
+   - A heatmap visualization as an image using the GNUplot script command `gnuplot -p PlotImage.p` will generate from the resulting data, which will pop-up in a seperate window when it is completed.

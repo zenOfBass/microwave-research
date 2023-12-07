@@ -3,7 +3,7 @@
 
 namespace MicrowaveResearch
 {
-    public class ExperimentBuilder
+    public class ExperimentBuilder : IExperimentBuilder
     {
         private string? fullExpName, filePath, minFreq, maxFreq, freqSteps, numAntennas, objName, code;
         private Connection? connection;
@@ -12,13 +12,13 @@ namespace MicrowaveResearch
         private double doubleMinFreq, doubleMaxFreq;
 
 
-        public ExperimentBuilder SetConnection(Connection connection)
+        public IExperimentBuilder SetConnection(Connection connection)
         {
             this.connection = connection;
             return this;
         }
 
-        public ExperimentBuilder SetUserInput()
+        public IExperimentBuilder SetUserInput()
         {
             Console.WriteLine("Experiment Code: ");
             while (true)
@@ -36,7 +36,7 @@ namespace MicrowaveResearch
                 else break;
             }
 
-            Console.WriteLine("Minimum Frequency: ");
+            Console.WriteLine("Minimum Frequency (MHz): ");
             while (true)
             {
                 minFreq = Console.ReadLine();
@@ -44,7 +44,7 @@ namespace MicrowaveResearch
                 else Console.WriteLine("Invalid input. Please enter a valid positive value.");
             }
 
-            Console.WriteLine("Maximum Frequency: ");
+            Console.WriteLine("Maximum Frequency (MHz): ");
             while (true)
             {
                 maxFreq = Console.ReadLine();
@@ -78,7 +78,7 @@ namespace MicrowaveResearch
                 intFreqSteps++;
                 totalTraces = 2 * intNumAntennas * (intNumAntennas - 1); // The number of traces = 2n(n-1), where n is the number of antennas
                 complexData = new Complex[intFreqSteps, totalTraces];    // Set the number of rows and columns based on user input
-                fullExpName = $"ExpTable_{code}_{objName}_{minFreq}_{maxFreq}_{freqSteps}_{numAntennas}";
+                fullExpName = $"ExpTable_{code}_{objName}_{Math.Round(doubleMinFreq, 0)}MHz_{Math.Round(doubleMaxFreq, 0)}MHz_{freqSteps}_{numAntennas}";
                 filePath = $"data/{code}-{objName}_{minFreq}-{maxFreq}_{freqSteps}_{numAntennas}_0.csv";
                 return new Experiment(connection!,
                                     intFreqSteps,

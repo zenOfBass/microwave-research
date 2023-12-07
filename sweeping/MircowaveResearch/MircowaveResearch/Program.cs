@@ -17,7 +17,7 @@ while (true)
     {
         Experiment experiment = new ExperimentBuilder()
             .SetConnection(connection)
-            .SetUserInput()
+            .SetUserInput() 
             .Build; // Use the Build property to get the constructed Experiment instance
         experiment.Run();
     }
